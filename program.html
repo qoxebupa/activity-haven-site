@@ -120,6 +120,21 @@ a { color: inherit; text-decoration: none; }
 .detail-meta div { font-size: 1rem; }
 .detail-meta span.label { display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--charcoal-soft); font-weight: 700; margin-bottom: 3px; }
 .detail-desc { font-size: 1.08rem; color: var(--charcoal-soft); border-top: 1px solid var(--teal-pale); padding-top: 22px; }
+.notice-box {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: #FBEBC9;
+  color: #6B4A0E;
+  border: 1px solid #EFCE86;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 22px;
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+.notice-box .notice-icon { flex-shrink: 0; font-size: 1.15rem; line-height: 1.4; }
+.notice-box strong { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; color: #8A5A12; }
 .state-msg { text-align: center; padding: 60px 24px; color: var(--charcoal-soft); font-size: 1.1rem; }
 
 footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 96px; text-align: center; font-size: 0.9rem; }
@@ -246,7 +261,8 @@ footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 
           image: cellText(r, 6),
           video: cellText(r, 7),
           leaders: cellText(r, 8),
-          description: cellText(r, 9)
+          description: cellText(r, 9),
+          notice: cellText(r, 10)
         }))
         .find(p => p.day === wantDay && p.program === wantProgram);
 
@@ -294,6 +310,10 @@ footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 
         ? `<span class="status-badge" data-status="${statusInfo.key}">${escapeHtml(statusInfo.label)}</span>`
         : '';
 
+      const noticeHtml = match.notice
+        ? `<div class="notice-box"><span class="notice-icon">📌</span><div><strong>Notice</strong>${escapeHtml(match.notice)}</div></div>`
+        : '';
+
       detailWrap.innerHTML = `
         <div class="detail-card" data-type="${escapeHtml(match.type)}">
           ${mediaHtml}
@@ -305,6 +325,7 @@ footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 
             <div><span class="label">Room</span>${escapeHtml(match.room)}</div>
             ${leaderHtml}
           </div>
+          ${noticeHtml}
           <p class="detail-desc">${escapeHtml(match.description)}</p>
         </div>`;
 
