@@ -1,0 +1,107 @@
+/*
+Theme Name: Activity Haven Child
+Template: radcliffe-2
+Description: Child theme adding a custom Programs listing and detail view, matching the Activity Haven design.
+Version: 1.0
+*/
+
+.ah-program-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.ah-program-card {
+  display: block;
+  border: 1px solid #e3e0d6;
+  border-radius: 12px;
+  padding: 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s ease;
+}
+
+.ah-program-card:hover {
+  border-color: #04342C;
+}
+
+.ah-badge {
+  display: inline-block;
+  background: #E1F5EE;
+  color: #04342C;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.ah-program-card h3 {
+  font-size: 16px;
+  margin: 10px 0 2px;
+}
+
+.ah-program-card p {
+  font-size: 13px;
+  color: #6b6a63;
+  margin: 0;
+}
+
+.ah-detail-video {
+  background: #04342C;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.ah-detail-video video,
+.ah-detail-video iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: block;
+  border: 0;
+}
+
+.ah-detail-leader {
+  font-size: 14px;
+  color: #6b6a63;
+  margin: 8px 0 12px;
+}
+
+.ah-notice-box {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: #FBEBC9;
+  color: #6B4A0E;
+  border: 1px solid #EFCE86;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+.ah-notice-box strong {
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+  color: #8A5A12;
+}
+
+.ah-detail-desc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #3d3d3a;
+}
+
+.ah-status-badge {
+  display: inline-block;
+  background: #FAECE7;
+  color: #4A1B0C;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-left: 8px;
+}
