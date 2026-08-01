@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery | Activity Haven Recreation Centre</title>
+<meta name="description" content="Printable posters for drop-in and instructional programs, the monthly lunch menu, this week's activities, and photos from around the centre.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal-deep: #1E5F5B;
+  --teal-mid: #2F8C82;
+  --teal-pale: #E4EFEC;
+  --cream: #FAF3E4;
+  --paper: #FFFDF8;
+  --coral: #D6604A;
+  --coral-dark: #B84D39;
+  --gold: #E3A23B;
+  --charcoal: #2B2B26;
+  --charcoal-soft: #55524A;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Public Sans", -apple-system, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--font-body); color: var(--charcoal); background: var(--paper); font-size: 18px; line-height: 1.6; }
+h1, h2, h3 { font-family: var(--font-display); margin: 0; }
+a { color: inherit; text-decoration: none; }
+
+.site-header { background: var(--paper); }
+.main-nav-row { position: sticky; top: 0; z-index: 50; background: var(--paper); border-bottom: 3px solid var(--teal-deep); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 10px 96px; display: flex; align-items: center; gap: 28px; flex-wrap: wrap; row-gap: 6px; }
+.main-nav { display: flex; gap: 17px; flex-wrap: wrap; row-gap: 4px; justify-content: center; width: 100%; }
+.main-nav a { font-weight: 600; font-size: 1.2rem; color: var(--charcoal); padding: 6px 2px; border-bottom: 2px solid transparent; }
+.main-nav a:hover, .main-nav a.is-current { border-color: var(--coral); }
+
+.page-hero { background: var(--teal-deep); color: var(--teal-pale); padding: 56px 96px 44px; text-align: center; }
+.page-hero .eyebrow { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.8rem; font-weight: 700; color: var(--gold); }
+.page-hero h1 { color: white; font-size: clamp(1.9rem, 3.4vw, 2.8rem); font-weight: 600; margin: 12px 0 10px; }
+.page-hero p { max-width: 640px; margin: 0 auto; opacity: 0.92; }
+
+.content-wrap { max-width: 1100px; margin: 0 auto; padding: 56px 96px 30px; }
+.content-card {
+  background: var(--paper);
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(30,26,20,0.12);
+  padding: 40px 44px;
+  border-top: 6px solid var(--teal-mid);
+  margin-bottom: 40px;
+}
+.content-card h2 { font-size: 1.5rem; color: var(--teal-deep); font-weight: 600; margin: 0 0 8px; }
+.content-card > p.lead { color: var(--charcoal-soft); margin: 0 0 26px; }
+.eyebrow { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.8rem; font-weight: 700; color: var(--coral); display: block; margin-bottom: 8px; }
+
+.poster-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+.poster-card { background: var(--cream); border-radius: 14px; overflow: hidden; box-shadow: 0 2px 10px rgba(43,43,38,0.08); display: flex; flex-direction: column; }
+.poster-card img { width: 100%; display: block; }
+.poster-card-foot { padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.poster-card-foot span { font-weight: 600; font-size: 0.88rem; color: var(--charcoal-soft); }
+.btn-print {
+  display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border-radius: 999px;
+  font-weight: 700; font-size: 0.85rem; border: none; cursor: pointer; font-family: var(--font-body);
+  background: var(--coral); color: white;
+}
+.btn-print:hover { background: var(--coral-dark); }
+
+.photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+.photo-tile {
+  aspect-ratio: 4/3; background: linear-gradient(135deg, var(--teal-pale), var(--cream)); border-radius: 12px;
+  display: flex; align-items: center; justify-content: center; color: var(--charcoal-soft); font-size: 0.85rem;
+  text-align: center; padding: 12px; border: 2px dashed var(--teal-mid);
+}
+
+.fb-panel { background: var(--cream); border-radius: 14px; padding: 30px; text-align: center; border: 2px dashed var(--gold); }
+.fb-panel p { color: var(--charcoal-soft); max-width: 560px; margin: 8px auto 0; }
+
+.note { font-size: 0.85rem; color: var(--charcoal-soft); background: var(--teal-pale); border-radius: 10px; padding: 10px 16px; margin-top: 18px; }
+
+footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 96px; text-align: center; font-size: 0.9rem; }
+footer.site-footer a { color: var(--gold); }
+
+@media print {
+  .site-header, footer.site-footer, .btn-print, .fb-panel, .page-hero, .photo-grid { display: none !important; }
+  .content-card { box-shadow: none; border: none; }
+}
+
+@media (max-width: 900px) {
+  .header-inner, .page-hero, .content-wrap, footer.site-footer { padding-left: 24px; padding-right: 24px; }
+  .content-card { padding: 28px 26px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="main-nav-row">
+    <div class="header-inner">
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="programs.html">Programs/Events</a>
+        <a href="gallery.html" class="is-current">Gallery</a>
+        <a href="newsletter.html">Newsletter</a>
+        <a href="membership.html">Membership</a>
+        <a href="index.html#volunteer">Volunteer</a>
+        <a href="donate.html">Donate</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <p class="eyebrow">Posters &amp; Photos</p>
+  <h1>Gallery</h1>
+  <p>Everything printable in one place — drop-in and instructional schedules, the monthly lunch menu, and photos from around the centre. Click "Print" under any poster to print just that page.</p>
+</section>
+
+<div class="content-wrap">
+
+  <!-- DROP-IN POSTER -->
+  <div class="content-card" id="drop-in">
+    <span class="eyebrow">Drop-in Programs</span>
+    <h2>This month's drop-in schedule</h2>
+    <p class="lead">Replicated exactly from the live posting — same two pages staff already print and post on the boards. Prefer one that updates itself? <a href="drop-in-poster.html" style="color:var(--teal-deep); font-weight:700; text-decoration:underline;">Open the live auto-generated version →</a></p>
+    <div class="poster-grid">
+      <div class="poster-card">
+        <img src="https://activityhaven.org/wp-content/uploads/2026/07/AH-drop-in-2026-pg-1-2.jpg" alt="Drop-in Programs poster, page 1">
+        <div class="poster-card-foot">
+          <span>Page 1</span>
+          <button class="btn-print" onclick="printImage('https://activityhaven.org/wp-content/uploads/2026/07/AH-drop-in-2026-pg-1-2.jpg')">Print</button>
+        </div>
+      </div>
+      <div class="poster-card">
+        <img src="https://activityhaven.org/wp-content/uploads/2026/07/AH-drop-in-2026-pg-2-1.jpg" alt="Drop-in Programs poster, page 2">
+        <div class="poster-card-foot">
+          <span>Page 2</span>
+          <button class="btn-print" onclick="printImage('https://activityhaven.org/wp-content/uploads/2026/07/AH-drop-in-2026-pg-2-1.jpg')">Print</button>
+        </div>
+      </div>
+    </div>
+    <p class="note">Source: activityhaven.org/drop-in-programs — swap these two image links whenever the office posts a new month's schedule.</p>
+  </div>
+
+  <!-- INSTRUCTIONAL POSTERS -->
+  <div class="content-card" id="instructional">
+    <span class="eyebrow">Instructional Classes</span>
+    <h2>Registration rules &amp; class schedule</h2>
+    <p class="lead">The three posters from the live instructional classes page, replicated exactly. Prefer one that updates itself? <a href="instructional-poster.html" style="color:var(--teal-deep); font-weight:700; text-decoration:underline;">Open the live auto-generated version →</a></p>
+    <div class="poster-grid">
+      <div class="poster-card">
+        <img src="https://activityhaven.org/wp-content/uploads/2026/07/White-And-Red-Abstract-Classroom-Rules-A4-Flyer-22-1.jpg" alt="Registration rules flyer">
+        <div class="poster-card-foot">
+          <span>Registration Rules</span>
+          <button class="btn-print" onclick="printImage('https://activityhaven.org/wp-content/uploads/2026/07/White-And-Red-Abstract-Classroom-Rules-A4-Flyer-22-1.jpg')">Print</button>
+        </div>
+      </div>
+      <div class="poster-card">
+        <img src="https://activityhaven.org/wp-content/uploads/2026/07/Sept-Instructionals-2026-pg-2.jpg" alt="Instructional class schedule, page 2">
+        <div class="poster-card-foot">
+          <span>Schedule — Page 2</span>
+          <button class="btn-print" onclick="printImage('https://activityhaven.org/wp-content/uploads/2026/07/Sept-Instructionals-2026-pg-2.jpg')">Print</button>
+        </div>
+      </div>
+      <div class="poster-card">
+        <img src="https://activityhaven.org/wp-content/uploads/2026/07/Sept-Instructionals-pg-1.jpg" alt="Instructional class schedule, page 1">
+        <div class="poster-card-foot">
+          <span>Schedule — Page 1</span>
+          <button class="btn-print" onclick="printImage('https://activityhaven.org/wp-content/uploads/2026/07/Sept-Instructionals-pg-1.jpg')">Print</button>
+        </div>
+      </div>
+    </div>
+    <p class="note">Source: activityhaven.org/instructional-classes — swap these three image links each session (roughly every 6-8 weeks).</p>
+  </div>
+
+  <!-- MONTHLY MENU (folded in from the old standalone Menu nav item) -->
+  <div class="content-card" id="menu">
+    <span class="eyebrow">Monthly Menu</span>
+    <h2>Lunch at Activity Haven — Wednesdays &amp; Fridays, $12</h2>
+    <p class="lead">Everyone's welcome, members or not. Ask for your meal "to go" if you're on the run. This used to have its own nav item — it now lives here instead.</p>
+    <div class="poster-grid">
+      <div class="poster-card">
+        <img src="https://activityhaven.org/wp-content/uploads/2026/07/July-Newsletter-2026-pg-8.jpg" alt="July lunch menu">
+        <div class="poster-card-foot">
+          <span>July</span>
+          <button class="btn-print" onclick="printImage('https://activityhaven.org/wp-content/uploads/2026/07/July-Newsletter-2026-pg-8.jpg')">Print</button>
+        </div>
+      </div>
+      <div class="poster-card">
+        <img src="https://activityhaven.org/wp-content/uploads/2026/07/July-Newsletter-2026-pg-9.jpg" alt="August lunch menu">
+        <div class="poster-card-foot">
+          <span>August</span>
+          <button class="btn-print" onclick="printImage('https://activityhaven.org/wp-content/uploads/2026/07/July-Newsletter-2026-pg-9.jpg')">Print</button>
+        </div>
+      </div>
+    </div>
+    <p class="note">Menu images are pulled from the current newsletter — swap in fresh pages each month.</p>
+  </div>
+
+  <!-- SPECIAL EVENTS -->
+  <div class="content-card" id="events">
+    <span class="eyebrow">Special Events</span>
+    <h2>Posters for upcoming events</h2>
+    <p class="lead">Placeholder tiles for now — send real photos whenever you have them and they'll drop straight in. Development of automatic feed is anticipated from Canva or AH office source(s) and Facebook to allow selecting Newsletter-worthy items and public website perusal.</p>
+    <div class="photo-grid">
+      <div class="photo-tile">Event poster</div>
+      <div class="photo-tile">Event poster</div>
+      <div class="photo-tile">Event poster</div>
+      <div class="photo-tile">Event poster</div>
+    </div>
+  </div>
+
+  <!-- FACEBOOK THIS WEEK POSTER -->
+  <div class="content-card" id="this-week">
+    <span class="eyebrow">This Week</span>
+    <h2>This week's activities (from Facebook)</h2>
+    <div class="fb-panel" style="margin-top:20px;">
+      <strong>Placeholder</strong>
+      <p>Drop this week's Facebook activities poster image in here. Send me the image (or a link to the Facebook post) and I'll wire it in so it's easy to update each week.</p>
+    </div>
+  </div>
+
+  <!-- STAFF & PAST EVENTS GALLERY -->
+  <div class="content-card" id="photos">
+    <span class="eyebrow">Around the Centre</span>
+    <h2>Staff &amp; past events</h2>
+    <p class="lead">Placeholder tiles for now — send real photos whenever you have them and they'll drop straight in, same layout.</p>
+    <div class="photo-grid">
+      <div class="photo-tile">Staff photo</div>
+      <div class="photo-tile">Staff photo</div>
+      <div class="photo-tile">Past event</div>
+      <div class="photo-tile">Past event</div>
+      <div class="photo-tile">Past event</div>
+      <div class="photo-tile">Staff photo</div>
+      <div class="photo-tile">Past event</div>
+      <div class="photo-tile">Past event</div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  Activity Haven Recreation Centre — 180 Barnardo Ave, Peterborough, ON &nbsp;|&nbsp; 705-876-1670
+</footer>
+
+<script>
+function printImage(url) {
+  var win = window.open('', '_blank');
+  win.document.write('<html><head><title>Print</title></head><body style="margin:0;text-align:center;">' +
+    '<img src="' + url + '" style="max-width:100%;" onload="window.print();">' +
+    '</body></html>');
+  win.document.close();
+}
+</script>
+
+</body>
+</html>

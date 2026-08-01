@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drop-in Poster (Live) | Activity Haven Recreation Centre</title>
+<meta name="description" content="Auto-generated drop-in programs poster, pulled live from the Program Hub spreadsheet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal-deep: #1E5F5B; --teal-mid: #2F8C82; --teal-pale: #E4EFEC;
+  --cream: #FAF3E4; --paper: #FFFDF8; --coral: #D6604A; --coral-dark: #B84D39;
+  --gold: #E3A23B; --charcoal: #2B2B26; --charcoal-soft: #55524A;
+  --green-row: #DEF0E1;
+  --font-display: "Fraunces", Georgia, serif; --font-body: "Public Sans", -apple-system, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--font-body); color: var(--charcoal); background: var(--paper); font-size: 18px; line-height: 1.5; }
+h1, h2, h3 { font-family: var(--font-display); margin: 0; }
+a { color: inherit; text-decoration: none; }
+
+.site-header { background: var(--paper); }
+.main-nav-row { position: sticky; top: 0; z-index: 50; background: var(--paper); border-bottom: 3px solid var(--teal-deep); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 10px 96px; display: flex; align-items: center; gap: 28px; flex-wrap: wrap; row-gap: 6px; }
+.main-nav { display: flex; gap: 17px; flex-wrap: wrap; row-gap: 4px; justify-content: center; width: 100%; }
+.main-nav a { font-weight: 600; font-size: 1.2rem; color: var(--charcoal); padding: 6px 2px; border-bottom: 2px solid transparent; }
+.main-nav a:hover, .main-nav a.is-current { border-color: var(--coral); }
+
+.print-bar { text-align: center; padding: 14px 24px; background: var(--cream); }
+.btn-print {
+  display: inline-flex; align-items: center; gap: 8px; padding: 12px 26px; border-radius: 999px;
+  font-weight: 700; font-size: 0.95rem; border: none; cursor: pointer; font-family: var(--font-body);
+  background: var(--coral); color: white;
+}
+.btn-print:hover { background: var(--coral-dark); }
+
+.poster-wrap { max-width: 900px; margin: 20px auto; padding: 6px; }
+.state-msg { text-align: center; color: var(--charcoal-soft); padding: 60px 20px; font-size: 1.1rem; }
+
+.poster-block + .poster-block { margin-top: 46px; }
+.poster-frame { border: 3px double var(--teal-deep); border-radius: 14px; padding: 20px 26px 26px; }
+
+.poster-header { display: flex; align-items: center; gap: 16px; border-bottom: 3px solid var(--gold); padding-bottom: 10px; margin-bottom: 4px; }
+.poster-header img { height: 54px; width: auto; }
+.poster-header h1 { font-size: 1.6rem; color: var(--teal-deep); font-weight: 700; letter-spacing: 0.01em; }
+.poster-subline { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.85rem; color: var(--coral-dark); font-weight: 700; margin: 8px 0 14px; }
+.poster-subline .updated { color: var(--charcoal-soft); font-weight: 600; }
+
+.poster-table { width: 100%; border-collapse: collapse; }
+.poster-table thead th {
+  text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--teal-deep); font-weight: 700; padding: 4px 10px 6px; border-bottom: 2px solid var(--teal-deep);
+}
+.poster-table tbody td { padding: 5px 10px; vertical-align: baseline; white-space: nowrap; }
+.poster-table tbody td.name { white-space: normal; font-weight: 700; color: var(--charcoal); }
+.poster-table tbody tr.alt td { background: var(--green-row); }
+.poster-table td.day { font-weight: 700; color: var(--teal-deep); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.poster-table td.time { color: var(--charcoal-soft); font-size: 0.88rem; }
+.poster-table td.room { color: var(--teal-deep); font-weight: 600; font-size: 0.85rem; }
+
+footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 96px; text-align: center; font-size: 0.9rem; }
+footer.site-footer a { color: var(--gold); }
+
+@media print {
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  @page { size: portrait; margin: 0.4in; }
+  .site-header, .print-bar, footer.site-footer { display: none !important; }
+  .poster-wrap { max-width: 100%; margin: 0; padding: 0; }
+  .poster-frame { border-width: 2px; padding: 10px 14px 14px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .poster-table tbody td { padding: 2px 8px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .poster-table tbody tr { break-inside: avoid; }
+  .poster-block { break-after: page; }
+  .poster-block:last-of-type { break-after: auto; }
+  .poster-block + .poster-block { margin-top: 0; }
+}
+@media (max-width: 900px) {
+  .header-inner, footer.site-footer { padding-left: 24px; padding-right: 24px; }
+  .poster-table { font-size: 0.88rem; }
+  .poster-table tbody td { padding: 4px 6px; }
+  .poster-subline { flex-direction: column; gap: 2px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="main-nav-row">
+    <div class="header-inner">
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="programs.html">Programs/Events</a>
+        <a href="gallery.html" class="is-current">Gallery</a>
+        <a href="newsletter.html">Newsletter</a>
+        <a href="membership.html">Membership</a>
+        <a href="index.html#volunteer">Volunteer</a>
+        <a href="donate.html">Donate</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </nav>
+</header>
+
+<div class="print-bar">
+  <button class="btn-print" onclick="window.print()">🖨 Print This Poster</button>
+</div>
+
+<div class="poster-wrap">
+  <p class="state-msg" id="stateMsg">Loading the live schedule…</p>
+  <div id="posterBody"></div>
+</div>
+
+<footer class="site-footer">
+  Activity Haven Recreation Centre — 180 Barnardo Ave, Peterborough, ON &nbsp;|&nbsp; 705-876-1670
+</footer>
+
+<script>
+(function () {
+  const SHEET_ID = '1tvGtCqroniAThEteWph0f4Bg1f_aiV0JqQU3M4ZTcOk';
+  const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+  const WEEKDAY_ORDER = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const TARGET_TYPE = 'Drop-in';
+  const LOGO_URL = 'https://i0.wp.com/activityhaven.org/wp-content/uploads/2025/11/ActivityHaven_50AnniLogo_IconFullColour.jpg?fit=993%2C1088&ssl=1';
+  const ROWS_PER_PAGE = 26; // rough number of rows that fits one printed portrait page
+
+  const stateMsg = document.getElementById('stateMsg');
+  const posterBody = document.getElementById('posterBody');
+
+  function extractJson(text) {
+    const start = text.indexOf('{');
+    const end = text.lastIndexOf('}');
+    return JSON.parse(text.substring(start, end + 1));
+  }
+  function cellText(row, i) {
+    const c = row.c[i];
+    return c && c.v != null ? String(c.v).trim() : '';
+  }
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+  function orderedDays(programs) {
+    const seen = [];
+    WEEKDAY_ORDER.forEach(d => { if (programs.some(p => p.day === d) && !seen.includes(d)) seen.push(d); });
+    programs.forEach(p => { if (!seen.includes(p.day)) seen.push(p.day); });
+    return seen;
+  }
+  function todayFormatted() {
+    return new Date().toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+  function chunk(arr, size) {
+    const out = [];
+    for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
+    return out;
+  }
+
+  const SAMPLE_PROGRAMS = [
+    { day: 'Monday', program: 'Billiards (sample data)', time: '8:30-4:00', room: 'Basement', type: 'Drop-in' },
+    { day: 'Monday', program: 'Euchre (sample data)', time: '1:00-3:30', room: '5', type: 'Drop-in' },
+    { day: 'Tuesday', program: 'Darts (sample data)', time: '1:00-3:00', room: 'Basement', type: 'Drop-in' },
+    { day: 'Wednesday', program: 'Table Tennis (sample data)', time: '9:00-12:00', room: '10', type: 'Drop-in' }
+  ];
+
+  function showPreviewBanner() {
+    const b = document.createElement('div');
+    b.style.cssText = 'background:var(--gold);color:var(--charcoal);text-align:center;padding:10px 20px;font-weight:700;font-size:0.9rem;';
+    b.textContent = "Preview mode — showing sample rows because this file was opened locally. Real data loads automatically once this page is published online.";
+    document.body.insertBefore(b, document.body.firstChild);
+  }
+
+  function posterHeaderHtml(pageIdx, pageCount) {
+    const pageNote = pageCount > 1 ? ` — Page ${pageIdx + 1} of ${pageCount}` : '';
+    return `
+      <div class="poster-header">
+        <img src="${LOGO_URL}" alt="Activity Haven logo">
+        <h1>Activity Haven Drop-in Program Schedule${pageNote}</h1>
+      </div>
+      <div class="poster-subline">
+        <span>$3 user fee each program</span>
+        <span class="updated">Last updated ${todayFormatted()}</span>
+      </div>`;
+  }
+
+  async function load() {
+    let programs;
+    try {
+      const res = await fetch(GVIZ_URL);
+      if (!res.ok) throw new Error('Network response was not ok');
+      const text = await res.text();
+      const json = extractJson(text);
+      const rows = json.table.rows;
+
+      programs = rows
+        .map(r => ({
+          day: cellText(r, 0), program: cellText(r, 1), time: cellText(r, 2),
+          room: cellText(r, 3), type: cellText(r, 4) || 'Drop-in', status: cellText(r, 5)
+        }))
+        .filter(p => p.day && p.program)
+        .filter(p => !['cancelled', 'ended'].includes(p.status.trim().toLowerCase()))
+        .filter(p => p.type === TARGET_TYPE);
+    } catch (err) {
+      programs = SAMPLE_PROGRAMS;
+      showPreviewBanner();
+    }
+
+    try {
+      if (programs.length === 0) {
+        stateMsg.textContent = 'No drop-in programs found in the Program Hub right now.';
+        return;
+      }
+
+      stateMsg.style.display = 'none';
+      const days = orderedDays(programs);
+      const ordered = days.flatMap(day => programs.filter(p => p.day === day));
+      const pages = chunk(ordered, ROWS_PER_PAGE);
+
+      let html = '';
+      pages.forEach((pageRows, pageIdx) => {
+        html += `<div class="poster-block"><div class="poster-frame">`;
+        html += posterHeaderHtml(pageIdx, pages.length);
+        html += `<table class="poster-table"><thead><tr><th>Day</th><th>Program</th><th>Time</th><th>Room</th></tr></thead><tbody>`;
+        pageRows.forEach((p, i) => {
+          const altClass = (i % 2 === 1) ? ' class="alt"' : '';
+          html += `<tr${altClass}>
+            <td class="day">${escapeHtml(p.day)}</td>
+            <td class="name">${escapeHtml(p.program)}</td>
+            <td class="time">🕒 ${escapeHtml(p.time)}</td>
+            <td class="room">${p.room ? '📍 Room ' + escapeHtml(p.room) : ''}</td>
+          </tr>`;
+        });
+        html += `</tbody></table></div></div>`;
+      });
+
+      posterBody.innerHTML = html;
+    } catch (err) {
+      stateMsg.textContent = "Couldn't load the live schedule right now. Please refresh, or check back shortly.";
+      console.error(err);
+    }
+  }
+
+  load();
+})();
+</script>
+
+</body>
+</html>

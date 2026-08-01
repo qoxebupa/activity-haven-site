@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programs &amp; Activities | Activity Haven Recreation Centre</title>
+<meta name="description" content="Browse 50+ drop-in programs at Activity Haven Recreation Centre in Peterborough — cards, crafts, fitness, music, and games for adults 50+, five days a week.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal-deep: #1E5F5B;
+  --teal-mid: #2F8C82;
+  --teal-pale: #E4EFEC;
+  --cream: #FAF3E4;
+  --paper: #FFFDF8;
+  --coral: #D6604A;
+  --coral-dark: #B84D39;
+  --gold: #E3A23B;
+  --plum: #7B5468;
+  --harbor: #3D6E8C;
+  --charcoal: #2B2B26;
+  --charcoal-soft: #55524A;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Public Sans", -apple-system, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--font-body); color: var(--charcoal); background: var(--paper); font-size: 18px; line-height: 1.6; }
+h1, h2, h3, h4 { font-family: var(--font-display); margin: 0; }
+a { color: inherit; text-decoration: none; }
+
+/* ---- header (matches homepage, compact) ---- */
+.site-header { background: var(--paper); }
+.main-nav-row { position: sticky; top: 0; z-index: 50; background: var(--paper); border-bottom: 3px solid var(--teal-deep); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 10px 96px; display: flex; align-items: center; gap: 28px; flex-wrap: wrap; row-gap: 6px; }
+.main-nav { display: flex; gap: 17px; flex-wrap: wrap; row-gap: 4px; justify-content: center; width: 100%; }
+.main-nav a { font-weight: 600; font-size: 1.2rem; color: var(--charcoal); padding: 6px 2px; border-bottom: 2px solid transparent; }
+.main-nav a:hover, .main-nav a.is-current { border-color: var(--coral); }
+
+/* ---- page hero ---- */
+.page-hero { background: var(--teal-deep); color: var(--teal-pale); padding: 56px 96px 44px; text-align: center; }
+.page-hero .eyebrow { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.8rem; font-weight: 700; color: var(--gold); }
+.page-hero h1 { color: white; font-size: clamp(1.9rem, 3.4vw, 2.8rem); font-weight: 600; margin: 12px 0 10px; }
+.page-hero p { max-width: 640px; margin: 0 auto; opacity: 0.92; }
+
+/* ---- controls ---- */
+.controls { max-width: 1200px; margin: -28px auto 0; padding: 0 96px; position: relative; z-index: 2; }
+.controls-card {
+  background: var(--paper);
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(30,26,20,0.14);
+  padding: 24px 28px;
+}
+.search-row { display: flex; gap: 12px; margin-bottom: 16px; }
+.search-row input {
+  flex: 1;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  padding: 12px 16px;
+  border: 2px solid var(--teal-pale);
+  border-radius: 10px;
+  outline: none;
+}
+.search-row input:focus { border-color: var(--teal-mid); }
+.day-filters { display: flex; gap: 10px; flex-wrap: wrap; }
+.day-btn {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.98rem;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 2px solid var(--teal-pale);
+  background: var(--paper);
+  color: var(--charcoal);
+  cursor: pointer;
+}
+.day-btn.is-active { background: var(--teal-deep); border-color: var(--teal-deep); color: white; }
+.type-filters { margin-top: 12px; }
+.result-count { margin-top: 14px; font-size: 0.95rem; color: var(--charcoal-soft); }
+
+/* ---- program grid ---- */
+.programs-section { max-width: 1200px; margin: 0 auto; padding: 40px 96px 90px; }
+.day-group { margin-bottom: 44px; }
+.day-group h2 {
+  font-size: 1.5rem;
+  color: var(--teal-deep);
+  font-weight: 600;
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--teal-pale);
+  margin-bottom: 20px;
+}
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.card {
+  display: block;
+  background: var(--paper);
+  border-radius: 14px;
+  overflow: hidden;
+  border-left: 6px solid var(--teal-mid);
+  box-shadow: 0 4px 14px rgba(30,26,20,0.08);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.card:hover, .card:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(30,26,20,0.14);
+}
+.card-body { padding: 20px 22px; }
+.card h3 { font-size: 1.15rem; color: var(--charcoal); font-weight: 600; margin-bottom: 8px; line-height: 1.25; }
+.card .meta { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.9rem; font-weight: 600; color: var(--charcoal-soft); margin-bottom: 4px; }
+.card .meta span { display: inline-flex; align-items: center; gap: 5px; }
+.card .card-more {
+  display: block;
+  margin-top: 12px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--coral);
+}
+.card .type-badge {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: var(--teal-pale);
+  color: var(--teal-deep);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.card[data-type="Instructional"] .type-badge {
+  background: #F3E4E0;
+  color: var(--coral-dark);
+}
+.card[data-type="Special Event"] .type-badge {
+  background: #FBEBC9;
+  color: #8A5A12;
+}
+
+/* per-day accent colours */
+.day-Monday    .card { border-left-color: var(--teal-mid); }
+.day-Tuesday   .card { border-left-color: var(--coral); }
+.day-Wednesday .card { border-left-color: var(--gold); }
+.day-Thursday  .card { border-left-color: var(--plum); }
+.day-Friday    .card { border-left-color: var(--harbor); }
+
+.state-msg { text-align: center; padding: 60px 24px; color: var(--charcoal-soft); font-size: 1.1rem; }
+
+footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 96px; text-align: center; font-size: 0.9rem; }
+footer.site-footer a { color: var(--gold); }
+
+@media (max-width: 900px) {
+  .header-inner, .page-hero, .controls, .programs-section, footer.site-footer { padding-left: 24px; padding-right: 24px; }
+  .search-row { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="main-nav-row">
+    <div class="header-inner">
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="programs.html" class="is-current">Programs/Events</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="newsletter.html">Newsletter</a>
+        <a href="membership.html">Membership</a>
+        <a href="#volunteer">Volunteer</a>
+        <a href="donate.html">Donate</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <p class="eyebrow">50+ programs, five days a week</p>
+  <h1>Find your next favourite thing</h1>
+  <p>Cards, crafts, fitness, music, and friends — search or filter by day to see what's on.</p>
+</section>
+
+<div class="controls">
+  <div class="controls-card">
+    <div class="search-row">
+      <input type="text" id="searchInput" placeholder="Search programs — try &quot;cards&quot;, &quot;music&quot;, or &quot;walking&quot;&hellip;">
+    </div>
+    <div class="day-filters" id="dayFilters">
+      <button class="day-btn is-active" data-day="All">All Days</button>
+      <button class="day-btn" data-day="Monday">Monday</button>
+      <button class="day-btn" data-day="Tuesday">Tuesday</button>
+      <button class="day-btn" data-day="Wednesday">Wednesday</button>
+      <button class="day-btn" data-day="Thursday">Thursday</button>
+      <button class="day-btn" data-day="Friday">Friday</button>
+    </div>
+    <div class="day-filters type-filters" id="typeFilters">
+      <button class="day-btn type-btn is-active" data-type="All">All Types</button>
+      <button class="day-btn type-btn" data-type="Drop-in">Drop-in</button>
+      <button class="day-btn type-btn" data-type="Instructional">Instructional</button>
+      <button class="day-btn type-btn" data-type="Special Event">Special Events</button>
+    </div>
+    <p class="result-count" id="resultCount"></p>
+  </div>
+</div>
+
+<section class="programs-section" id="programsSection">
+  <p class="state-msg" id="stateMsg">Loading programs…</p>
+</section>
+
+<footer class="site-footer">
+  Activity Haven Recreation Centre — 180 Barnardo Ave, Peterborough, ON &nbsp;|&nbsp; 705-876-1670
+</footer>
+
+<script>
+(function () {
+  const SHEET_ID = '1tvGtCqroniAThEteWph0f4Bg1f_aiV0JqQU3M4ZTcOk';
+  const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+  const WEEKDAY_ORDER = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+  const stateMsg = document.getElementById('stateMsg');
+  const programsSection = document.getElementById('programsSection');
+  const searchInput = document.getElementById('searchInput');
+  const dayFilters = document.getElementById('dayFilters');
+  const typeFilters = document.getElementById('typeFilters');
+  const resultCount = document.getElementById('resultCount');
+
+  let allPrograms = [];
+  let activeDay = 'All';
+  let activeType = 'All';
+
+  function extractJson(text) {
+    // gviz wraps its JSON response in a JS function call; strip that wrapper.
+    const start = text.indexOf('{');
+    const end = text.lastIndexOf('}');
+    return JSON.parse(text.substring(start, end + 1));
+  }
+
+  function cellText(row, i) {
+    const c = row.c[i];
+    return c && c.v != null ? String(c.v).trim() : '';
+  }
+
+  const SAMPLE_PROGRAMS = [
+    { day: 'Monday', program: 'Billiards (sample data)', time: '8:30-4:00', room: 'Basement', type: 'Drop-in', status: '', image: '', video: '', leaders: '', description: 'Sample preview row — real data loads once this page is published online.' },
+    { day: 'Tuesday', program: 'Cardio Drumming with Lisa (sample data)', time: '11:30am-12:30pm', room: 'RM 5', type: 'Instructional', status: '', image: '', video: '', leaders: 'Lisa', description: 'Session fee $45 + $3 user fee per class.' },
+    { day: 'Friday, July 17', program: 'Evening Bingo (sample data)', time: '6:00pm', room: '', type: 'Special Event', status: '', image: '', video: '', leaders: '', description: 'Evening bingo with dinner available beforehand. Tickets $20.' }
+  ];
+
+  function showPreviewBanner() {
+    const b = document.createElement('div');
+    b.style.cssText = 'background:var(--gold,#E3A23B);color:#2B2B26;text-align:center;padding:10px 20px;font-weight:700;font-size:0.9rem;';
+    b.textContent = "Preview mode — showing sample rows because this file was opened locally. Real data loads automatically once this page is published online.";
+    document.body.insertBefore(b, document.body.firstChild);
+  }
+
+  async function loadPrograms() {
+    try {
+      const res = await fetch(GVIZ_URL);
+      if (!res.ok) throw new Error('Network response was not ok');
+      const text = await res.text();
+      const json = extractJson(text);
+      const rows = json.table.rows;
+
+      allPrograms = rows
+        .map(r => ({
+          day: cellText(r, 0),
+          program: cellText(r, 1),
+          time: cellText(r, 2),
+          room: cellText(r, 3),
+          type: cellText(r, 4) || 'Drop-in',
+          status: cellText(r, 5),
+          image: cellText(r, 6),
+          video: cellText(r, 7),
+          leaders: cellText(r, 8),
+          description: cellText(r, 9)
+        }))
+        .filter(p => p.day && p.program)
+        .filter(p => !['cancelled', 'ended'].includes(p.status.trim().toLowerCase()));
+
+      render();
+    } catch (err) {
+      allPrograms = SAMPLE_PROGRAMS;
+      showPreviewBanner();
+      render();
+    }
+  }
+
+  function orderedDays() {
+    const seen = [];
+    // Weekdays first, in Mon-Sun order, if present
+    WEEKDAY_ORDER.forEach(d => { if (allPrograms.some(p => p.day === d) && !seen.includes(d)) seen.push(d); });
+    // Then anything else (e.g. specific event dates), in first-seen order
+    allPrograms.forEach(p => { if (!seen.includes(p.day)) seen.push(p.day); });
+    return seen;
+  }
+
+  function matchesSearch(p, query) {
+    if (!query) return true;
+    const haystack = (p.program + ' ' + p.description + ' ' + p.type).toLowerCase();
+    return haystack.includes(query.toLowerCase());
+  }
+
+  function render() {
+    const query = searchInput.value.trim();
+    const filtered = allPrograms.filter(p =>
+      (activeDay === 'All' || p.day === activeDay) &&
+      (activeType === 'All' || p.type === activeType) &&
+      matchesSearch(p, query)
+    );
+
+    resultCount.textContent = `${filtered.length} program${filtered.length === 1 ? '' : 's'} found`;
+
+    if (filtered.length === 0) {
+      programsSection.innerHTML = '<p class="state-msg">No programs match your search. Try a different word or clear the filters.</p>';
+      return;
+    }
+
+    const days = activeDay === 'All' ? orderedDays() : [activeDay];
+    let html = '';
+
+    days.forEach(day => {
+      const dayPrograms = filtered.filter(p => p.day === day);
+      if (dayPrograms.length === 0) return;
+
+      html += `<div class="day-group day-${slugify(day)}"><h2>${escapeHtml(day)}</h2><div class="card-grid">`;
+      dayPrograms.forEach(p => {
+        const link = `program.html?day=${encodeURIComponent(p.day)}&program=${encodeURIComponent(p.program)}`;
+        html += `
+          <a class="card" data-type="${escapeHtml(p.type)}" href="${link}">
+            <div class="card-body">
+              <h3>${escapeHtml(p.program)}</h3>
+              <div class="meta">
+                <span>🕒 ${escapeHtml(p.time)}</span>
+                <span>📍 Room ${escapeHtml(p.room)}</span>
+              </div>
+              <span class="type-badge">${escapeHtml(p.type)}</span>
+              <span class="card-more">Details →</span>
+            </div>
+          </a>`;
+      });
+      html += `</div></div>`;
+    });
+
+    programsSection.innerHTML = html || '<p class="state-msg">No programs match your search.</p>';
+  }
+
+  function slugify(str) {
+    return str.replace(/[^a-zA-Z0-9]+/g, '-');
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  dayFilters.addEventListener('click', (e) => {
+    const btn = e.target.closest('.day-btn');
+    if (!btn) return;
+    dayFilters.querySelectorAll('.day-btn').forEach(b => b.classList.remove('is-active'));
+    btn.classList.add('is-active');
+    activeDay = btn.dataset.day;
+    render();
+  });
+
+  typeFilters.addEventListener('click', (e) => {
+    const btn = e.target.closest('.type-btn');
+    if (!btn) return;
+    typeFilters.querySelectorAll('.type-btn').forEach(b => b.classList.remove('is-active'));
+    btn.classList.add('is-active');
+    activeType = btn.dataset.type;
+    render();
+  });
+
+  let debounceTimer;
+  searchInput.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(render, 150);
+  });
+
+  loadPrograms();
+})();
+</script>
+
+</body>
+</html>

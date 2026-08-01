@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Newsletter | Activity Haven Recreation Centre</title>
+<meta name="description" content="Activity Haven Recreation Centre's monthly newsletter.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal-deep: #1E5F5B;
+  --teal-mid: #2F8C82;
+  --teal-pale: #E4EFEC;
+  --cream: #FAF3E4;
+  --paper: #FFFDF8;
+  --coral: #D6604A;
+  --coral-dark: #B84D39;
+  --gold: #E3A23B;
+  --charcoal: #2B2B26;
+  --charcoal-soft: #55524A;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Public Sans", -apple-system, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--font-body); color: var(--charcoal); background: var(--paper); font-size: 18px; line-height: 1.6; }
+h1, h2, h3 { font-family: var(--font-display); margin: 0; }
+a { color: inherit; text-decoration: none; }
+
+.site-header { background: var(--paper); }
+.main-nav-row { position: sticky; top: 0; z-index: 50; background: var(--paper); border-bottom: 3px solid var(--teal-deep); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 10px 96px; display: flex; align-items: center; gap: 28px; flex-wrap: wrap; row-gap: 6px; }
+.main-nav { display: flex; gap: 17px; flex-wrap: wrap; row-gap: 4px; justify-content: center; width: 100%; }
+.main-nav a { font-weight: 600; font-size: 1.2rem; color: var(--charcoal); padding: 6px 2px; border-bottom: 2px solid transparent; }
+.main-nav a:hover, .main-nav a.is-current { border-color: var(--coral); }
+
+.page-hero { background: var(--teal-deep); color: var(--teal-pale); padding: 56px 96px 44px; text-align: center; }
+.page-hero .eyebrow { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.8rem; font-weight: 700; color: var(--gold); }
+.page-hero h1 { color: white; font-size: clamp(1.9rem, 3.4vw, 2.8rem); font-weight: 600; margin: 12px 0 10px; }
+.page-hero p { max-width: 640px; margin: 0 auto; opacity: 0.92; }
+
+.content-wrap { max-width: 900px; margin: 0 auto; padding: 56px 96px 90px; }
+.content-card {
+  background: var(--paper);
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(30,26,20,0.12);
+  padding: 40px 44px;
+  border-top: 6px solid var(--teal-mid);
+}
+.content-card h2 { font-size: 1.5rem; color: var(--teal-deep); font-weight: 600; margin: 28px 0 14px; }
+.content-card h2:first-child { margin-top: 0; }
+.content-card p { color: var(--charcoal-soft); margin: 0 0 16px; }
+.content-card ul { color: var(--charcoal-soft); padding-left: 22px; margin: 0 0 16px; }
+.content-card li { margin-bottom: 8px; }
+.content-card img.inline-photo { width: 100%; max-width: 340px; border-radius: 12px; display: block; margin: 0 auto 20px; box-shadow: 0 8px 20px rgba(30,26,20,0.15); }
+.pull-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--teal-deep);
+  border-left: 4px solid var(--gold);
+  padding: 4px 0 4px 20px;
+  margin: 24px 0;
+}
+.btn-donate {
+  display: inline-block;
+  background: var(--coral);
+  color: white;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-size: 1.1rem;
+  margin: 10px 0 24px;
+}
+.btn-donate:hover { background: var(--coral-dark); }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 8px; }
+.info-grid div { background: var(--cream); border-radius: 12px; padding: 18px 20px; }
+.info-grid span.label { display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--charcoal-soft); font-weight: 700; margin-bottom: 6px; }
+.info-grid a { color: var(--teal-deep); font-weight: 700; }
+.form-row { margin-bottom: 16px; }
+.form-row label { display: block; font-weight: 700; font-size: 0.9rem; margin-bottom: 6px; }
+.form-row input, .form-row textarea {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 12px 14px;
+  border: 2px solid var(--teal-pale);
+  border-radius: 10px;
+  outline: none;
+}
+.form-row input:focus, .form-row textarea:focus { border-color: var(--teal-mid); }
+.form-note { font-size: 0.9rem; color: var(--charcoal-soft); margin-top: 8px; }
+
+footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 96px; text-align: center; font-size: 0.9rem; }
+footer.site-footer a { color: var(--gold); }
+
+/* ---------- Newsletter viewer ---------- */
+.viewer { display: flex; align-items: center; justify-content: center; gap: 18px; margin-bottom: 22px; }
+.viewer-frame {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 1275 / 1650;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(30,26,20,0.18);
+  background: var(--teal-pale);
+}
+.viewer-frame img { width: 100%; height: 100%; object-fit: contain; background: white; display: block; }
+.viewer-btn {
+  flex-shrink: 0;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--teal-mid);
+  background: var(--paper);
+  color: var(--teal-deep);
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.viewer-btn:hover { background: var(--teal-mid); color: white; }
+.viewer-btn:disabled { opacity: 0.35; cursor: default; background: var(--paper); color: var(--teal-deep); }
+.viewer-meta { display: flex; align-items: center; justify-content: space-between; max-width: 420px; margin: 0 auto 24px; }
+.viewer-count { font-weight: 700; color: var(--teal-deep); }
+.viewer-open { font-size: 0.9rem; font-weight: 700; color: var(--coral); }
+.thumb-strip {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 6px 2px 14px;
+  scrollbar-width: thin;
+}
+.thumb-strip button {
+  flex-shrink: 0;
+  width: 54px;
+  aspect-ratio: 1275 / 1650;
+  border-radius: 6px;
+  border: 2px solid transparent;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0.65;
+  background: var(--teal-pale);
+}
+.thumb-strip button.is-active { border-color: var(--gold); opacity: 1; }
+.thumb-strip img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+@media (max-width: 900px) {
+  .header-inner, .page-hero, .content-wrap, footer.site-footer { padding-left: 24px; padding-right: 24px; }
+  .content-card { padding: 28px 26px; }
+  .info-grid { grid-template-columns: 1fr; }
+  .viewer { gap: 8px; }
+  .viewer-btn { width: 36px; height: 36px; font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="main-nav-row">
+    <div class="header-inner">
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="programs.html">Programs/Events</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="newsletter.html" class="is-current">Newsletter</a>
+        <a href="membership.html">Membership</a>
+        <a href="#volunteer">Volunteer</a>
+        <a href="donate.html">Donate</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <p class="eyebrow">This month's issue</p>
+  <h1>Newsletter</h1>
+  <p>News, events, workshops, and tournaments happening at Activity Haven.</p>
+</section>
+
+<div class="content-wrap">
+  <div class="content-card">
+
+    <h2>This Month at Activity Haven</h2>
+    <p>Read the full newsletter below — a message from our Executive Director, member spotlights, upcoming special events, tournaments, workshops, bus trips, and the monthly lunch menu. Use the arrows or thumbnails to flip through pages.</p>
+
+    <div class="viewer">
+      <button class="viewer-btn" id="prevBtn" aria-label="Previous page">&#8249;</button>
+      <div class="viewer-frame">
+        <img id="viewerImg" src="" alt="">
+      </div>
+      <button class="viewer-btn" id="nextBtn" aria-label="Next page">&#8250;</button>
+    </div>
+    <div class="viewer-meta">
+      <span class="viewer-count" id="viewerCount"></span>
+      <a class="viewer-open" id="viewerOpen" href="#" target="_blank" rel="noopener">Open full size ↗</a>
+    </div>
+    <div class="thumb-strip" id="thumbStrip"></div>
+
+    <p class="form-note">Newsletter pages pulled from the current activityhaven.org listing (published August 2026) — swap in each new month's pages once this goes live.</p>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  var base = "https://activityhaven.org/wp-content/uploads/2026/07/August-Newsletter-pg-";
+  var pages = [];
+  for (var i = 1; i <= 10; i++) pages.push(base + i + ".jpg");
+
+  var current = 0;
+  var img = document.getElementById('viewerImg');
+  var count = document.getElementById('viewerCount');
+  var openLink = document.getElementById('viewerOpen');
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var strip = document.getElementById('thumbStrip');
+
+  pages.forEach(function (src, i) {
+    var b = document.createElement('button');
+    b.setAttribute('aria-label', 'Go to page ' + (i + 1));
+    var im = document.createElement('img');
+    im.src = src;
+    im.alt = 'Newsletter page ' + (i + 1) + ' thumbnail';
+    im.loading = 'lazy';
+    b.appendChild(im);
+    b.addEventListener('click', function () { show(i); });
+    strip.appendChild(b);
+  });
+
+  function show(i) {
+    current = Math.max(0, Math.min(pages.length - 1, i));
+    img.src = pages[current];
+    img.alt = 'Newsletter page ' + (current + 1) + ' of ' + pages.length;
+    count.textContent = 'Page ' + (current + 1) + ' of ' + pages.length;
+    openLink.href = pages[current];
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === pages.length - 1;
+    Array.prototype.forEach.call(strip.children, function (el, i2) {
+      el.classList.toggle('is-active', i2 === current);
+      if (i2 === current) el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    });
+  }
+
+  prevBtn.addEventListener('click', function () { show(current - 1); });
+  nextBtn.addEventListener('click', function () { show(current + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') show(current - 1);
+    if (e.key === 'ArrowRight') show(current + 1);
+  });
+
+  show(0);
+})();
+</script>
+
+<footer class="site-footer">
+  Activity Haven Recreation Centre — 180 Barnardo Ave, Peterborough, ON &nbsp;|&nbsp; 705-876-1670
+</footer>
+
+</body>
+</html>

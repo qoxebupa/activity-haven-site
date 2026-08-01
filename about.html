@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About | Activity Haven Recreation Centre</title>
+<meta name="description" content="About Activity Haven Recreation Centre — our story, vision, mission and values.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal-deep: #1E5F5B;
+  --teal-mid: #2F8C82;
+  --teal-pale: #E4EFEC;
+  --cream: #FAF3E4;
+  --paper: #FFFDF8;
+  --coral: #D6604A;
+  --coral-dark: #B84D39;
+  --gold: #E3A23B;
+  --charcoal: #2B2B26;
+  --charcoal-soft: #55524A;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Public Sans", -apple-system, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--font-body); color: var(--charcoal); background: var(--paper); font-size: 18px; line-height: 1.6; }
+h1, h2, h3 { font-family: var(--font-display); margin: 0; }
+a { color: inherit; text-decoration: none; }
+
+.site-header { background: var(--paper); }
+.main-nav-row { position: sticky; top: 0; z-index: 50; background: var(--paper); border-bottom: 3px solid var(--teal-deep); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 10px 96px; display: flex; align-items: center; gap: 28px; flex-wrap: wrap; row-gap: 6px; }
+.main-nav { display: flex; gap: 17px; flex-wrap: wrap; row-gap: 4px; justify-content: center; width: 100%; }
+.main-nav a { font-weight: 600; font-size: 1.2rem; color: var(--charcoal); padding: 6px 2px; border-bottom: 2px solid transparent; }
+.main-nav a:hover, .main-nav a.is-current { border-color: var(--coral); }
+
+.page-hero { background: var(--teal-deep); color: var(--teal-pale); padding: 56px 96px 44px; text-align: center; }
+.page-hero .eyebrow { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.8rem; font-weight: 700; color: var(--gold); }
+.page-hero h1 { color: white; font-size: clamp(1.9rem, 3.4vw, 2.8rem); font-weight: 600; margin: 12px 0 10px; }
+.page-hero p { max-width: 640px; margin: 0 auto; opacity: 0.92; }
+
+.content-wrap { max-width: 900px; margin: 0 auto; padding: 56px 96px 90px; }
+.content-card {
+  background: var(--paper);
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(30,26,20,0.12);
+  padding: 40px 44px;
+  border-top: 6px solid var(--teal-mid);
+}
+.content-card h2 { font-size: 1.5rem; color: var(--teal-deep); font-weight: 600; margin: 28px 0 14px; }
+.content-card h2:first-child { margin-top: 0; }
+.content-card p { color: var(--charcoal-soft); margin: 0 0 16px; }
+.content-card ul { color: var(--charcoal-soft); padding-left: 22px; margin: 0 0 16px; }
+.content-card li { margin-bottom: 8px; }
+.content-card img.inline-photo { width: 100%; max-width: 340px; border-radius: 12px; display: block; margin: 0 auto 20px; box-shadow: 0 8px 20px rgba(30,26,20,0.15); }
+.pull-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--teal-deep);
+  border-left: 4px solid var(--gold);
+  padding: 4px 0 4px 20px;
+  margin: 24px 0;
+}
+.btn-donate {
+  display: inline-block;
+  background: var(--coral);
+  color: white;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-size: 1.1rem;
+  margin: 10px 0 24px;
+}
+.btn-donate:hover { background: var(--coral-dark); }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 8px; }
+.info-grid div { background: var(--cream); border-radius: 12px; padding: 18px 20px; }
+.info-grid span.label { display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--charcoal-soft); font-weight: 700; margin-bottom: 6px; }
+.info-grid a { color: var(--teal-deep); font-weight: 700; }
+.form-row { margin-bottom: 16px; }
+.form-row label { display: block; font-weight: 700; font-size: 0.9rem; margin-bottom: 6px; }
+.form-row input, .form-row textarea {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 12px 14px;
+  border: 2px solid var(--teal-pale);
+  border-radius: 10px;
+  outline: none;
+}
+.form-row input:focus, .form-row textarea:focus { border-color: var(--teal-mid); }
+.form-note { font-size: 0.9rem; color: var(--charcoal-soft); margin-top: 8px; }
+
+footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 96px; text-align: center; font-size: 0.9rem; }
+footer.site-footer a { color: var(--gold); }
+
+@media (max-width: 900px) {
+  .header-inner, .page-hero, .content-wrap, footer.site-footer { padding-left: 24px; padding-right: 24px; }
+  .content-card { padding: 28px 26px; }
+  .info-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="main-nav-row">
+    <div class="header-inner">
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html" class="is-current">About</a>
+        <a href="programs.html">Programs/Events</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="newsletter.html">Newsletter</a>
+        <a href="membership.html">Membership</a>
+        <a href="#volunteer">Volunteer</a>
+        <a href="donate.html">Donate</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <p class="eyebrow">Our story</p>
+  <h1>About Activity Haven</h1>
+  <p>Serving adults 50+ in Peterborough since 1990.</p>
+</section>
+
+<div class="content-wrap">
+  <div class="content-card">
+
+    <h2>Who We Are</h2>
+    <p>Our club gives our members a place to belong, to be with people their own age and to share their interests and their talents, to have fun, to laugh and to enjoy themselves. We're happy you're here!</p>
+
+    <h2>Our Story</h2>
+    <p>In April 1990, Activity Haven Recreation Centre of Peterborough became an incorporated organization and operates independently under the guidance of a Board of Directors. In 1994, with the help of infrastructure funds, the club was able to increase our facilities — including making areas handicap accessible.</p>
+    <p>Today we offer more than 80 programs ongoing in our rooms at the Queen Alexandra Building, from Euchre and Bridge to Line Dancing, Woodcarving, Tai Chi, and instructor-led yoga five days a week. Our club could not function without our wonderful volunteers — over 200 of them help out across every area of the club.</p>
+
+    <h2>Vision</h2>
+    <p>A centre that is proactive, progressive, accountable and innovative, providing recreational services to the 50+ population in Peterborough and surrounding areas.</p>
+
+    <h2>Mission</h2>
+    <p>To promote socialization of adults 50+ with a view to support and strengthen the determinants of health and wellbeing — encouraging our members through intellectual, physical, creative and social engagement to be active and involved, develop friendships, and maintain an independent, healthy lifestyle.</p>
+
+    <h2>Values</h2>
+    <p>Involvement, innovation, integrity, transparency and inclusiveness are foundational to every aspect of the centre.</p>
+
+    <div class="pull-quote">"A place to belong, every single day."</div>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  Activity Haven Recreation Centre — 180 Barnardo Ave, Peterborough, ON &nbsp;|&nbsp; 705-876-1670
+</footer>
+
+</body>
+</html>
