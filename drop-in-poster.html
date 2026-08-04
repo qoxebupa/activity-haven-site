@@ -213,7 +213,7 @@ footer.site-footer a { color: var(--gold); }
 
       stateMsg.style.display = 'none';
       const days = orderedDays(programs);
-      const ordered = days.flatMap(day => programs.filter(p => p.day === day));
+      const ordered = days.flatMap(day => programs.filter(p => p.day === day).slice().sort((a,b)=>{const k=t=>{if(!t)return 1/0;const s=t.trim();if(/^anytime$/i.test(s))return 1/0;const m=s.match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)?/i);if(!m)return 1/0;let h=parseInt(m[1],10);const mi=m[2]?parseInt(m[2],10):0;let ap=m[3]?m[3].toLowerCase():null;if(!ap){if(h>=8&&h<=12)ap='am';else if(h>=1&&h<=7)ap='pm';else ap='am';}if(ap==='pm'&&h!==12)h+=12;if(ap==='am'&&h===12)h=0;return h*60+mi;};return k(a.time)-k(b.time);}));
       const pages = chunk(ordered, ROWS_PER_PAGE);
 
       let html = '';
