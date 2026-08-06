@@ -198,7 +198,7 @@ footer.site-footer a { color: var(--gold); }
           room: cellText(r, 3), type: cellText(r, 4) || 'Drop-in', status: cellText(r, 5)
         }))
         .filter(p => p.day && p.program)
-        .filter(p => !['cancelled', 'ended'].includes(p.status.trim().toLowerCase()))
+        .filter(p => !p.status)
         .filter(p => p.type === TARGET_TYPE);
     } catch (err) {
       programs = SAMPLE_PROGRAMS;
