@@ -171,7 +171,7 @@ footer.site-footer a { color: var(--gold); }
           type: cellText(r, 4) || 'Drop-in', status: cellText(r, 5), image: cellText(r, 6), description: cellText(r, 9)
         }))
         .filter(p => p.day && p.program)
-        .filter(p => !['cancelled', 'ended'].includes(p.status.trim().toLowerCase()))
+        .filter(p => !p.status)
         .filter(p => p.type === TARGET_TYPE);
     } catch (err) {
       events = SAMPLE_EVENTS;
