@@ -442,7 +442,7 @@ a { color: inherit; text-decoration: none; }
   .slide { transition: none; }
 }
 
-</style>
+.spotlight{background:var(--cream);padding:72px 96px;}.spotlight-inner{max-width:1200px;margin:0 auto;text-align:center;}.spotlight-inner .eyebrow{color:var(--coral-dark);text-transform:uppercase;letter-spacing:0.14em;font-size:0.8rem;font-weight:700;}.spotlight-inner h2{font-family:var(--font-display);font-size:clamp(1.7rem, 3vw, 2.4rem);font-weight:600;margin:10px 0 40px;color:var(--teal-deep);}.spotlight-state{color:var(--charcoal-soft);padding:10px 0 30px;}.spotlight-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:28px;text-align:left;}.spotlight-card{background:var(--paper);border-radius:14px;overflow:hidden;border-top:4px solid var(--coral);display:flex;flex-direction:column;}.spotlight-media{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;background:var(--teal-pale);}.spotlight-body{padding:22px 24px 26px;}.spotlight-card h3{font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--teal-deep);margin:0 0 8px;}.spotlight-card p{color:var(--charcoal-soft);font-size:0.95rem;margin:0 0 14px;}.spotlight-link{color:var(--coral-dark);font-weight:700;font-size:0.9rem;}@media (max-width: 900px){.spotlight{padding:56px 24px;}.spotlight-grid{grid-template-columns:1fr;}}</style>
 </head>
 <body>
 
@@ -552,7 +552,7 @@ a { color: inherit; text-decoration: none; }
   </div>
 </section>
 
-<section class="intro" id="about">
+<section class="spotlight" id="spotlight"><div class="spotlight-inner"><p class="eyebrow">Live from the Program Hub</p><h2>What's Not To Miss</h2><p class="spotlight-state" id="spotlightState">Loading…</p><div class="spotlight-grid" id="spotlightGrid"></div></div></section><section class="intro" id="about">
   <div class="intro-inner">
     <div class="intro-text">
       <p class="eyebrow">Who we are</p>
@@ -697,5 +697,5 @@ a { color: inherit; text-decoration: none; }
 })();
 
 </script>
-</body>
+<script>(function(){const SHEET_ID='1tvGtCqroniAThEteWph0f4Bg1f_aiV0JqQU3M4ZTcOk';const GVIZ_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Spotlight`;const section=document.getElementById('spotlight');const stateMsg=document.getElementById('spotlightState');const grid=document.getElementById('spotlightGrid');function extractJson(text){const start=text.indexOf('{');const end=text.lastIndexOf('}');return JSON.parse(text.substring(start,end+1));}function cellText(row,i){const c=row.c[i];return c&&c.v!=null?String(c.v).trim():'';}function escapeHtml(str){const div=document.createElement('div');div.textContent=str;return div.innerHTML;}async function loadSpotlight(){if(!section)return;try{const res=await fetch(GVIZ_URL);if(!res.ok)throw new Error('bad response');const text=await res.text();const json=extractJson(text);const rows=json.table.rows||[];const items=rows.map(function(r){return{status:cellText(r,0),title:cellText(r,1),image:cellText(r,2),video:cellText(r,3),description:cellText(r,4),link:cellText(r,5)};}).filter(function(s){return s.title;}).filter(function(s){return !s.status;}).slice(0,3);if(items.length===0){section.style.display='none';return;}stateMsg.style.display='none';grid.innerHTML=items.map(function(s){const media=s.image?('<img class="spotlight-media" src="'+escapeHtml(s.image)+'" alt="'+escapeHtml(s.title)+'" onerror="this.style.display=\'none\'">'):(s.video?('<video class="spotlight-media" src="'+escapeHtml(s.video)+'" muted playsinline preload="metadata"></video>'):'');const linkHtml=s.link?('<a class="spotlight-link" href="'+escapeHtml(s.link)+'">Learn more →</a>'):'';return '<div class="spotlight-card">'+media+'<div class="spotlight-body"><h3>'+escapeHtml(s.title)+'</h3><p>'+escapeHtml(s.description)+'</p>'+linkHtml+'</div></div>';}).join('');}catch(err){section.style.display='none';console.error(err);}}loadSpotlight();})();</script></body>
 </html>
