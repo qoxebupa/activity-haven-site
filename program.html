@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title id="pageTitle">Program Details | Activity Haven Recreation Centre</title>
-<meta name="description" id="pageDesc" content="Program details from Activity Haven Recreation Centre in Peterborough.">
+<title>Programs &amp; Activities | Activity Haven Recreation Centre</title>
+<meta name="description" content="Browse 50+ drop-in programs at Activity Haven Recreation Centre in Peterborough — cards, crafts, fitness, music, and games for adults 50+, five days a week.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -17,145 +17,190 @@
   --coral: #D6604A;
   --coral-dark: #B84D39;
   --gold: #E3A23B;
+  --plum: #7B5468;
+  --harbor: #3D6E8C;
   --charcoal: #2B2B26;
   --charcoal-soft: #55524A;
   --font-display: "Fraunces", Georgia, serif;
   --font-body: "Public Sans", -apple-system, sans-serif;
 }
 * { box-sizing: border-box; }
-body { margin: 0; font-family: var(--font-body); color: var(--charcoal); background: var(--cream); font-size: 18px; line-height: 1.6; }
-h1, h2, h3 { font-family: var(--font-display); margin: 0; }
+body { margin: 0; font-family: var(--font-body); color: var(--charcoal); background: var(--paper); font-size: 18px; line-height: 1.6; }
+h1, h2, h3, h4 { font-family: var(--font-display); margin: 0; }
 a { color: inherit; text-decoration: none; }
 
-.site-header { background: var(--paper); border-bottom: 3px solid var(--teal-deep); }
-.header-inner { max-width: 900px; margin: 0 auto; padding: 14px 96px; }
-.back-link { font-weight: 700; color: var(--teal-deep); font-size: 1.05rem; }
-.back-link:hover { color: var(--coral); }
+/* ---- page hero ---- */
+.page-hero { background: var(--teal-deep); color: var(--teal-pale); padding: 56px 96px 44px; text-align: center; }
+.page-hero .eyebrow { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.8rem; font-weight: 700; color: var(--gold); }
+.page-hero h1 { color: white; font-size: clamp(1.9rem, 3.4vw, 2.8rem); font-weight: 600; margin: 12px 0 10px; }
+.page-hero p { max-width: 640px; margin: 0 auto; opacity: 0.92; }
 
-.detail-wrap { max-width: 760px; margin: 0 auto; padding: 56px 96px 90px; }
-.detail-card {
+/* ---- controls ---- */
+.controls { max-width: 1200px; margin: -28px auto 0; padding: 0 96px; position: relative; z-index: 2; }
+.controls-card {
   background: var(--paper);
-  border-radius: 18px;
-  box-shadow: 0 12px 30px rgba(30,26,20,0.12);
-  padding: 40px 44px;
-  border-top: 6px solid var(--teal-mid);
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(30,26,20,0.14);
+  padding: 24px 28px;
 }
-.detail-card[data-type="Instructional"] { border-top-color: var(--coral); }
-.detail-card[data-type="Special Event"] { border-top-color: var(--gold); }
-.type-badge {
-  display: inline-block;
-  font-size: 0.78rem;
+.search-row { display: flex; gap: 12px; margin-bottom: 16px; }
+.search-row input {
+  flex: 1;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  padding: 12px 16px;
+  border: 2px solid var(--teal-pale);
+  border-radius: 10px;
+  outline: none;
+}
+.search-row input:focus { border-color: var(--teal-mid); }
+.day-filters { display: flex; gap: 10px; flex-wrap: wrap; }
+.day-btn {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.98rem;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 2px solid var(--teal-pale);
+  background: var(--paper);
+  color: var(--charcoal);
+  cursor: pointer;
+}
+.day-btn.is-active { background: var(--teal-deep); border-color: var(--teal-deep); color: white; }
+.type-filters { margin-top: 12px; }
+.result-count { margin-top: 14px; font-size: 0.95rem; color: var(--charcoal-soft); }
+
+/* ---- program list (one line per program) ---- */
+.programs-section { max-width: 1200px; margin: 0 auto; padding: 40px 96px 90px; }
+.program-list { display: flex; flex-direction: column; gap: 10px; }
+.program-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  background: var(--paper);
+  border-radius: 10px;
+  border-left: 6px solid var(--teal-mid);
+  box-shadow: 0 2px 8px rgba(30,26,20,0.06);
+  padding: 12px 18px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.program-row:hover, .program-row:focus-within {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(30,26,20,0.1);
+}
+.program-row .row-day {
+  flex: 0 0 84px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--teal-deep);
+}
+.program-row .row-title {
+  flex: 1 1 220px;
+  min-width: 160px;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--charcoal);
+  line-height: 1.25;
+}
+.program-row .row-meta {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--charcoal-soft);
+}
+.program-row .row-meta span { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.program-row .type-badge {
+  flex: 0 0 auto;
+  font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   background: var(--teal-pale);
   color: var(--teal-deep);
-  padding: 5px 12px;
+  padding: 4px 10px;
   border-radius: 999px;
-  margin-bottom: 16px;
+  white-space: nowrap;
 }
-.detail-card[data-type="Instructional"] .type-badge { background: #F3E4E0; color: var(--coral-dark); }
-.detail-card[data-type="Special Event"] .type-badge { background: #FBEBC9; color: #8A5A12; }
-.status-badge {
-  display: inline-block;
-  font-size: 0.78rem;
+.program-row[data-type="Instructional"] .type-badge { background: #F3E4E0; color: var(--coral-dark); }
+.program-row[data-type="Special Event"] .type-badge { background: #FBEBC9; color: #8A5A12; }
+.program-row .row-details-btn {
+  flex: 0 0 auto;
+  margin-left: auto;
+  font-family: var(--font-body);
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 5px 12px;
+  font-size: 0.85rem;
+  color: white;
+  background: var(--coral);
+  padding: 8px 18px;
   border-radius: 999px;
-  margin-bottom: 16px;
-  margin-left: 8px;
+  white-space: nowrap;
 }
-.status-badge[data-status="paused"] { background: #FBEBC9; color: #8A5A12; }
-.status-badge[data-status="rescheduled"] { background: #FBEBC9; color: #8A5A12; }
-.status-badge[data-status="cancelled"] { background: #F3E4E0; color: var(--coral-dark); }
-.status-badge[data-status="ended"] { background: #ECE9E1; color: var(--charcoal-soft); }
-.detail-image-wrap {
-  position: relative;
-  width: 100%;
-  height: 340px;
-  border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 24px;
-  background: var(--teal-pale);
-}
-.detail-image-skeleton {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(100deg, var(--teal-pale) 30%, #ffffff 50%, var(--teal-pale) 70%);
-  background-size: 300% 100%;
-  animation: shimmer 1.4s ease-in-out infinite;
-}
-@keyframes shimmer {
-  0% { background-position: 120% 0; }
-  100% { background-position: -20% 0; }
-}
-.detail-image {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.detail-image.is-loaded { opacity: 1; }
-.detail-video-wrap {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16/9;
-  border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 24px;
-  background: var(--charcoal);
-}
-.detail-video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.detail-video-native { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: var(--charcoal); }
-@media (prefers-reduced-motion: reduce) {
-  .detail-image-skeleton { animation: none; }
-}
-.detail-card h1 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--teal-deep); font-weight: 600; margin-bottom: 18px; line-height: 1.2; }
-.detail-meta { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 26px; }
-.detail-meta div { font-size: 1rem; }
-.detail-meta span.label { display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--charcoal-soft); font-weight: 700; margin-bottom: 3px; }
-.detail-desc { font-size: 1.08rem; color: var(--charcoal-soft); border-top: 1px solid var(--teal-pale); padding-top: 22px; }
-.notice-box {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  background: #FBEBC9;
-  color: #6B4A0E;
-  border: 1px solid #EFCE86;
-  border-radius: 10px;
-  padding: 14px 16px;
-  margin-bottom: 22px;
-  font-size: 0.98rem;
-  line-height: 1.5;
-}
-.notice-box .notice-icon { flex-shrink: 0; font-size: 1.15rem; line-height: 1.4; }
-.notice-box strong { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; color: #8A5A12; }
+.program-row .row-details-btn:hover, .program-row .row-details-btn:focus-visible { background: var(--coral-dark); }
+
+/* per-day accent colours */
+.program-row[data-day="Monday"]    { border-left-color: var(--teal-mid); }
+.program-row[data-day="Tuesday"]   { border-left-color: var(--coral); }
+.program-row[data-day="Wednesday"] { border-left-color: var(--gold); }
+.program-row[data-day="Thursday"]  { border-left-color: var(--plum); }
+.program-row[data-day="Friday"]    { border-left-color: var(--harbor); }
+
 .state-msg { text-align: center; padding: 60px 24px; color: var(--charcoal-soft); font-size: 1.1rem; }
 
+@media (max-width: 640px) {
+  .program-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .program-row .row-details-btn { margin-left: 0; align-self: flex-start; }
+}
+
 footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 96px; text-align: center; font-size: 0.9rem; }
+footer.site-footer a { color: var(--gold); }
 
 @media (max-width: 900px) {
-  .header-inner, .detail-wrap, footer.site-footer { padding-left: 24px; padding-right: 24px; }
-  .detail-card { padding: 28px 26px; }
+  .page-hero, .controls, .programs-section, footer.site-footer { padding-left: 24px; padding-right: 24px; }
+  .search-row { flex-direction: column; }
 }
 </style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="header-inner">
-    <a href="programs.html" class="back-link">← Back to all programs</a>
-  </div>
-</header>
+<section class="page-hero">
+  <p class="eyebrow">50+ programs, five days a week</p>
+  <h1>Find your next favourite thing</h1>
+  <p>Cards, crafts, fitness, music, and friends — search or filter by day to see what's on.</p>
+</section>
 
-<div class="detail-wrap" id="detailWrap">
-  <p class="state-msg">Loading program details…</p>
+<div class="controls">
+  <div class="controls-card">
+    <div class="search-row">
+      <input type="text" id="searchInput" placeholder="Search programs — try &quot;cards&quot;, &quot;music&quot;, or &quot;walking&quot;&hellip;">
+    </div>
+    <div class="day-filters" id="dayFilters">
+      <button class="day-btn is-active" data-day="All">All Days</button>
+      <button class="day-btn" data-day="Monday">Monday</button>
+      <button class="day-btn" data-day="Tuesday">Tuesday</button>
+      <button class="day-btn" data-day="Wednesday">Wednesday</button>
+      <button class="day-btn" data-day="Thursday">Thursday</button>
+      <button class="day-btn" data-day="Friday">Friday</button>
+    </div>
+    <div class="day-filters type-filters" id="typeFilters">
+      <button class="day-btn type-btn is-active" data-type="All">All Types</button>
+      <button class="day-btn type-btn" data-type="Drop-in">Drop-in</button>
+      <button class="day-btn type-btn" data-type="Instructional">Instructional</button>
+      <button class="day-btn type-btn" data-type="Special Event">Special Events</button>
+    </div>
+    <p class="result-count" id="resultCount"></p>
+  </div>
 </div>
+
+<section class="programs-section" id="programsSection">
+  <p class="state-msg" id="stateMsg">Loading programs…</p>
+</section>
 
 <footer class="site-footer">
   Activity Haven Recreation Centre — 180 Barnardo Ave, Peterborough, ON &nbsp;|&nbsp; 705-876-1670
@@ -165,13 +210,21 @@ footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 
 (function () {
   const SHEET_ID = '1tvGtCqroniAThEteWph0f4Bg1f_aiV0JqQU3M4ZTcOk';
   const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
-  const detailWrap = document.getElementById('detailWrap');
+  const WEEKDAY_ORDER = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-  const params = new URLSearchParams(window.location.search);
-  const wantDay = params.get('day') || '';
-  const wantProgram = params.get('program') || '';
+  const stateMsg = document.getElementById('stateMsg');
+  const programsSection = document.getElementById('programsSection');
+  const searchInput = document.getElementById('searchInput');
+  const dayFilters = document.getElementById('dayFilters');
+  const typeFilters = document.getElementById('typeFilters');
+  const resultCount = document.getElementById('resultCount');
+
+  let allPrograms = [];
+  let activeDay = 'All';
+  let activeType = 'All';
 
   function extractJson(text) {
+    // gviz wraps its JSON response in a JS function call; strip that wrapper.
     const start = text.indexOf('{');
     const end = text.lastIndexOf('}');
     return JSON.parse(text.substring(start, end + 1));
@@ -182,67 +235,20 @@ footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 
     return c && c.v != null ? String(c.v).trim() : '';
   }
 
-  function resolveImageUrl(raw) {
-    if (!raw) return '';
-    // Auto-convert a Google Drive "share" link into a directly-embeddable one.
-    const match = raw.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
-    if (match) {
-      return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w1000`;
-    }
-    return raw;
+  const SAMPLE_PROGRAMS = [
+    { day: 'Monday', program: 'Billiards (sample data)', time: '8:30-4:00', room: 'Basement', type: 'Drop-in', status: '', image: '', video: '', leaders: '', description: 'Sample preview row — real data loads once this page is published online.' },
+    { day: 'Tuesday', program: 'Cardio Drumming with Lisa (sample data)', time: '11:30am-12:30pm', room: 'RM 5', type: 'Instructional', status: '', image: '', video: '', leaders: 'Lisa', description: 'Session fee $45 + $3 user fee per class.' },
+    { day: 'Friday, July 17', program: 'Evening Bingo (sample data)', time: '6:00pm', room: '', type: 'Special Event', status: '', image: '', video: '', leaders: '', description: 'Evening bingo with dinner available beforehand. Tickets $20.' }
+  ];
+
+  function showPreviewBanner() {
+    const b = document.createElement('div');
+    b.style.cssText = 'background:var(--gold,#E3A23B);color:#2B2B26;text-align:center;padding:10px 20px;font-weight:700;font-size:0.9rem;';
+    b.textContent = "Preview mode — showing sample rows because this file was opened locally. Real data loads automatically once this page is published online.";
+    document.body.insertBefore(b, document.body.firstChild);
   }
 
-  function resolveVideoEmbedUrl(raw) {
-    if (!raw) return '';
-    // Auto-convert a Google Drive "share" link into an embeddable preview link.
-    const match = raw.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
-    if (match) {
-      return `https://drive.google.com/file/d/${match[1]}/preview`;
-    }
-    return raw;
-  }
-
-  function isDirectVideoFile(raw) {
-    return /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(raw);
-  }
-
-  function getYouTubeId(raw) {
-    if (!raw) return '';
-    const patterns = [
-      /youtu\.be\/([a-zA-Z0-9_-]{11})/,
-      /youtube\.com\/watch\?[^#]*\bv=([a-zA-Z0-9_-]{11})/,
-      /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/,
-      /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/
-    ];
-    for (const p of patterns) {
-      const m = raw.match(p);
-      if (m) return m[1];
-    }
-    return '';
-  }
-
-  function resolveYouTubeEmbedUrl(raw) {
-    const id = getYouTubeId(raw);
-    if (!id) return '';
-    // autoplay + mute (required together by every browser's autoplay policy),
-    // loop (needs playlist=same id, a YouTube quirk for looping a single video),
-    // controls=0 to hide the button bar, playsinline so mobile doesn't force fullscreen.
-    return `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3`;
-  }
-
-  function statusBadgeInfo(status) {
-    const key = (status || '').trim().toLowerCase();
-    const known = { paused: 'Paused', rescheduled: 'Rescheduled', cancelled: 'Cancelled', ended: 'Ended' };
-    return known[key] ? { key, label: known[key] } : null;
-  }
-
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
-
-  async function loadProgram() {
+  async function loadPrograms() {
     try {
       const res = await fetch(GVIZ_URL);
       if (!res.ok) throw new Error('Network response was not ok');
@@ -250,7 +256,7 @@ footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 
       const json = extractJson(text);
       const rows = json.table.rows;
 
-      const match = rows
+      allPrograms = rows
         .map(r => ({
           day: cellText(r, 0),
           program: cellText(r, 1),
@@ -261,86 +267,127 @@ footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 
           image: cellText(r, 6),
           video: cellText(r, 7),
           leaders: cellText(r, 8),
-          description: cellText(r, 9),
-          notice: cellText(r, 10)
+          description: cellText(r, 9)
         }))
-        .find(p => p.day === wantDay && p.program === wantProgram);
+        .filter(p => p.day && p.program)
+        .filter(p => !p.status);
 
-      if (!match) {
-        detailWrap.innerHTML = '<p class="state-msg">We couldn\'t find that program — it may have been renamed or removed. <a href="programs.html" style="color:var(--coral); font-weight:700;">Browse all programs →</a></p>';
-        return;
-      }
-
-      document.getElementById('pageTitle').textContent = match.program + ' | Activity Haven Recreation Centre';
-      document.getElementById('pageDesc').setAttribute('content', match.description || match.program);
-
-      // Prefer video over image; only show one.
-      let mediaHtml = '';
-      if (match.video && isDirectVideoFile(match.video)) {
-        mediaHtml = `<div class="detail-video-wrap">
-             <video class="detail-video-native" autoplay muted loop playsinline preload="auto">
-               <source src="${escapeHtml(match.video)}" type="video/mp4">
-             </video>
-           </div>`;
-      } else if (match.video && getYouTubeId(match.video)) {
-        mediaHtml = `<div class="detail-video-wrap">
-             <iframe class="detail-video" src="${escapeHtml(resolveYouTubeEmbedUrl(match.video))}"
-                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                     allowfullscreen loading="lazy"></iframe>
-           </div>`;
-      } else if (match.video) {
-        mediaHtml = `<div class="detail-video-wrap">
-             <iframe class="detail-video" src="${escapeHtml(resolveVideoEmbedUrl(match.video))}" allow="autoplay" allowfullscreen loading="lazy"></iframe>
-           </div>`;
-      } else if (match.image) {
-        mediaHtml = `<div class="detail-image-wrap">
-             <div class="detail-image-skeleton"></div>
-             <img class="detail-image" src="${escapeHtml(resolveImageUrl(match.image))}" alt="${escapeHtml(match.program)}"
-                  onload="this.classList.add('is-loaded'); this.previousElementSibling.style.display='none';"
-                  onerror="this.closest('.detail-image-wrap').style.display='none';">
-           </div>`;
-      }
-
-      const leaderHtml = match.leaders
-        ? `<div><span class="label">Led by</span>${escapeHtml(match.leaders)}</div>`
-        : '';
-
-      const statusInfo = statusBadgeInfo(match.status);
-      const statusBadgeHtml = statusInfo
-        ? `<span class="status-badge" data-status="${statusInfo.key}">${escapeHtml(statusInfo.label)}</span>`
-        : '';
-
-      const noticeHtml = match.notice
-        ? `<div class="notice-box"><span class="notice-icon">📌</span><div><strong>Notice</strong>${escapeHtml(match.notice)}</div></div>`
-        : '';
-
-      detailWrap.innerHTML = `
-        <div class="detail-card" data-type="${escapeHtml(match.type)}">
-          ${mediaHtml}
-          <span class="type-badge">${escapeHtml(match.type)}</span>${statusBadgeHtml}
-          <h1>${escapeHtml(match.program)}</h1>
-          <div class="detail-meta">
-            <div><span class="label">Day</span>${escapeHtml(match.day)}</div>
-            <div><span class="label">Time</span>${escapeHtml(match.time)}</div>
-            <div><span class="label">Room</span>${escapeHtml(match.room)}</div>
-            ${leaderHtml}
-          </div>
-          ${noticeHtml}
-          <p class="detail-desc">${escapeHtml(match.description)}</p>
-        </div>`;
-
-      const videoEl = detailWrap.querySelector('.detail-video-native');
-      if (videoEl) {
-        videoEl.muted = true;
-        videoEl.play().catch(() => {});
-      }
+      render();
     } catch (err) {
-      detailWrap.innerHTML = '<p class="state-msg">We couldn\'t load this program right now. Please try again shortly.</p>';
-      console.error(err);
+      allPrograms = SAMPLE_PROGRAMS;
+      showPreviewBanner();
+      render();
     }
   }
 
-  loadProgram();
+  function orderedDays() {
+    const seen = [];
+    // Weekdays first, in Mon-Sun order, if present
+    WEEKDAY_ORDER.forEach(d => { if (allPrograms.some(p => p.day === d) && !seen.includes(d)) seen.push(d); });
+    // Then anything else (e.g. specific event dates), in first-seen order
+    allPrograms.forEach(p => { if (!seen.includes(p.day)) seen.push(p.day); });
+    return seen;
+  }
+
+  function matchesSearch(p, query) {
+    if (!query) return true;
+    const haystack = (p.program + ' ' + p.description + ' ' + p.type).toLowerCase();
+    return haystack.includes(query.toLowerCase());
+  }
+
+  function timeKey(t) {
+    if (!t) return 1/0;
+    const s = t.trim();
+    if (/^anytime$/i.test(s)) return 1/0;
+    const m = s.match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)?/i);
+    if (!m) return 1/0;
+    let h = parseInt(m[1], 10);
+    const mi = m[2] ? parseInt(m[2], 10) : 0;
+    let ap = m[3] ? m[3].toLowerCase() : null;
+    if (!ap) {
+      if (h === 12) ap = 'pm';
+      else if (h >= 8 && h <= 11) ap = 'am';
+      else if (h >= 1 && h <= 7) ap = 'pm';
+      else ap = 'am';
+    }
+    if (ap === 'pm' && h !== 12) h += 12;
+    if (ap === 'am' && h === 12) h = 0;
+    return h * 60 + mi;
+  }
+
+  function render() {
+    const query = searchInput.value.trim();
+    const filtered = allPrograms.filter(p =>
+      (activeDay === 'All' || p.day === activeDay) &&
+      (activeType === 'All' || p.type === activeType) &&
+      matchesSearch(p, query)
+    );
+
+    resultCount.textContent = `${filtered.length} program${filtered.length === 1 ? '' : 's'} found`;
+
+    if (filtered.length === 0) {
+      programsSection.innerHTML = '<p class="state-msg">No programs match your search. Try a different word or clear the filters.</p>';
+      return;
+    }
+
+    const days = activeDay === 'All' ? orderedDays() : [activeDay];
+    let sorted = [];
+    days.forEach(day => {
+      const dayPrograms = filtered.filter(p => p.day === day).slice().sort((a, b) => timeKey(a.time) - timeKey(b.time));
+      sorted = sorted.concat(dayPrograms);
+    });
+
+    let html = '<div class="program-list">';
+    sorted.forEach(p => {
+      const link = `program.html?day=${encodeURIComponent(p.day)}&program=${encodeURIComponent(p.program)}`;
+      html += `
+        <div class="program-row" data-type="${escapeHtml(p.type)}" data-day="${escapeHtml(p.day)}">
+          <span class="row-day">${escapeHtml(p.day)}</span>
+          <span class="row-title">${escapeHtml(p.program)}</span>
+          <span class="row-meta">
+            <span>🕒 ${escapeHtml(p.time)}</span>
+            <span>📍 Room ${escapeHtml(p.room)}</span>
+          </span>
+          <span class="type-badge">${escapeHtml(p.type)}</span>
+          <a class="row-details-btn" href="${link}">Details →</a>
+        </div>`;
+    });
+    html += '</div>';
+
+    programsSection.innerHTML = html;
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  dayFilters.addEventListener('click', (e) => {
+    const btn = e.target.closest('.day-btn');
+    if (!btn) return;
+    dayFilters.querySelectorAll('.day-btn').forEach(b => b.classList.remove('is-active'));
+    btn.classList.add('is-active');
+    activeDay = btn.dataset.day;
+    render();
+  });
+
+  typeFilters.addEventListener('click', (e) => {
+    const btn = e.target.closest('.type-btn');
+    if (!btn) return;
+    typeFilters.querySelectorAll('.type-btn').forEach(b => b.classList.remove('is-active'));
+    btn.classList.add('is-active');
+    activeType = btn.dataset.type;
+    render();
+  });
+
+  let debounceTimer;
+  searchInput.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(render, 150);
+  });
+
+  loadPrograms();
 })();
 </script>
 
