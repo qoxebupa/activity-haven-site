@@ -89,34 +89,57 @@ a { color: inherit; text-decoration: none; }
   border-bottom: 3px solid var(--teal-pale);
   margin-bottom: 20px;
 }
-.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.card-grid { display: flex; flex-direction: column; gap: 10px; }
 .card {
   display: block;
   background: var(--paper);
-  border-radius: 14px;
+  border-radius: 10px;
   overflow: hidden;
   border-left: 6px solid var(--teal-mid);
-  box-shadow: 0 4px 14px rgba(30,26,20,0.08);
+  box-shadow: 0 2px 8px rgba(30,26,20,0.07);
   transition: transform 0.15s, box-shadow 0.15s;
 }
 .card:hover, .card:focus-visible {
   transform: translateY(-3px);
   box-shadow: 0 10px 22px rgba(30,26,20,0.14);
 }
-.card-body { padding: 20px 22px; }
-.card h3 { font-size: 1.15rem; color: var(--charcoal); font-weight: 600; margin-bottom: 8px; line-height: 1.25; }
-.card .meta { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.9rem; font-weight: 600; color: var(--charcoal-soft); margin-bottom: 4px; }
+.card-body {
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+.card h3 {
+  font-size: 1rem;
+  color: var(--charcoal);
+  font-weight: 600;
+  line-height: 1.25;
+  flex: 1 1 220px;
+  min-width: 0;
+}
+.card .meta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--charcoal-soft);
+  flex: 0 0 auto;
+}
 .card .meta span { display: inline-flex; align-items: center; gap: 5px; }
 .card .card-more {
   display: block;
-  margin-top: 12px;
+  flex: 0 0 auto;
+  margin-left: auto;
   font-size: 0.88rem;
   font-weight: 700;
   color: var(--coral);
+  white-space: nowrap;
 }
 .card .type-badge {
   display: inline-block;
-  margin-top: 12px;
+  flex: 0 0 auto;
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -125,6 +148,7 @@ a { color: inherit; text-decoration: none; }
   color: var(--teal-deep);
   padding: 4px 10px;
   border-radius: 999px;
+  white-space: nowrap;
 }
 .card[data-type="Instructional"] .type-badge {
   background: #F3E4E0;
@@ -161,7 +185,7 @@ footer.site-footer a { color: var(--gold); }
       <nav class="main-nav">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
-        <a href="programs.html" class="is-current">Programs/Events</a>
+        <a href="programs.html" class="is-current">Activities</a>
         <a href="gallery.html">Gallery</a>
         <a href="newsletter.html">Newsletter</a>
         <a href="membership.html">Membership</a>
