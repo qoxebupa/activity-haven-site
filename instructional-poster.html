@@ -148,6 +148,15 @@ footer.site-footer a { color: var(--gold); }
     div.textContent = str;
     return div.innerHTML;
   }
+  // Only prefix "Room" for a simple room number (1-10). Anything else
+  // (e.g. "Basement", "RM 5", "Kitchen") is shown as-is, since "Room Basement"
+  // reads badly — the label itself already says what it needs to.
+  function formatRoomLabel(room) {
+    if (!room) return '';
+    const trimmed = String(room).trim();
+    const isSimpleNumber = /^([1-9]|10)$/.test(trimmed);
+    return isSimpleNumber ? ('📍 Room ' + escapeHtml(trimmed)) : ('📍 ' + escapeHtml(trimmed));
+  }
   function extractFee(description) {
     const m = description.match(/\$([\d.]+)/);
     return m ? '$' + m[1] : '';
@@ -270,7 +279,7 @@ footer.site-footer a { color: var(--gold); }
             html += `<div class="prog-row${altClass}">
               <span class="time">${escapeHtml(p.time)}</span>
               <span class="desc">${escapeHtml(p.program)}</span>
-              <span class="room">${p.room ? '📍 Room ' + escapeHtml(p.room) : ''}</span>
+              <span class="room">${formatRoomLabel(p.room)}</span>
               <span class="fee">${escapeHtml(fee)}</span>
             </div>`;
           });

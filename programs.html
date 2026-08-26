@@ -354,7 +354,7 @@ footer.site-footer a { color: var(--gold); }
               <h3>${escapeHtml(p.program)}</h3>
               <div class="meta">
                 <span>🕒 ${escapeHtml(p.time)}</span>
-                <span>📍 Room ${escapeHtml(p.room)}</span>
+                <span>${formatRoomLabel(p.room)}</span>
               </div>
               <span class="type-badge">${escapeHtml(p.type)}</span>
               <span class="card-more">Details →</span>
@@ -375,6 +375,15 @@ footer.site-footer a { color: var(--gold); }
     const div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
+  }
+  // Only prefix "Room" for a simple room number (1-10). Anything else
+  // (e.g. "Basement", "RM 5", "Kitchen") is shown as-is, since "Room Basement"
+  // reads badly — the label itself already says what it needs to.
+  function formatRoomLabel(room) {
+    if (!room) return '';
+    const trimmed = String(room).trim();
+    const isSimpleNumber = /^([1-9]|10)$/.test(trimmed);
+    return isSimpleNumber ? ('📍 Room ' + escapeHtml(trimmed)) : ('📍 ' + escapeHtml(trimmed));
   }
 
   dayFilters.addEventListener('click', (e) => {

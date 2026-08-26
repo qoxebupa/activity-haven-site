@@ -141,6 +141,15 @@ footer.site-footer a { color: var(--gold); }
     div.textContent = str;
     return div.innerHTML;
   }
+  // Only prefix "Room" for a simple room number (1-10). Anything else
+  // (e.g. "Basement", "RM 5", "Kitchen") is shown as-is, since "Room Basement"
+  // reads badly — the label itself already says what it needs to.
+  function formatRoomLabel(room) {
+    if (!room) return '';
+    const trimmed = String(room).trim();
+    const isSimpleNumber = /^([1-9]|10)$/.test(trimmed);
+    return isSimpleNumber ? ('📍 Room ' + escapeHtml(trimmed)) : ('📍 ' + escapeHtml(trimmed));
+  }
   function orderedDays(programs) {
     const seen = [];
     WEEKDAY_ORDER.forEach(d => { if (programs.some(p => p.day === d) && !seen.includes(d)) seen.push(d); });
@@ -227,7 +236,7 @@ footer.site-footer a { color: var(--gold); }
             <td class="day">${escapeHtml(p.day)}</td>
             <td class="name">${escapeHtml(p.program)}</td>
             <td class="time">🕒 ${escapeHtml(p.time)}</td>
-            <td class="room">${p.room ? '📍 Room ' + escapeHtml(p.room) : ''}</td>
+            <td class="room">${formatRoomLabel(p.room)}</td>
           </tr>`;
         });
         html += `</tbody></table></div></div>`;
