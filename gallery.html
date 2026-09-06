@@ -55,6 +55,12 @@ a { color: inherit; text-decoration: none; }
 .content-card > p.lead { color: var(--charcoal-soft); margin: 0 0 26px; }
 .eyebrow { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.8rem; font-weight: 700; color: var(--coral); display: block; margin-bottom: 8px; }
 
+.card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+.card-head h2 { margin-bottom: 0; }
+.card-head .btn-print { flex-shrink: 0; margin-top: 4px; }
+
+.scroll-box { max-height: 640px; overflow-y: auto; border: 2px solid var(--teal-pale); border-radius: 12px; padding: 6px 14px; }
+
 .poster-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
 .poster-card { background: var(--cream); border-radius: 14px; overflow: hidden; box-shadow: 0 2px 10px rgba(43,43,38,0.08); display: flex; flex-direction: column; }
 .poster-card img { width: 100%; display: block; }
@@ -126,6 +132,7 @@ footer.site-footer a { color: var(--gold); }
 @media print {
   .site-header, footer.site-footer, .btn-print, .fb-panel, .page-hero, .photo-grid { display: none !important; }
   .content-card { box-shadow: none; border: none; }
+  .scroll-box { max-height: none !important; overflow: visible !important; border: none; padding: 0; }
 }
 
 @media (max-width: 900px) {
@@ -165,9 +172,14 @@ footer.site-footer a { color: var(--gold); }
 
   <!-- DROP-IN SCHEDULE (live, pulled directly from the Program Hub) -->
   <div class="content-card" id="drop-in">
-    <span class="eyebrow">Drop-in Programs</span>
-    <h2>This month's drop-in schedule</h2>
-    <div class="poster-wrap" id="posterWrapDropin">
+    <div class="card-head">
+      <div>
+        <span class="eyebrow">Drop-in Programs</span>
+        <h2>This month's drop-in schedule</h2>
+      </div>
+      <button class="btn-print" onclick="printSection('posterWrapDropin', 'Drop-in Program Schedule')">Print</button>
+    </div>
+    <div class="poster-wrap scroll-box" id="posterWrapDropin">
       <p class="state-msg" id="stateMsgDropin">Loading the live schedule…</p>
       <div id="posterBodyDropin"></div>
     </div>
@@ -175,8 +187,12 @@ footer.site-footer a { color: var(--gold); }
 
   <!-- INSTRUCTIONAL CLASS SCHEDULE (live) + REGISTRATION RULES -->
   <div class="content-card" id="instructional">
-    <span class="eyebrow">Instructional Classes</span>
-    <h2>Current class schedule</h2>
+    <div class="card-head">
+      <div>
+        <span class="eyebrow">Instructional Classes</span>
+      </div>
+      <button class="btn-print" onclick="printSection('posterWrapInstr', 'Instructional Class Schedule')">Print</button>
+    </div>
     <div class="poster-wrap" id="posterWrapInstr">
       <p class="state-msg" id="stateMsgInstr">Loading the live schedule…</p>
       <div id="posterBodyInstr"></div>
@@ -270,6 +286,19 @@ function printImage(url) {
     '<img src="' + url + '" style="max-width:100%;" onload="window.print();">' +
     '</body></html>');
   win.document.close();
+}
+
+// Prints a live schedule section (drop-in or instructional) in its own window,
+// reusing this page's own styling so it looks the same as on-screen.
+function printSection(id, title) {
+  var content = document.getElementById(id).innerHTML;
+  var styles = document.querySelector('style').innerHTML;
+  var win = window.open('', '_blank');
+  win.document.write('<html><head><title>' + title + '</title><style>' + styles +
+    ' body{margin:24px;} .state-msg{display:none;}</style></head><body>' +
+    content + '</body></html>');
+  win.document.close();
+  win.onload = function () { win.focus(); win.print(); };
 }
 </script>
 
