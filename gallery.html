@@ -19,6 +19,9 @@
   --gold: #E3A23B;
   --charcoal: #2B2B26;
   --charcoal-soft: #55524A;
+  --green-row: #DEF0E1;
+  --green-day: #8FCA9F;
+  --green-alt: #C4E8CE;
   --font-display: "Poppins", -apple-system, sans-serif;
   --font-body: "Poppins", -apple-system, sans-serif;
 }
@@ -64,18 +67,6 @@ a { color: inherit; text-decoration: none; }
 }
 .btn-print:hover { background: var(--coral-dark); }
 
-.live-card {
-  background: var(--teal-pale); border-radius: 14px; padding: 28px 26px;
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px;
-}
-.live-card p { margin: 0; color: var(--charcoal-soft); max-width: 46ch; }
-.btn-live {
-  display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 999px;
-  font-weight: 700; font-size: 0.95rem; border: none; cursor: pointer; font-family: var(--font-body);
-  background: var(--teal-deep); color: white; white-space: nowrap; text-decoration: none;
-}
-.btn-live:hover, .btn-live:focus-visible { background: var(--teal-mid); }
-
 .photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
 .photo-tile {
   aspect-ratio: 4/3; background: linear-gradient(135deg, var(--teal-pale), var(--cream)); border-radius: 12px;
@@ -88,6 +79,47 @@ a { color: inherit; text-decoration: none; }
 
 .note { font-size: 0.85rem; color: var(--charcoal-soft); background: var(--teal-pale); border-radius: 10px; padding: 10px 16px; margin-top: 18px; }
 
+/* Live schedule content, embedded directly on the Gallery page (same styling as the
+   standalone /drop-in-poster and /instructional-poster pages, minus their print bar). */
+.poster-wrap { max-width: 900px; margin: 0 auto; }
+.state-msg { text-align: center; color: var(--charcoal-soft); padding: 30px 20px; font-size: 1.05rem; }
+.poster-block + .poster-block { margin-top: 36px; }
+.poster-frame { border: 3px double var(--teal-deep); border-radius: 14px; padding: 20px 26px 26px; }
+.poster-header { display: flex; align-items: center; gap: 16px; border-bottom: 3px solid var(--gold); padding-bottom: 10px; margin-bottom: 4px; }
+.poster-header img { height: 54px; width: auto; }
+.poster-header .org-name { font-size: 0.85rem; color: var(--charcoal-soft); font-weight: 600; }
+.poster-header h1 { font-size: 1.4rem; color: var(--teal-deep); font-weight: 700; letter-spacing: 0.01em; }
+.poster-subline { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px; font-size: 0.85rem; color: var(--coral-dark); font-weight: 700; margin: 8px 0 14px; }
+.poster-subline .updated { color: var(--charcoal-soft); font-weight: 600; white-space: nowrap; }
+
+.poster-table { width: 100%; border-collapse: collapse; }
+.poster-table thead th {
+  text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--teal-deep); font-weight: 700; padding: 4px 10px 6px; border-bottom: 2px solid var(--teal-deep);
+}
+.poster-table tbody td { padding: 5px 10px; vertical-align: baseline; white-space: nowrap; }
+.poster-table tbody td.name { white-space: normal; font-weight: 700; color: var(--charcoal); }
+.poster-table tbody tr.alt td { background: var(--green-row); }
+.poster-table td.day { font-weight: 700; color: var(--teal-deep); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.poster-table td.time { color: var(--charcoal-soft); font-size: 0.88rem; }
+.poster-table td.room { color: var(--teal-deep); font-weight: 600; font-size: 0.85rem; }
+
+.day-heading {
+  background: var(--green-day); color: var(--teal-deep); font-weight: 700; font-size: 1.05rem;
+  padding: 5px 14px; border-radius: 6px; margin: 14px 0 4px; text-transform: uppercase; letter-spacing: 0.03em;
+}
+.day-heading:first-of-type { margin-top: 0; }
+.prog-list { display: grid; }
+.prog-row {
+  display: grid; grid-template-columns: 145px 1fr auto auto; gap: 12px; align-items: baseline;
+  padding: 4px 10px;
+}
+.prog-row.alt { background: var(--green-alt); }
+.prog-row .time { color: var(--charcoal-soft); font-size: 0.86rem; white-space: nowrap; }
+.prog-row .desc { color: var(--charcoal); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.prog-row .room { color: var(--teal-deep); font-weight: 600; font-size: 0.85rem; white-space: nowrap; }
+.prog-row .fee { color: var(--coral-dark); font-weight: 700; font-size: 0.9rem; text-align: right; white-space: nowrap; }
+
 footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 96px; text-align: center; font-size: 0.9rem; }
 footer.site-footer a { color: var(--gold); }
 
@@ -99,6 +131,7 @@ footer.site-footer a { color: var(--gold); }
 @media (max-width: 900px) {
   .header-inner, .page-hero, .content-wrap, footer.site-footer { padding-left: 24px; padding-right: 24px; }
   .content-card { padding: 28px 26px; }
+  .prog-row { grid-template-columns: 76px 1fr auto auto; font-size: 0.9rem; }
 }
 </style>
 </head>
@@ -130,23 +163,26 @@ footer.site-footer a { color: var(--gold); }
 
 <div class="content-wrap">
 
-  <!-- DROP-IN POSTER -->
+  <!-- DROP-IN SCHEDULE (live, pulled directly from the Program Hub) -->
   <div class="content-card" id="drop-in">
     <span class="eyebrow">Drop-in Programs</span>
     <h2>This month's drop-in schedule</h2>
-    <p class="lead">Always up to date — pulled live from the Program Hub, so there's nothing here to swap out each month.</p>
-    <div class="live-card">
-      <p>See the full drop-in schedule, updated automatically whenever the program list changes.</p>
-      <a href="drop-in-poster.html" class="btn-live">View the current drop-in schedule →</a>
+    <div class="poster-wrap" id="posterWrapDropin">
+      <p class="state-msg" id="stateMsgDropin">Loading the live schedule…</p>
+      <div id="posterBodyDropin"></div>
     </div>
   </div>
 
-  <!-- INSTRUCTIONAL POSTERS -->
+  <!-- INSTRUCTIONAL CLASS SCHEDULE (live) + REGISTRATION RULES -->
   <div class="content-card" id="instructional">
     <span class="eyebrow">Instructional Classes</span>
-    <h2>Registration rules &amp; class schedule</h2>
-    <p class="lead">General registration rules, plus the current class schedule — always up to date, pulled live from the Program Hub.</p>
-    <div class="poster-grid">
+    <h2>Current class schedule</h2>
+    <div class="poster-wrap" id="posterWrapInstr">
+      <p class="state-msg" id="stateMsgInstr">Loading the live schedule…</p>
+      <div id="posterBodyInstr"></div>
+    </div>
+
+    <div class="poster-grid" style="margin-top:28px;">
       <div class="poster-card">
         <img src="registration-rules.jpg" alt="Activity Haven registration rules poster">
         <div class="poster-card-foot">
@@ -154,10 +190,6 @@ footer.site-footer a { color: var(--gold); }
           <button class="btn-print" onclick="printImage('registration-rules.jpg')">Print</button>
         </div>
       </div>
-    </div>
-    <div class="live-card" style="margin-top:20px;">
-      <p>See the current class schedule, updated automatically whenever the program list changes.</p>
-      <a href="instructional-poster.html" class="btn-live">View the current class schedule →</a>
     </div>
   </div>
 
@@ -189,7 +221,7 @@ footer.site-footer a { color: var(--gold); }
   <div class="content-card" id="events">
     <span class="eyebrow">Special Events</span>
     <h2>Posters for upcoming events</h2>
-    <p class="lead">Placeholder tiles for now — send real photos whenever you have them and they'll drop straight in. Development of automatic feed is anticipated from Canva or AH office source(s) and Facebook to allow selecting Newsletter-worthy items and public website perusal.</p>
+    <p class="lead">Placeholder tiles for now — send real photos whenever you have them and they'll drop straight in.</p>
     <div class="photo-grid">
       <div class="photo-tile">Event poster</div>
       <div class="photo-tile">Event poster</div>
@@ -239,6 +271,318 @@ function printImage(url) {
     '</body></html>');
   win.document.close();
 }
+</script>
+
+<!-- LIVE DROP-IN SCHEDULE — same Program Hub data and logic as /drop-in-poster.html,
+     rendered here directly instead of behind a click-through link. -->
+<script>
+(function () {
+  const SHEET_ID = '1tvGtCqroniAThEteWph0f4Bg1f_aiV0JqQU3M4ZTcOk';
+  const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+  const WEEKDAY_ORDER = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const TARGET_TYPE = 'Drop-in';
+  const LOGO_URL = 'https://i0.wp.com/activityhaven.org/wp-content/uploads/2025/11/ActivityHaven_50AnniLogo_IconFullColour.jpg?fit=993%2C1088&ssl=1';
+  const ROWS_PER_PAGE = 26;
+
+  const wrap = document.getElementById('posterWrapDropin');
+  const stateMsg = document.getElementById('stateMsgDropin');
+  const posterBody = document.getElementById('posterBodyDropin');
+
+  function extractJson(text) {
+    const start = text.indexOf('{');
+    const end = text.lastIndexOf('}');
+    return JSON.parse(text.substring(start, end + 1));
+  }
+  function cellText(row, i) {
+    const c = row.c[i];
+    return c && c.v != null ? String(c.v).trim() : '';
+  }
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+  function formatRoomLabel(room) {
+    if (!room) return '';
+    const trimmed = String(room).trim();
+    const isSimpleNumber = /^([1-9]|10)$/.test(trimmed);
+    return isSimpleNumber ? ('📍 Room ' + escapeHtml(trimmed)) : ('📍 ' + escapeHtml(trimmed));
+  }
+  function orderedDays(programs) {
+    const seen = [];
+    WEEKDAY_ORDER.forEach(d => { if (programs.some(p => p.day === d) && !seen.includes(d)) seen.push(d); });
+    programs.forEach(p => { if (!seen.includes(p.day)) seen.push(p.day); });
+    return seen;
+  }
+  function todayFormatted() {
+    return new Date().toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+  function chunk(arr, size) {
+    const out = [];
+    for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
+    return out;
+  }
+
+  const SAMPLE_PROGRAMS = [
+    { day: 'Monday', program: 'Billiards (sample data)', time: '8:30-4:00', room: 'Basement', type: 'Drop-in' },
+    { day: 'Monday', program: 'Euchre (sample data)', time: '1:00-3:30', room: '5', type: 'Drop-in' },
+    { day: 'Tuesday', program: 'Darts (sample data)', time: '1:00-3:00', room: 'Basement', type: 'Drop-in' },
+    { day: 'Wednesday', program: 'Table Tennis (sample data)', time: '9:00-12:00', room: '10', type: 'Drop-in' }
+  ];
+
+  function showPreviewBanner() {
+    const b = document.createElement('div');
+    b.style.cssText = 'background:var(--gold);color:var(--charcoal);text-align:center;padding:10px 20px;font-weight:700;font-size:0.9rem;border-radius:8px;margin-bottom:14px;';
+    b.textContent = "Preview mode — showing sample rows because this file was opened locally. Real data loads automatically once this page is published online.";
+    wrap.insertBefore(b, wrap.firstChild);
+  }
+
+  function posterHeaderHtml(pageIdx, pageCount) {
+    const pageNote = pageCount > 1 ? ` — Page ${pageIdx + 1} of ${pageCount}` : '';
+    return `
+      <div class="poster-header">
+        <img src="${LOGO_URL}" alt="Activity Haven logo">
+        <h1>Activity Haven Drop-in Program Schedule${pageNote}</h1>
+      </div>
+      <div class="poster-subline">
+        <span>$3 user fee each program</span>
+        <span class="updated">Last updated ${todayFormatted()}</span>
+      </div>`;
+  }
+
+  async function load() {
+    let programs;
+    try {
+      const res = await fetch(GVIZ_URL);
+      if (!res.ok) throw new Error('Network response was not ok');
+      const text = await res.text();
+      const json = extractJson(text);
+      const rows = json.table.rows;
+
+      programs = rows
+        .map(r => ({
+          day: cellText(r, 0), program: cellText(r, 1), time: cellText(r, 2),
+          room: cellText(r, 3), type: cellText(r, 4) || 'Drop-in', status: cellText(r, 5)
+        }))
+        .filter(p => p.day && p.program)
+        .filter(p => !p.status)
+        .filter(p => p.type === TARGET_TYPE);
+    } catch (err) {
+      programs = SAMPLE_PROGRAMS;
+      showPreviewBanner();
+    }
+
+    try {
+      if (programs.length === 0) {
+        stateMsg.textContent = 'No drop-in programs found in the Program Hub right now.';
+        return;
+      }
+
+      stateMsg.style.display = 'none';
+      const days = orderedDays(programs);
+      const ordered = days.flatMap(day => programs.filter(p => p.day === day).slice().sort((a,b)=>{const k=t=>{if(!t)return 1/0;const s=t.trim();if(/^anytime$/i.test(s))return 1/0;const m=s.match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)?/i);if(!m)return 1/0;let h=parseInt(m[1],10);const mi=m[2]?parseInt(m[2],10):0;let ap=m[3]?m[3].toLowerCase():null;if(!ap){if(h===12)ap='pm';else if(h>=8&&h<=11)ap='am';else if(h>=1&&h<=7)ap='pm';else ap='am';}if(ap==='pm'&&h!==12)h+=12;if(ap==='am'&&h===12)h=0;return h*60+mi;};return k(a.time)-k(b.time);}));
+      const pages = chunk(ordered, ROWS_PER_PAGE);
+
+      let html = '';
+      pages.forEach((pageRows, pageIdx) => {
+        html += `<div class="poster-block"><div class="poster-frame">`;
+        html += posterHeaderHtml(pageIdx, pages.length);
+        html += `<table class="poster-table"><thead><tr><th>Day</th><th>Program</th><th>Time</th><th>Room</th></tr></thead><tbody>`;
+        pageRows.forEach((p, i) => {
+          const altClass = (i % 2 === 1) ? ' class="alt"' : '';
+          html += `<tr${altClass}>
+            <td class="day">${escapeHtml(p.day)}</td>
+            <td class="name">${escapeHtml(p.program)}</td>
+            <td class="time">🕒 ${escapeHtml(p.time)}</td>
+            <td class="room">${formatRoomLabel(p.room)}</td>
+          </tr>`;
+        });
+        html += `</tbody></table></div></div>`;
+      });
+
+      posterBody.innerHTML = html;
+    } catch (err) {
+      stateMsg.textContent = "Couldn't load the live schedule right now. Please refresh, or check back shortly.";
+      console.error(err);
+    }
+  }
+
+  load();
+})();
+</script>
+
+<!-- LIVE INSTRUCTIONAL CLASS SCHEDULE — same Program Hub data and logic as
+     /instructional-poster.html, rendered here directly instead of behind a click-through link. -->
+<script>
+(function () {
+  const SHEET_ID = '1tvGtCqroniAThEteWph0f4Bg1f_aiV0JqQU3M4ZTcOk';
+  const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+  const WEEKDAY_ORDER = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const TARGET_TYPE = 'Instructional';
+  const LOGO_URL = 'https://i0.wp.com/activityhaven.org/wp-content/uploads/2025/11/ActivityHaven_50AnniLogo_IconFullColour.jpg?fit=993%2C1088&ssl=1';
+  const ROWS_PER_PAGE = 20;
+
+  const wrap = document.getElementById('posterWrapInstr');
+  const stateMsg = document.getElementById('stateMsgInstr');
+  const posterBody = document.getElementById('posterBodyInstr');
+
+  function extractJson(text) {
+    const start = text.indexOf('{');
+    const end = text.lastIndexOf('}');
+    return JSON.parse(text.substring(start, end + 1));
+  }
+  function cellText(row, i) {
+    const c = row.c[i];
+    return c && c.v != null ? String(c.v).trim() : '';
+  }
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+  function formatRoomLabel(room) {
+    if (!room) return '';
+    const trimmed = String(room).trim();
+    const isSimpleNumber = /^([1-9]|10)$/.test(trimmed);
+    return isSimpleNumber ? ('📍 Room ' + escapeHtml(trimmed)) : ('📍 ' + escapeHtml(trimmed));
+  }
+  function extractFee(description) {
+    const m = description.match(/\$([\d.]+)/);
+    return m ? '$' + m[1] : '';
+  }
+  function orderedDays(programs) {
+    const seen = [];
+    WEEKDAY_ORDER.forEach(d => { if (programs.some(p => p.day === d) && !seen.includes(d)) seen.push(d); });
+    programs.forEach(p => { if (!seen.includes(p.day)) seen.push(p.day); });
+    return seen;
+  }
+  function weekRange() {
+    const now = new Date();
+    const daysUntilMonday = (1 - now.getDay() + 7) % 7;
+    const monday = new Date(now);
+    monday.setDate(now.getDate() + daysUntilMonday);
+    const friday = new Date(monday);
+    friday.setDate(monday.getDate() + 4);
+    const fmt = d => d.toLocaleDateString('en-CA', { month: 'long', day: 'numeric' });
+    return `${fmt(monday)} to ${fmt(friday)}`;
+  }
+
+  const SAMPLE_PROGRAMS = [
+    { day: 'Monday', program: 'Intermediate Line Dance with Kay (sample data)', time: '10:00-11:00am', room: 'RM 5', description: 'Session fee $16 + $3 user fee per class.' },
+    { day: 'Tuesday', program: 'Cardio Drumming with Lisa (sample data)', time: '11:30am-12:30pm', room: 'RM 5', description: 'Session fee $45 + $3 user fee per class.' },
+    { day: 'Wednesday', program: 'Chair Yoga with Mandy (sample data)', time: '2:30-3:30pm', room: 'RM 8', description: 'Session fee $45 + $3 user fee per class.' }
+  ];
+
+  function showPreviewBanner() {
+    const b = document.createElement('div');
+    b.style.cssText = 'background:var(--gold);color:var(--charcoal);text-align:center;padding:10px 20px;font-weight:700;font-size:0.9rem;border-radius:8px;margin-bottom:14px;';
+    b.textContent = "Preview mode — showing sample rows because this file was opened locally. Real data loads automatically once this page is published online.";
+    wrap.insertBefore(b, wrap.firstChild);
+  }
+
+  function posterHeaderHtml(pageIdx, pageCount) {
+    const pageNote = pageCount > 1 ? ` — Page ${pageIdx + 1} of ${pageCount}` : '';
+    return `
+      <div class="poster-header">
+        <img src="${LOGO_URL}" alt="Activity Haven logo">
+        <div>
+          <div class="org-name">Activity Haven Recreation Centre</div>
+          <h1>Instructional Classes${pageNote}</h1>
+        </div>
+      </div>
+      <div class="poster-subline">
+        <span>$3 user fee applies to every class, in addition to the session fee shown below.</span>
+        <span class="updated">Week of ${weekRange()}</span>
+      </div>`;
+  }
+
+  function paginateDays(days, programsByDay) {
+    const pages = [];
+    let current = [];
+    let currentRows = 0;
+    days.forEach(day => {
+      const rows = programsByDay[day].length;
+      if (currentRows > 0 && currentRows + rows > ROWS_PER_PAGE) {
+        pages.push(current);
+        current = [];
+        currentRows = 0;
+      }
+      current.push(day);
+      currentRows += rows;
+    });
+    if (current.length) pages.push(current);
+    return pages;
+  }
+
+  async function load() {
+    let programs;
+    try {
+      const res = await fetch(GVIZ_URL);
+      if (!res.ok) throw new Error('Network response was not ok');
+      const text = await res.text();
+      const json = extractJson(text);
+      const rows = json.table.rows;
+
+      programs = rows
+        .map(r => ({
+          day: cellText(r, 0), program: cellText(r, 1), time: cellText(r, 2),
+          room: cellText(r, 3), type: cellText(r, 4) || 'Drop-in', status: cellText(r, 5),
+          description: cellText(r, 9)
+        }))
+        .filter(p => p.day && p.program)
+        .filter(p => !p.status)
+        .filter(p => p.type === TARGET_TYPE);
+    } catch (err) {
+      programs = SAMPLE_PROGRAMS;
+      showPreviewBanner();
+    }
+
+    try {
+      if (programs.length === 0) {
+        stateMsg.textContent = 'No instructional classes found in the Program Hub right now.';
+        return;
+      }
+
+      stateMsg.style.display = 'none';
+      const days = orderedDays(programs);
+      const programsByDay = {};
+      days.forEach(day => { programsByDay[day] = programs.filter(p => p.day === day).slice().sort((a,b)=>{const k=t=>{if(!t)return 1/0;const s=t.trim();if(/^anytime$/i.test(s))return 1/0;const m=s.match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)?/i);if(!m)return 1/0;let h=parseInt(m[1],10);const mi=m[2]?parseInt(m[2],10):0;let ap=m[3]?m[3].toLowerCase():null;if(!ap){if(h===12)ap='pm';else if(h>=8&&h<=11)ap='am';else if(h>=1&&h<=7)ap='pm';else ap='am';}if(ap==='pm'&&h!==12)h+=12;if(ap==='am'&&h===12)h=0;return h*60+mi;};return k(a.time)-k(b.time);}); });
+      const pages = paginateDays(days, programsByDay);
+
+      let rowIndex = 0;
+      let html = '';
+      pages.forEach((pageDays, pageIdx) => {
+        html += `<div class="poster-block"><div class="poster-frame">`;
+        html += posterHeaderHtml(pageIdx, pages.length);
+        pageDays.forEach(day => {
+          const dayPrograms = programsByDay[day];
+          if (dayPrograms.length === 0) return;
+          html += `<div class="day-group"><div class="day-heading">${escapeHtml(day)}</div><div class="prog-list">`;
+          dayPrograms.forEach(p => {
+            const fee = extractFee(p.description);
+            const altClass = (rowIndex % 2 === 1) ? ' alt' : '';
+            rowIndex++;
+            html += `<div class="prog-row${altClass}">
+              <span class="time">${escapeHtml(p.time)}</span>
+              <span class="desc">${escapeHtml(p.program)}</span>
+              <span class="room">${formatRoomLabel(p.room)}</span>
+              <span class="fee">${escapeHtml(fee)}</span>
+            </div>`;
+          });
+          html += `</div></div>`;
+        });
+        html += `</div></div>`;
+      });
+
+      posterBody.innerHTML = html;
+    } catch (err) {
+      stateMsg.textContent = "Couldn't load the live schedule right now. Please refresh, or check back shortly.";
+      console.error(err);
+    }
+  }
+
+  load();
+})();
 </script>
 
 </body>
