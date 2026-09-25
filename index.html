@@ -268,6 +268,16 @@ a { color: inherit; text-decoration: none; }
   height: 100%;
   object-fit: cover;
 }
+/* Photos: show the whole picture (no cropped heads), with a soft blurred copy filling the empty sides */
+img.slide-video { object-fit: contain; }
+.slide-backdrop {
+  position: absolute;
+  inset: -40px;
+  width: calc(100% + 80px);
+  height: calc(100% + 80px);
+  object-fit: cover;
+  filter: blur(28px) brightness(0.7);
+}
 .mute-toggle {
   position: absolute;
   bottom: 24px;
@@ -644,6 +654,14 @@ a { color: inherit; text-decoration: none; }
       }
       el.className = 'slide-video';
       el.src = src;
+      if (!video) {
+        const bg = document.createElement('img');
+        bg.className = 'slide-backdrop';
+        bg.alt = '';
+        bg.setAttribute('aria-hidden', 'true');
+        bg.src = src;
+        div.appendChild(bg);
+      }
       div.appendChild(el);
       carousel.insertBefore(div, overlay);
       slides.push({ div, el, video, caption: item.caption || '',
