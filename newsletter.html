@@ -106,7 +106,9 @@ footer.site-footer a { color: var(--gold); }
   box-shadow: 0 12px 30px rgba(30,26,20,0.18);
   background: var(--teal-pale);
 }
-.viewer-frame img { width: 100%; height: 100%; object-fit: contain; background: white; display: block; }
+.viewer-frame img, .viewer-frame video { width: 100%; height: 100%; object-fit: contain; background: white; display: block; }
+.viewer-frame video { background: #000; }
+.viewer-caption { text-align: center; max-width: 520px; margin: -8px auto 14px; font-weight: 500; color: var(--charcoal); }
 .viewer-btn {
   flex-shrink: 0;
   width: 44px; height: 44px;
@@ -126,6 +128,16 @@ footer.site-footer a { color: var(--gold); }
 .viewer-meta { display: flex; align-items: center; justify-content: space-between; max-width: 420px; margin: 0 auto 24px; }
 .viewer-count { font-weight: 700; color: var(--teal-deep); }
 .viewer-open { font-size: 0.9rem; font-weight: 700; color: var(--coral); }
+.viewer-links { display: flex; align-items: center; gap: 16px; }
+.viewer-print { font: inherit; font-size: 0.9rem; font-weight: 700; color: var(--coral); background: none; border: none; padding: 0; cursor: pointer; }
+.viewer-print:hover, .viewer-open:hover { text-decoration: underline; }
+
+/* Printing: only the page currently shown in the viewer */
+@media print {
+  @page { margin: 0.4in; }
+  body * { visibility: hidden !important; }
+  #viewerImg { visibility: visible !important; position: fixed; left: 0; top: 0; width: 100%; height: 100%; object-fit: contain; }
+}
 .thumb-strip {
   display: flex;
   gap: 10px;
@@ -146,7 +158,9 @@ footer.site-footer a { color: var(--gold); }
   background: var(--teal-pale);
 }
 .thumb-strip button.is-active { border-color: var(--gold); opacity: 1; }
-.thumb-strip img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb-strip img, .thumb-strip video { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+.thumb-strip button { position: relative; }
+.thumb-strip button.is-video::after { content: "\25B6"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.9rem; text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
 
 @media (max-width: 900px) {
   .header-inner, .page-hero, .content-wrap, footer.site-footer { padding-left: 24px; padding-right: 24px; }
@@ -187,74 +201,160 @@ footer.site-footer a { color: var(--gold); }
   <div class="content-card">
 
     <h2>This Month at Activity Haven</h2>
-    <p>Read the full newsletter below — a message from our Executive Director, member spotlights, upcoming special events, tournaments, workshops, bus trips, and the monthly lunch menu. Use the arrows or thumbnails to flip through pages.</p>
+    <p>Read the full newsletter below — a message from our Executive Director, member spotlights, upcoming special events, tournaments, workshops, bus trips, and the monthly lunch menu. Use the arrows or thumbnails to flip through.</p>
 
     <div class="viewer">
       <button class="viewer-btn" id="prevBtn" aria-label="Previous page">&#8249;</button>
       <div class="viewer-frame">
         <img id="viewerImg" src="" alt="">
+        <video id="viewerVid" controls playsinline preload="metadata" style="display:none"></video>
       </div>
       <button class="viewer-btn" id="nextBtn" aria-label="Next page">&#8250;</button>
     </div>
+    <p class="viewer-caption" id="viewerCaption" style="display:none"></p>
     <div class="viewer-meta">
       <span class="viewer-count" id="viewerCount"></span>
-      <a class="viewer-open" id="viewerOpen" href="#" target="_blank" rel="noopener">Open full size ↗</a>
+      <span class="viewer-links">
+        <button class="viewer-print" id="viewerPrint" type="button">Print this page 🖨</button>
+        <a class="viewer-open" id="viewerOpen" href="#" target="_blank" rel="noopener">Open full size ↗</a>
+      </span>
     </div>
     <div class="thumb-strip" id="thumbStrip"></div>
-
-    <p class="form-note">Newsletter pages pulled from the current activityhaven.org listing (published August 2026) — swap in each new month's pages once this goes live.</p>
 
   </div>
 </div>
 
 <script>
+/* ---------- Newsletter viewer: driven by the "Newsletter" tab of the Program Hub sheet ----------
+   Columns: A Order | B Media | C Caption | D Show
+   - Order: number; lowest shows first
+   - Media: an image link (Google Drive images work if shared "Anyone with the link"),
+            an image/video file name in this site (e.g. fumble-fun.mp4), or any direct link
+   - Caption: optional line of text shown under the page
+   - Show: leave blank or "yes" to show; "no" to hide
+   If the sheet can't be reached, the built-in August pages below are used instead. */
 (function () {
+  var SHEET_ID = '1tvGtCqroniAThEteWph0f4Bg1f_aiV0JqQU3M4ZTcOk';
+  var SHEET_URL = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:json&headers=1&sheet=Newsletter';
   var base = "https://activityhaven.org/wp-content/uploads/2026/07/August-Newsletter-pg-";
-  var pages = [];
-  for (var i = 1; i <= 10; i++) pages.push(base + i + ".jpg");
+  var DEFAULT_ITEMS = [];
+  for (var i = 1; i <= 10; i++) DEFAULT_ITEMS.push({ media: base + i + ".jpg", caption: '' });
 
-  var current = 0;
   var img = document.getElementById('viewerImg');
+  var vid = document.getElementById('viewerVid');
   var count = document.getElementById('viewerCount');
+  var captionEl = document.getElementById('viewerCaption');
   var openLink = document.getElementById('viewerOpen');
+  var printBtn = document.getElementById('viewerPrint');
   var prevBtn = document.getElementById('prevBtn');
   var nextBtn = document.getElementById('nextBtn');
   var strip = document.getElementById('thumbStrip');
 
-  pages.forEach(function (src, i) {
-    var b = document.createElement('button');
-    b.setAttribute('aria-label', 'Go to page ' + (i + 1));
-    var im = document.createElement('img');
-    im.src = src;
-    im.alt = 'Newsletter page ' + (i + 1) + ' thumbnail';
-    im.loading = 'lazy';
-    b.appendChild(im);
-    b.addEventListener('click', function () { show(i); });
-    strip.appendChild(b);
-  });
+  function isVideo(url) { return /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(url); }
+  function driveToDirect(url) {
+    var m = url.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]+)/);
+    return m ? 'https://lh3.googleusercontent.com/d/' + m[1] : url;
+  }
+  function cellText(row, i) { var c = row.c && row.c[i]; return c && c.v != null ? String(c.v).trim() : ''; }
 
-  function show(i) {
-    current = Math.max(0, Math.min(pages.length - 1, i));
-    img.src = pages[current];
-    img.alt = 'Newsletter page ' + (current + 1) + ' of ' + pages.length;
-    count.textContent = 'Page ' + (current + 1) + ' of ' + pages.length;
-    openLink.href = pages[current];
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === pages.length - 1;
-    Array.prototype.forEach.call(strip.children, function (el, i2) {
-      el.classList.toggle('is-active', i2 === current);
-      if (i2 === current) el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  function loadFromSheet() {
+    return fetch(SHEET_URL).then(function (res) {
+      if (!res.ok) throw new Error('bad response');
+      return res.text();
+    }).then(function (text) {
+      var json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
+      // Safety check: if the Newsletter tab is missing, Google silently returns the first tab instead
+      var col = json.table.cols && json.table.cols[1];
+      if (!col || !/media/i.test(col.label || '')) throw new Error('Newsletter tab not found');
+      var hideWords = ['no', 'n', 'hide', 'false', '0'];
+      return (json.table.rows || []).map(function (r, idx) {
+        return { order: parseFloat(cellText(r, 0)), media: cellText(r, 1), caption: cellText(r, 2),
+                 show: cellText(r, 3).toLowerCase(), idx: idx };
+      }).filter(function (s) {
+        return s.media && hideWords.indexOf(s.show) === -1;
+      }).sort(function (a, b) {
+        var ao = isNaN(a.order) ? Infinity : a.order, bo = isNaN(b.order) ? Infinity : b.order;
+        return (ao - bo) || (a.idx - b.idx);
+      });
     });
   }
 
-  prevBtn.addEventListener('click', function () { show(current - 1); });
-  nextBtn.addEventListener('click', function () { show(current + 1); });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowLeft') show(current - 1);
-    if (e.key === 'ArrowRight') show(current + 1);
-  });
+  function start(items) {
+    var pages = items.map(function (it) {
+      var src = driveToDirect(it.media);
+      return { src: src, video: isVideo(src), caption: it.caption || '' };
+    });
+    var current = 0;
 
-  show(0);
+    pages.forEach(function (p, i) {
+      var b = document.createElement('button');
+      b.setAttribute('aria-label', 'Go to item ' + (i + 1));
+      var t;
+      if (p.video) {
+        t = document.createElement('video');
+        t.src = p.src + '#t=0.5';
+        t.muted = true;
+        t.preload = 'metadata';
+        t.setAttribute('playsinline', '');
+        b.classList.add('is-video');
+      } else {
+        t = document.createElement('img');
+        t.src = p.src;
+        t.alt = 'Item ' + (i + 1) + ' thumbnail';
+        t.loading = 'lazy';
+      }
+      b.appendChild(t);
+      b.addEventListener('click', function () { show(i); });
+      strip.appendChild(b);
+    });
+
+    function show(i) {
+      current = Math.max(0, Math.min(pages.length - 1, i));
+      var p = pages[current];
+      if (p.video) {
+        img.style.display = 'none';
+        vid.style.display = 'block';
+        if (vid.getAttribute('src') !== p.src) vid.src = p.src;
+      } else {
+        vid.pause();
+        vid.style.display = 'none';
+        img.style.display = 'block';
+        img.src = p.src;
+        img.alt = p.caption || ('Newsletter page ' + (current + 1) + ' of ' + pages.length);
+      }
+      captionEl.textContent = p.caption;
+      captionEl.style.display = p.caption ? '' : 'none';
+      count.textContent = (current + 1) + ' of ' + pages.length;
+      openLink.href = p.src;
+      printBtn.style.display = p.video ? 'none' : '';
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === pages.length - 1;
+      Array.prototype.forEach.call(strip.children, function (el, i2) {
+        el.classList.toggle('is-active', i2 === current);
+        if (i2 === current) el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      });
+    }
+
+    printBtn.addEventListener('click', function () {
+      // make sure the full image has loaded before opening the print dialog
+      if (img.complete && img.naturalWidth) window.print();
+      else img.addEventListener('load', function once() { img.removeEventListener('load', once); window.print(); });
+    });
+
+    prevBtn.addEventListener('click', function () { show(current - 1); });
+    nextBtn.addEventListener('click', function () { show(current + 1); });
+    document.addEventListener('keydown', function (e) {
+      if (e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+      if (e.key === 'ArrowLeft') show(current - 1);
+      if (e.key === 'ArrowRight') show(current + 1);
+    });
+
+    show(0);
+  }
+
+  loadFromSheet()
+    .then(function (items) { start(items.length ? items : DEFAULT_ITEMS); })
+    .catch(function (err) { console.error('Newsletter sheet not available, using built-in pages', err); start(DEFAULT_ITEMS); });
 })();
 </script>
 
