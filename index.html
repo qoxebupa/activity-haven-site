@@ -452,7 +452,26 @@ img.slide-video { object-fit: contain; }
   .slide { transition: none; }
 }
 
-.spotlight{background:var(--cream);padding:72px 96px;}.spotlight-inner{max-width:1200px;margin:0 auto;text-align:center;}.spotlight-inner .eyebrow{color:var(--coral-dark);text-transform:uppercase;letter-spacing:0.14em;font-size:0.8rem;font-weight:700;}.spotlight-inner h2{font-family:var(--font-display);font-size:clamp(1.7rem, 3vw, 2.4rem);font-weight:600;margin:10px 0 40px;color:var(--teal-deep);}.spotlight-state{color:var(--charcoal-soft);padding:10px 0 30px;}.spotlight-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:28px;text-align:left;}.spotlight-card{background:var(--paper);border-radius:14px;overflow:hidden;border-top:4px solid var(--coral);display:flex;flex-direction:column;}.spotlight-media{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;background:var(--teal-pale);}.spotlight-body{padding:22px 24px 26px;}.spotlight-card h3{font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--teal-deep);margin:0 0 8px;}.spotlight-card p{color:var(--charcoal-soft);font-size:0.95rem;margin:0 0 14px;}.spotlight-link{color:var(--coral-dark);font-weight:700;font-size:0.9rem;}@media (max-width: 900px){.spotlight{padding:56px 24px;}.spotlight-grid{grid-template-columns:1fr;}}</style>
+.spotlight{background:var(--cream);padding:72px 96px;}.spotlight-inner{max-width:1200px;margin:0 auto;text-align:center;}.spotlight-inner .eyebrow{color:var(--coral-dark);text-transform:uppercase;letter-spacing:0.14em;font-size:0.8rem;font-weight:700;}.spotlight-inner h2{font-family:var(--font-display);font-size:clamp(1.7rem, 3vw, 2.4rem);font-weight:600;margin:10px 0 40px;color:var(--teal-deep);}.spotlight-state{color:var(--charcoal-soft);padding:10px 0 30px;}.spotlight-grid{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:28px;text-align:left;}
+.spotlight-grid>.spotlight-card{flex:0 1 calc((100% - 56px) / 3);min-width:0;}.spotlight-card{background:var(--paper);border-radius:14px;overflow:hidden;border-top:4px solid var(--coral);display:flex;flex-direction:column;}.spotlight-media{width:100%;aspect-ratio:8.5/11;object-fit:contain;display:block;background:var(--teal-pale);}
+.spotlight-poster{display:block;padding:0;border:0;background:none;cursor:zoom-in;width:100%;}
+.spotlight-tools{display:flex;justify-content:center;gap:10px;padding:12px 16px 4px;flex-wrap:wrap;}
+.spotlight-tools button{font:inherit;font-size:0.9rem;font-weight:700;color:var(--teal-deep);background:var(--teal-pale);border:0;border-radius:999px;padding:8px 16px;cursor:pointer;}
+.spotlight-tools button:hover{background:var(--teal-deep);color:#fff;}
+.spotlight-card.poster-only .spotlight-tools{padding-bottom:14px;}
+/* Full-screen poster viewer */
+.poster-lightbox{position:fixed;inset:0;z-index:9999;background:rgba(15,25,25,0.92);display:none;flex-direction:column;align-items:center;justify-content:center;padding:16px;}
+.poster-lightbox.is-open{display:flex;}
+.poster-lightbox img{max-width:96vw;max-height:calc(100vh - 110px);object-fit:contain;background:#fff;border-radius:6px;box-shadow:0 10px 40px rgba(0,0,0,0.5);}
+.poster-lightbox-bar{display:flex;gap:12px;margin-top:14px;}
+.poster-lightbox-bar button{font:inherit;font-size:1rem;font-weight:700;border:0;border-radius:999px;padding:10px 22px;cursor:pointer;background:#fff;color:var(--teal-deep);}
+.poster-lightbox-bar button.close{background:var(--coral);color:#fff;}
+#posterPrintImg{display:none;}
+@media print{
+  @page{margin:0.4in;}
+  body.print-poster *{visibility:hidden !important;}
+  body.print-poster #posterPrintImg{display:block;visibility:visible !important;position:fixed;left:0;top:0;width:100%;height:100%;object-fit:contain;}
+}.spotlight-body{padding:22px 24px 26px;}.spotlight-card h3{font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--teal-deep);margin:0 0 8px;}.spotlight-card p{color:var(--charcoal-soft);font-size:0.95rem;margin:0 0 14px;}.spotlight-link{color:var(--coral-dark);font-weight:700;font-size:0.9rem;}@media (max-width: 900px){.spotlight{padding:56px 24px;}.spotlight-grid{max-width:440px;margin:0 auto;}.spotlight-grid>.spotlight-card{flex-basis:100%;}}</style>
 </head>
 <body>
 
@@ -515,7 +534,7 @@ img.slide-video { object-fit: contain; }
   </div>
 </section>
 
-<section class="spotlight" id="spotlight"><div class="spotlight-inner"><p class="eyebrow">Live from the Program Hub</p><h2>What's Not To Miss</h2><p class="spotlight-state" id="spotlightState">Loading…</p><div class="spotlight-grid" id="spotlightGrid"></div></div></section><section class="intro" id="about">
+<section class="spotlight" id="spotlight"><div class="spotlight-inner"><p class="eyebrow">Live from the Program Hub</p><h2>What's Not To Miss</h2><p class="spotlight-state" id="spotlightState">Loading…</p><div class="spotlight-grid" id="spotlightGrid"></div></div></section><div class="poster-lightbox" id="posterLightbox" role="dialog" aria-modal="true" aria-label="Poster, full screen"><img id="posterLightboxImg" src="" alt=""><div class="poster-lightbox-bar"><button type="button" id="posterLightboxPrint">Print 🖨</button><button type="button" class="close" id="posterLightboxClose">Close ✕</button></div></div><img id="posterPrintImg" src="" alt=""><section class="intro" id="about">
   <div class="intro-inner">
     <div class="intro-text">
       <p class="eyebrow">Who we are</p>
@@ -736,7 +755,8 @@ img.slide-video { object-fit: contain; }
      (the old "Status" heading still works the same way)
    - Image: image link (Google Drive images work if shared "Anyone with the link") or a file name in this site
    - Video: used when Image is blank; a video file name in this site (e.g. fumble-fun.mp4)
-   - Up to 3 cards are shown. */
+   - Up to 3 posters are shown. Title, Description and Link only appear when filled in.
+   - Image posters get "Full screen" and "Print" buttons. */
 (function(){
   const SHEET_ID='1tvGtCqroniAThEteWph0f4Bg1f_aiV0JqQU3M4ZTcOk';
   const GVIZ_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=1&sheet=Spotlight`;
@@ -777,24 +797,66 @@ img.slide-video { object-fit: contain; }
         return{order:parseFloat(cellText(r,col.order)),show:cellText(r,col.show).toLowerCase(),
           title:cellText(r,col.title),image:cellText(r,col.image),video:cellText(r,col.video),
           description:cellText(r,col.desc),link:cellText(r,col.link),idx:idx};
-      }).filter(function(s){return s.title&&(s.show===''||s.show==='yes'||s.show==='y');})
+      }).filter(function(s){return (s.title||s.image||s.video)&&(s.show===''||s.show==='yes'||s.show==='y');})
         .sort(function(a,b){const ao=isNaN(a.order)?Infinity:a.order,bo=isNaN(b.order)?Infinity:b.order;return (ao-bo)||(a.idx-b.idx);})
         .slice(0,MAX_CARDS);
 
       if(items.length===0){section.style.display='none';return;}
       stateMsg.style.display='none';
-      grid.innerHTML=items.map(function(s){
-        let media='';
+      grid.innerHTML=items.map(function(s,i){
+        let media='',tools='';
+        const label=s.title||'Poster';
         if(s.image){
-          media='<img class="spotlight-media" src="'+escapeHtml(driveToDirect(s.image))+'" alt="'+escapeHtml(s.title)+'" onerror="this.style.display=\'none\'">';
+          const src=escapeHtml(driveToDirect(s.image));
+          media='<button type="button" class="spotlight-poster" data-poster="'+src+'" data-label="'+escapeHtml(label)+'" aria-label="View '+escapeHtml(label)+' full screen">'+
+                '<img class="spotlight-media" src="'+src+'" alt="'+escapeHtml(label)+'" onerror="this.closest(\'.spotlight-card\').style.display=\'none\'"></button>';
+          tools='<div class="spotlight-tools">'+
+                '<button type="button" data-action="full" data-poster="'+src+'" data-label="'+escapeHtml(label)+'">Full screen ⤢</button>'+
+                '<button type="button" data-action="print" data-poster="'+src+'">Print 🖨</button></div>';
         }else if(s.video){
           media='<video class="spotlight-media" src="'+escapeHtml(s.video)+'#t=0.5" controls muted playsinline preload="metadata"></video>';
         }
-        const linkHtml=s.link?('<a class="spotlight-link" href="'+escapeHtml(s.link)+'">Learn more →</a>'):'';
-        return '<div class="spotlight-card">'+media+'<div class="spotlight-body"><h3>'+escapeHtml(s.title)+'</h3><p>'+escapeHtml(s.description)+'</p>'+linkHtml+'</div></div>';
+        let body='';
+        if(s.title)body+='<h3>'+escapeHtml(s.title)+'</h3>';
+        if(s.description)body+='<p>'+escapeHtml(s.description)+'</p>';
+        if(s.link)body+='<a class="spotlight-link" href="'+escapeHtml(s.link)+'">Learn more →</a>';
+        const bodyHtml=body?('<div class="spotlight-body">'+body+'</div>'):'';
+        return '<div class="spotlight-card'+(body?'':' poster-only')+'">'+media+tools+bodyHtml+'</div>';
       }).join('');
     }catch(err){section.style.display='none';console.error(err);}
   }
+  // ----- Full screen + print -----
+  const lb=document.getElementById('posterLightbox');
+  const lbImg=document.getElementById('posterLightboxImg');
+  const printImg=document.getElementById('posterPrintImg');
+  let lastFocus=null;
+  function openFull(src,label){
+    lastFocus=document.activeElement;
+    lbImg.src=src;lbImg.alt=label||'Poster';
+    lb.classList.add('is-open');document.body.style.overflow='hidden';
+    document.getElementById('posterLightboxClose').focus();
+  }
+  function closeFull(){
+    lb.classList.remove('is-open');document.body.style.overflow='';
+    if(lastFocus)lastFocus.focus();
+  }
+  function printPoster(src){
+    function go(){document.body.classList.add('print-poster');window.print();}
+    if(printImg.getAttribute('src')===src&&printImg.complete&&printImg.naturalWidth){go();return;}
+    printImg.onload=function(){printImg.onload=null;go();};
+    printImg.src=src;
+  }
+  window.addEventListener('afterprint',function(){document.body.classList.remove('print-poster');});
+  grid.addEventListener('click',function(e){
+    const btn=e.target.closest('[data-poster]');if(!btn)return;
+    if(btn.dataset.action==='print')printPoster(btn.dataset.poster);
+    else openFull(btn.dataset.poster,btn.dataset.label);
+  });
+  document.getElementById('posterLightboxClose').addEventListener('click',closeFull);
+  document.getElementById('posterLightboxPrint').addEventListener('click',function(){printPoster(lbImg.getAttribute('src'));});
+  lb.addEventListener('click',function(e){if(e.target===lb)closeFull();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&lb.classList.contains('is-open'))closeFull();});
+
   loadSpotlight();
 })();
 </script></body>
