@@ -727,5 +727,75 @@ img.slide-video { object-fit: contain; }
   }
 })();
 </script>
-<script>(function(){const SHEET_ID='1tvGtCqroniAThEteWph0f4Bg1f_aiV0JqQU3M4ZTcOk';const GVIZ_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Spotlight`;const section=document.getElementById('spotlight');const stateMsg=document.getElementById('spotlightState');const grid=document.getElementById('spotlightGrid');function extractJson(text){const start=text.indexOf('{');const end=text.lastIndexOf('}');return JSON.parse(text.substring(start,end+1));}function cellText(row,i){const c=row.c[i];return c&&c.v!=null?String(c.v).trim():'';}function escapeHtml(str){const div=document.createElement('div');div.textContent=str;return div.innerHTML;}async function loadSpotlight(){if(!section)return;try{const res=await fetch(GVIZ_URL);if(!res.ok)throw new Error('bad response');const text=await res.text();const json=extractJson(text);const rows=json.table.rows||[];const items=rows.map(function(r){return{status:cellText(r,0),title:cellText(r,1),image:cellText(r,2),video:cellText(r,3),description:cellText(r,4),link:cellText(r,5)};}).filter(function(s){return s.title;}).filter(function(s){return !s.status;}).slice(0,3);if(items.length===0){section.style.display='none';return;}stateMsg.style.display='none';grid.innerHTML=items.map(function(s){const media=s.image?('<img class="spotlight-media" src="'+escapeHtml(s.image)+'" alt="'+escapeHtml(s.title)+'" onerror="this.style.display=\'none\'">'):(s.video?('<video class="spotlight-media" src="'+escapeHtml(s.video)+'" muted playsinline preload="metadata"></video>'):'');const linkHtml=s.link?('<a class="spotlight-link" href="'+escapeHtml(s.link)+'">Learn more →</a>'):'';return '<div class="spotlight-card">'+media+'<div class="spotlight-body"><h3>'+escapeHtml(s.title)+'</h3><p>'+escapeHtml(s.description)+'</p>'+linkHtml+'</div></div>';}).join('');}catch(err){section.style.display='none';console.error(err);}}loadSpotlight();})();</script></body>
+<script>
+/* ---------- "What's Not To Miss": driven by the "Spotlight" tab of the Program Hub sheet ----------
+   Columns are found by their heading in row 1, so their order in the sheet doesn't matter:
+   Order | Show | Title | Image | Video | Description | Link
+   - Order: number; lowest shows first (blank = keeps its row position, after numbered rows)
+   - Show: blank or "yes" = show; anything else ("no", "hide", "paused"...) = hidden
+     (the old "Status" heading still works the same way)
+   - Image: image link (Google Drive images work if shared "Anyone with the link") or a file name in this site
+   - Video: used when Image is blank; a video file name in this site (e.g. fumble-fun.mp4)
+   - Up to 3 cards are shown. */
+(function(){
+  const SHEET_ID='1tvGtCqroniAThEteWph0f4Bg1f_aiV0JqQU3M4ZTcOk';
+  const GVIZ_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=1&sheet=Spotlight`;
+  const MAX_CARDS=3;
+  const section=document.getElementById('spotlight');
+  const stateMsg=document.getElementById('spotlightState');
+  const grid=document.getElementById('spotlightGrid');
+
+  function extractJson(text){return JSON.parse(text.substring(text.indexOf('{'),text.lastIndexOf('}')+1));}
+  function cellText(row,i){if(i<0)return '';const c=row.c&&row.c[i];return c&&c.v!=null?String(c.v).trim():'';}
+  function escapeHtml(str){const d=document.createElement('div');d.textContent=str;return d.innerHTML;}
+  function driveToDirect(url){const m=url.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]+)/);return m?'https://lh3.googleusercontent.com/d/'+m[1]:url;}
+
+  // Find each column by its heading; fall back to the original layout (Status, Title, Image, Video, Description, Link)
+  function columnMap(cols){
+    const labels=(cols||[]).map(c=>String(c.label||'').trim().toLowerCase());
+    const find=(names,fallback)=>{for(const n of names){const i=labels.indexOf(n);if(i>=0)return i;}return fallback;};
+    const hasHeadings=labels.includes('title');
+    return {
+      order: find(['order'],-1),
+      show:  find(['show','status'],hasHeadings?-1:0),
+      title: find(['title'],1),
+      image: find(['image','photo','picture'],2),
+      video: find(['video'],3),
+      desc:  find(['description','text'],4),
+      link:  find(['link','url'],5)
+    };
+  }
+
+  async function loadSpotlight(){
+    if(!section)return;
+    try{
+      const res=await fetch(GVIZ_URL);
+      if(!res.ok)throw new Error('bad response');
+      const json=extractJson(await res.text());
+      const col=columnMap(json.table.cols);
+      const items=(json.table.rows||[]).map(function(r,idx){
+        return{order:parseFloat(cellText(r,col.order)),show:cellText(r,col.show).toLowerCase(),
+          title:cellText(r,col.title),image:cellText(r,col.image),video:cellText(r,col.video),
+          description:cellText(r,col.desc),link:cellText(r,col.link),idx:idx};
+      }).filter(function(s){return s.title&&(s.show===''||s.show==='yes'||s.show==='y');})
+        .sort(function(a,b){const ao=isNaN(a.order)?Infinity:a.order,bo=isNaN(b.order)?Infinity:b.order;return (ao-bo)||(a.idx-b.idx);})
+        .slice(0,MAX_CARDS);
+
+      if(items.length===0){section.style.display='none';return;}
+      stateMsg.style.display='none';
+      grid.innerHTML=items.map(function(s){
+        let media='';
+        if(s.image){
+          media='<img class="spotlight-media" src="'+escapeHtml(driveToDirect(s.image))+'" alt="'+escapeHtml(s.title)+'" onerror="this.style.display=\'none\'">';
+        }else if(s.video){
+          media='<video class="spotlight-media" src="'+escapeHtml(s.video)+'#t=0.5" controls muted playsinline preload="metadata"></video>';
+        }
+        const linkHtml=s.link?('<a class="spotlight-link" href="'+escapeHtml(s.link)+'">Learn more →</a>'):'';
+        return '<div class="spotlight-card">'+media+'<div class="spotlight-body"><h3>'+escapeHtml(s.title)+'</h3><p>'+escapeHtml(s.description)+'</p>'+linkHtml+'</div></div>';
+      }).join('');
+    }catch(err){section.style.display='none';console.error(err);}
+  }
+  loadSpotlight();
+})();
+</script></body>
 </html>
