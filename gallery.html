@@ -83,6 +83,14 @@ a { color: inherit; text-decoration: none; }
 .fb-panel { background: var(--cream); border-radius: 14px; padding: 30px; text-align: center; border: 2px dashed var(--gold); }
 .fb-panel p { color: var(--charcoal-soft); max-width: 560px; margin: 8px auto 0; }
 
+.sheet-text h2 { margin-bottom: 8px; }
+.sheet-text p { color: var(--charcoal-soft); margin: 0 0 16px; }
+.sheet-text ul { color: var(--charcoal-soft); padding-left: 22px; margin: 0 0 16px; }
+.sheet-text + .poster-grid { margin-top: 10px; }
+.poster-card video { width: 100%; display: block; background: #000; }
+.video-frame { position: relative; aspect-ratio: 16/9; background: #000; }
+.video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.empty-msg { color: var(--charcoal-soft); font-style: italic; margin: 0; grid-column: 1 / -1; }
 .note { font-size: 0.85rem; color: var(--charcoal-soft); background: var(--teal-pale); border-radius: 10px; padding: 10px 16px; margin-top: 18px; }
 
 /* Live schedule content, embedded directly on the Gallery page (same styling as the
@@ -130,7 +138,7 @@ footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 
 footer.site-footer a { color: var(--gold); }
 
 @media print {
-  .site-header, footer.site-footer, .btn-print, .fb-panel, .page-hero, .photo-grid { display: none !important; }
+  .site-header, footer.site-footer, .btn-print, .page-hero { display: none !important; }
   .content-card { box-shadow: none; border: none; }
   .scroll-box { max-height: none !important; overflow: visible !important; border: none; padding: 0; }
 }
@@ -154,7 +162,7 @@ footer.site-footer a { color: var(--gold); }
         <a href="gallery.html" class="is-current">Gallery</a>
         <a href="newsletter.html">Newsletter</a>
         <a href="membership.html">Membership</a>
-        <a href="index.html#volunteer">Volunteer</a>
+        <a href="volunteer.html">Volunteer</a>
         <a href="donate.html">Donate</a>
         <a href="contact.html">Contact</a>
       </nav>
@@ -198,78 +206,58 @@ footer.site-footer a { color: var(--gold); }
       <div id="posterBodyInstr"></div>
     </div>
 
-    <div class="poster-grid" style="margin-top:28px;">
+    <!-- Registration Rules poster(s): "Gallery" tab, Section = Registration Rules -->
+    <div class="poster-grid" id="regRulesGrid" style="margin-top:28px;">
       <div class="poster-card">
         <img src="registration-rules.jpg" alt="Activity Haven registration rules poster">
         <div class="poster-card-foot">
           <span>Registration Rules</span>
-          <button class="btn-print" onclick="printImage('registration-rules.jpg')">Print</button>
+          <button class="btn-print" data-print="registration-rules.jpg">Print</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- MONTHLY MENU (folded in from the old standalone Menu nav item) -->
+  <!-- MONTHLY MENU — text: "Page Text" tab, Page = Menu; posters: "Gallery" tab, Section = Menu -->
   <div class="content-card" id="menu">
     <span class="eyebrow">Monthly Menu</span>
-    <h2>Lunch at Activity Haven — Wednesdays &amp; Fridays, $12</h2>
-    <p class="lead">Everyone's welcome, members or not. Ask for your meal "to go" if you're on the run. This used to have its own nav item — it now lives here instead.</p>
-    <div class="poster-grid">
+    <div class="sheet-text" id="menuText">
+      <h2>Lunch at Activity Haven — Wednesdays &amp; Fridays, $12</h2>
+      <p>Everyone's welcome, members or not. Ask for your meal "to go" if you're on the run.</p>
+    </div>
+    <div class="poster-grid" id="menuGrid">
       <div class="poster-card">
         <img src="https://activityhaven.org/wp-content/uploads/2026/07/July-Newsletter-2026-pg-8.jpg" alt="July lunch menu">
         <div class="poster-card-foot">
           <span>July</span>
-          <button class="btn-print" onclick="printImage('https://activityhaven.org/wp-content/uploads/2026/07/July-Newsletter-2026-pg-8.jpg')">Print</button>
+          <button class="btn-print" data-print="https://activityhaven.org/wp-content/uploads/2026/07/July-Newsletter-2026-pg-8.jpg">Print</button>
         </div>
       </div>
       <div class="poster-card">
         <img src="https://activityhaven.org/wp-content/uploads/2026/07/July-Newsletter-2026-pg-9.jpg" alt="August lunch menu">
         <div class="poster-card-foot">
           <span>August</span>
-          <button class="btn-print" onclick="printImage('https://activityhaven.org/wp-content/uploads/2026/07/July-Newsletter-2026-pg-9.jpg')">Print</button>
+          <button class="btn-print" data-print="https://activityhaven.org/wp-content/uploads/2026/07/July-Newsletter-2026-pg-9.jpg">Print</button>
         </div>
       </div>
     </div>
-    <p class="note">Menu images are pulled from the current newsletter — swap in fresh pages each month.</p>
   </div>
 
-  <!-- SPECIAL EVENTS -->
-  <div class="content-card" id="events">
-    <span class="eyebrow">Special Events</span>
-    <h2>Posters for upcoming events</h2>
-    <p class="lead">Placeholder tiles for now — send real photos whenever you have them and they'll drop straight in.</p>
-    <div class="photo-grid">
-      <div class="photo-tile">Event poster</div>
-      <div class="photo-tile">Event poster</div>
-      <div class="photo-tile">Event poster</div>
-      <div class="photo-tile">Event poster</div>
+  <!-- ANNOUNCEMENTS (was Special Events + This Week) — "Gallery" tab, Section = Announcements -->
+  <div class="content-card" id="announcements">
+    <span class="eyebrow">Announcements</span>
+    <h2>What's coming up</h2>
+    <div class="poster-grid" id="announceGrid" style="margin-top:20px;">
+      <p class="empty-msg">No announcements right now — check back soon.</p>
     </div>
   </div>
 
-  <!-- FACEBOOK THIS WEEK POSTER -->
-  <div class="content-card" id="this-week">
-    <span class="eyebrow">This Week</span>
-    <h2>This week's activities (from Facebook)</h2>
-    <div class="fb-panel" style="margin-top:20px;">
-      <strong>Placeholder</strong>
-      <p>Drop this week's Facebook activities poster image in here. Send me the image (or a link to the Facebook post) and I'll wire it in so it's easy to update each week.</p>
-    </div>
-  </div>
-
-  <!-- STAFF & PAST EVENTS GALLERY -->
+  <!-- AROUND THE CENTRE — "Gallery" tab, Section = Around the Centre -->
   <div class="content-card" id="photos">
     <span class="eyebrow">Around the Centre</span>
     <h2>Staff &amp; past events</h2>
-    <p class="lead">Placeholder tiles for now — send real photos whenever you have them and they'll drop straight in, same layout.</p>
-    <div class="photo-grid">
-      <div class="photo-tile">Staff photo</div>
-      <div class="photo-tile">Staff photo</div>
-      <div class="photo-tile">Past event</div>
-      <div class="photo-tile">Past event</div>
-      <div class="photo-tile">Past event</div>
-      <div class="photo-tile">Staff photo</div>
-      <div class="photo-tile">Past event</div>
-      <div class="photo-tile">Past event</div>
+    <div class="poster-grid" id="aroundGrid" style="margin-top:20px;">
+      <p class="empty-msg">Photos coming soon.</p>
     </div>
   </div>
 
@@ -280,14 +268,6 @@ footer.site-footer a { color: var(--gold); }
 </footer>
 
 <script>
-function printImage(url) {
-  var win = window.open('', '_blank');
-  win.document.write('<html><head><title>Print</title></head><body style="margin:0;text-align:center;">' +
-    '<img src="' + url + '" style="max-width:100%;" onload="window.print();">' +
-    '</body></html>');
-  win.document.close();
-}
-
 // Prints a live schedule section (drop-in or instructional) in its own window,
 // reusing this page's own styling so it looks the same as on-screen.
 function printSection(id, title) {
@@ -300,6 +280,15 @@ function printSection(id, title) {
   win.document.close();
   win.onload = function () { win.focus(); win.print(); };
 }
+</script>
+
+<script src="site-content.js"></script>
+<script>
+  AHContent.fillPosters('Registration Rules', document.getElementById('regRulesGrid'));
+  AHContent.fillText('Menu', document.getElementById('menuText'));
+  AHContent.fillPosters('Menu', document.getElementById('menuGrid'));
+  AHContent.fillPosters('Announcements', document.getElementById('announceGrid'), 'No announcements right now — check back soon.');
+  AHContent.fillPosters('Around the Centre', document.getElementById('aroundGrid'), 'Photos coming soon.');
 </script>
 
 <!-- LIVE DROP-IN SCHEDULE — same Program Hub data and logic as /drop-in-poster.html,
