@@ -2,7 +2,8 @@
    On screens 900px wide or less, the row of menu links is replaced by one
    large "Menu" bar. Tapping it opens the full list as big buttons.
    Desktop and tablet-landscape views are unchanged.
-   Added to every page that has a .main-nav-row with:
+   Also registers sw.js so phones can install the site as an app.
+   Added to every page with:
      <script src="mobile-nav.js" defer></script>                      */
 (function () {
   var css = [
@@ -57,4 +58,11 @@
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
+
+  // Lets phones install the site as an "Activity Haven" app (see sw.js).
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('/sw.js').catch(function () {});
+    });
+  }
 })();
