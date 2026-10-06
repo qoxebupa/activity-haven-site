@@ -312,9 +312,32 @@ footer.site-footer a { color: var(--gold); }
     const seen = [];
     // Weekdays first, in Mon-Sun order, if present
     WEEKDAY_ORDER.forEach(d => { if (allPrograms.some(p => p.day === d) && !seen.includes(d)) seen.push(d); });
-    // Then anything else (e.g. specific event dates), in first-seen order
-    allPrograms.forEach(p => { if (!seen.includes(p.day)) seen.push(p.day); });
+    // Then anything else (e.g. specific event dates), in date order, so staff
+    // can keep adding new rows at the bottom of the Sheet. Rows with no
+    // readable date (e.g. "CONFIRM DATE") go last, in Sheet order.
+    const others = [];
+    allPrograms.forEach(p => { if (!seen.includes(p.day) && !others.includes(p.day)) others.push(p.day); });
+    others
+      .map((d, i) => ({ d, i, t: eventDateValue(d) }))
+      .sort((a, b) => (a.t - b.t) || (a.i - b.i))
+      .forEach(x => seen.push(x.d));
     return seen;
+  }
+
+  // Turns "Thursday, October 15" (or "Saturday, October 10 & 24") into a
+  // sortable number. The Sheet has no year, so a date more than 6 months in
+  // the past is treated as next year (e.g. January after November).
+  function eventDateValue(dayStr) {
+    const MONTHS = ['january','february','march','april','may','june','july',
+                    'august','september','october','november','december'];
+    const m = String(dayStr).toLowerCase()
+      .match(/(january|february|march|april|may|june|july|august|september|october|november|december)\s+(\d{1,2})/);
+    if (!m) return Infinity;
+    const now = new Date();
+    const d = new Date(now.getFullYear(), MONTHS.indexOf(m[1]), parseInt(m[2], 10));
+    const sixMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 6, now.getDate());
+    if (d < sixMonthsAgo) d.setFullYear(d.getFullYear() + 1);
+    return d.getTime();
   }
 
   function matchesSearch(p, query) {
