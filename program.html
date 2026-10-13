@@ -263,9 +263,11 @@ footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 
       const text = await res.text();
       const json = extractJson(text);
       const rows = json.table.rows;
+      const headerRows = json.table.parsedNumHeaders || 0;
 
       const match = rows
-        .map(r => ({
+        .map((r, i) => ({
+          sheetRow: i + 1 + headerRows,
           day: cellText(r, 0),
           program: cellText(r, 1),
           time: cellText(r, 2),
@@ -355,6 +357,8 @@ footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 
           <p class="detail-desc">${escapeHtml(cleanDescription)}</p>
         </div>`;
 
+      enableStaffShortcut(match.sheetRow);
+
       const videoEl = detailWrap.querySelector('.detail-video-native');
       if (videoEl) {
         videoEl.muted = true;
@@ -363,6 +367,37 @@ footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 
     } catch (err) {
       detailWrap.innerHTML = '<p class="state-msg">We couldn\'t load this program right now. Please try again shortly.</p>';
       console.error(err);
+    }
+  }
+
+  // Hidden staff shortcut: type "hub" (desktop) or triple-tap the program
+  // title (phone/tablet) to open this program's row in the HUB tab.
+  // Nothing is shown on the page. Editing is still controlled by the
+  // Sheet's own sharing settings.
+  const HUB_GID = '717293429';
+  function enableStaffShortcut(sheetRow) {
+    if (!sheetRow) return;
+    const hubUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit#gid=${HUB_GID}&range=A${sheetRow}`;
+    const openHub = () => window.open(hubUrl, '_blank', 'noopener');
+
+    let typed = '';
+    document.addEventListener('keydown', e => {
+      const t = e.target;
+      if (t && (t.isContentEditable || /^(input|textarea|select)$/i.test(t.tagName))) return;
+      if (e.ctrlKey || e.metaKey || e.altKey || !e.key || e.key.length !== 1) return;
+      typed = (typed + e.key.toLowerCase()).slice(-3);
+      if (typed === 'hub') { typed = ''; openHub(); }
+    });
+
+    const title = detailWrap.querySelector('h1');
+    if (title) {
+      let taps = 0, timer = null;
+      title.addEventListener('click', () => {
+        taps++;
+        clearTimeout(timer);
+        timer = setTimeout(() => { taps = 0; }, 600);
+        if (taps >= 3) { taps = 0; openHub(); }
+      });
     }
   }
 
