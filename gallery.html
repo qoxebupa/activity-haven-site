@@ -611,6 +611,112 @@ function printSection(id, title) {
 })();
 </script>
 
+<!-- Hidden staff shortcut: type "hub" (desktop) or triple-tap a section
+     (phone/tablet) to open the Sheet tab and row that feeds that section.
+     Nothing is shown on the page; editing is still controlled by the
+     Sheet's own sharing settings. -->
+<script>
+(function () {
+  const SHEET_ID = '1tvGtCqroniAThEteWph0f4Bg1f_aiV0JqQU3M4ZTcOk';
+  const GID = { hub: '717293429', gallery: '1026948264', pageText: '94642468' };
+  const gviz = (extra) => `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json${extra}`;
+
+  // Which part of the Sheet feeds each part of the page.
+  // Inner areas are listed first so they win over the card around them.
+  const AREAS = [
+    { sel: '#regRulesGrid', tab: 'gallery',  match: 'registration rules' },
+    { sel: '#menuText',     tab: 'pageText', match: 'menu' },
+    { sel: '#menuGrid',     tab: 'gallery',  match: 'menu' },
+    { sel: '#drop-in',      tab: 'hub',      match: 'drop-in' },
+    { sel: '#instructional',tab: 'hub',      match: 'instructional' },
+    { sel: '#announcements',tab: 'gallery',  match: 'announcements' },
+    { sel: '#photos',       tab: 'gallery',  match: 'around the centre' }
+  ];
+  const ALL_SEL = AREAS.map(a => a.sel).join(',');
+  const rowFor = {};   // e.g. rowFor['gallery|menu'] = 3
+
+  function parse(text) {
+    return JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1)).table;
+  }
+  function val(row, i) {
+    const c = row.c && row.c[i];
+    return c && c.v != null ? String(c.v).trim().toLowerCase() : '';
+  }
+  // Remember the first Sheet row for each section; if a section has no rows
+  // yet, point at the first empty row so a new one can be added there.
+  function index(tabKey, rows, colIdx, firstDataRow, typeDefault) {
+    let firstBlank = null;
+    rows.forEach((r, i) => {
+      let key = val(r, colIdx);
+      const blankRow = !(r.c || []).some(c => c && c.v != null && String(c.v).trim() !== '');
+      if (blankRow) { if (firstBlank === null) firstBlank = i + firstDataRow; return; }
+      if (!key && typeDefault) key = typeDefault;
+      const k = tabKey + '|' + key;
+      if (!(k in rowFor)) rowFor[k] = i + firstDataRow;
+    });
+    rowFor[tabKey + '|_blank'] = firstBlank !== null ? firstBlank : rows.length + firstDataRow;
+  }
+
+  fetch(gviz('')).then(r => r.text()).then(t => {
+    const tbl = parse(t);
+    index('hub', tbl.rows, 4, 1 + (tbl.parsedNumHeaders || 0), 'drop-in');   // column E = Type
+  }).catch(() => {});
+  fetch(gviz('&headers=1&sheet=Gallery')).then(r => r.text()).then(t => {
+    index('gallery', parse(t).rows, 0, 2);                                 // column A = Section
+  }).catch(() => {});
+  fetch(gviz('&headers=1&sheet=' + encodeURIComponent('Page Text'))).then(r => r.text()).then(t => {
+    index('pageText', parse(t).rows, 0, 2);                                // column A = Page
+  }).catch(() => {});
+
+  function urlFor(area) {
+    let row = 1;
+    if (area) {
+      row = rowFor[area.tab + '|' + area.match] || rowFor[area.tab + '|_blank'] || 1;
+    }
+    const gid = area ? GID[area.tab] : GID.hub;
+    return `https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit#gid=${gid}&range=A${row}`;
+  }
+  function areaFromElement(el) {
+    const box = el && el.closest ? el.closest(ALL_SEL) : null;
+    return box ? AREAS.find(a => box.matches(a.sel)) : null;
+  }
+  // Fallback when the pointer isn't over a section: whichever section is
+  // in the middle of the screen.
+  function areaInView() {
+    const el = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2);
+    return areaFromElement(el);
+  }
+  function openHub(area) { window.open(urlFor(area || areaInView()), '_blank', 'noopener'); }
+
+  // Desktop: type "hub" while the mouse is over (or you last clicked in) a section.
+  let lastEl = null;
+  document.addEventListener('mousemove', e => { lastEl = e.target; }, { passive: true });
+  document.addEventListener('mousedown', e => { lastEl = e.target; });
+  let typed = '';
+  document.addEventListener('keydown', e => {
+    const t = e.target;
+    if (t && (t.isContentEditable || /^(input|textarea|select)$/i.test(t.tagName))) return;
+    if (e.ctrlKey || e.metaKey || e.altKey || !e.key || e.key.length !== 1) return;
+    typed = (typed + e.key.toLowerCase()).slice(-3);
+    if (typed === 'hub') { typed = ''; openHub(areaFromElement(lastEl)); }
+  });
+
+  // Phone/tablet (and a mouse in Firefox): triple-tap a section's heading or
+  // any plain part of a section — not a button, link, video or picture.
+  let taps = 0, tapTimer = null, tapArea = null;
+  document.addEventListener('click', e => {
+    if (e.target.closest('button, a, video, iframe, img, input, select, textarea')) return;
+    const area = areaFromElement(e.target);
+    if (!area) { taps = 0; return; }
+    if (area !== tapArea) { taps = 0; tapArea = area; }
+    taps++;
+    clearTimeout(tapTimer);
+    tapTimer = setTimeout(() => { taps = 0; }, 600);
+    if (taps >= 3) { taps = 0; openHub(area); }
+  });
+})();
+</script>
+
 <script src="mobile-nav.js" defer></script>
 </body>
 </html>
