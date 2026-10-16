@@ -597,6 +597,7 @@ img.slide-video { object-fit: contain; }
   <div class="footer-bottom">© Activity Haven Recreation Centre — Prototype homepage, in progress</div>
 </footer>
 
+<script src="image-links.js"></script>
 <script>
 /* ---------- Homepage carousel: driven by the "Carousel" tab of the Program Hub sheet ----------
    Columns: A Order | B Media | C Caption | D Show | E Seconds
@@ -630,6 +631,7 @@ img.slide-video { object-fit: contain; }
 
   function isVideo(url) { return /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(url); }
   function driveToDirect(url) {
+    if (window.ahImageLink) url = window.ahImageLink(url);
     const m = url.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]+)/);
     return m ? 'https://lh3.googleusercontent.com/d/' + m[1] : url;
   }
@@ -776,7 +778,7 @@ img.slide-video { object-fit: contain; }
   function extractJson(text){return JSON.parse(text.substring(text.indexOf('{'),text.lastIndexOf('}')+1));}
   function cellText(row,i){if(i<0)return '';const c=row.c&&row.c[i];return c&&c.v!=null?String(c.v).trim():'';}
   function escapeHtml(str){const d=document.createElement('div');d.textContent=str;return d.innerHTML;}
-  function driveToDirect(url){const m=url.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]+)/);return m?'https://lh3.googleusercontent.com/d/'+m[1]:url;}
+  function driveToDirect(url){if(window.ahImageLink)url=window.ahImageLink(url);const m=url.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]+)/);return m?'https://lh3.googleusercontent.com/d/'+m[1]:url;}
 
   // Find each column by its heading; fall back to the original layout (Status, Title, Image, Video, Description, Link)
   function columnMap(cols){

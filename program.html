@@ -169,6 +169,7 @@ footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 
   Activity Haven Recreation Centre — 180 Barnardo Ave, Peterborough, ON &nbsp;|&nbsp; 705-876-1670
 </footer>
 
+<script src="image-links.js"></script>
 <script>
 (function () {
   const SHEET_ID = '1tvGtCqroniAThEteWph0f4Bg1f_aiV0JqQU3M4ZTcOk';
@@ -192,6 +193,7 @@ footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 
 
   function resolveImageUrl(raw) {
     if (!raw) return '';
+    if (window.ahImageLink) raw = window.ahImageLink(raw);
     // Auto-convert a Google Drive "share" link into a directly-embeddable one.
     const match = raw.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
     if (match) {

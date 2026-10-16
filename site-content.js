@@ -32,7 +32,7 @@
     const m = url.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]+)/);
     return m ? m[1] : null;
   }
-  function imageSrc(url) { const id = driveId(url); return id ? 'https://lh3.googleusercontent.com/d/' + id : url; }
+  function imageSrc(url) { if (window.ahImageLink) url = window.ahImageLink(url); const id = driveId(url); return id ? 'https://lh3.googleusercontent.com/d/' + id : url; }
   function isVideoFile(url) { return /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(url); }
 
   // Fetch a tab and return its rows as objects keyed by lower-case heading.

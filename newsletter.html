@@ -232,6 +232,7 @@ footer.site-footer a { color: var(--gold); }
   </div>
 </div>
 
+<script src="image-links.js"></script>
 <script>
 /* ---------- Newsletter viewer: driven by the "Newsletter" tab of the Program Hub sheet ----------
    Columns: A Order | B Media | C Caption | D Show
@@ -260,6 +261,7 @@ footer.site-footer a { color: var(--gold); }
 
   function isVideo(url) { return /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(url); }
   function driveToDirect(url) {
+    if (window.ahImageLink) url = window.ahImageLink(url);
     var m = url.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]+)/);
     return m ? 'https://lh3.googleusercontent.com/d/' + m[1] : url;
   }
