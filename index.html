@@ -344,6 +344,13 @@ img.slide-video { object-fit: contain; }
 }
 .btn-video:hover, .btn-video:focus-visible { background: rgba(255,255,255,0.22); }
 .play-icon { font-size: 0.75rem; }
+.wwa-modal { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(20,30,28,0.88); }
+.wwa-modal[hidden] { display: none; }
+.wwa-box { position: relative; width: min(960px, 100%); }
+.wwa-box video { display: block; width: 100%; max-height: 80vh; background: #000; border-radius: 10px; }
+.wwa-close { position: absolute; top: -48px; right: 0; width: 40px; height: 40px; border: 0; border-radius: 50%; background: var(--paper); color: var(--charcoal); font-size: 1.1rem; cursor: pointer; }
+.wwa-close:hover, .wwa-close:focus-visible { background: var(--gold); }
+body.wwa-open { overflow: hidden; }
 
 .carousel-dots {
   position: absolute;
@@ -542,6 +549,13 @@ img.slide-video { object-fit: contain; }
   </div>
 </section>
 
+<div class="wwa-modal" id="wwaModal" role="dialog" aria-modal="true" aria-label="Who We Are video" hidden>
+  <div class="wwa-box">
+    <button class="wwa-close" id="wwaClose" aria-label="Close video">✕</button>
+    <video id="wwaVideo" src="who-we-are.mp4" controls playsinline preload="metadata"></video>
+  </div>
+</div>
+
 <section class="spotlight" id="spotlight"><div class="spotlight-inner"><p class="eyebrow">Live from the Program Hub</p><h2>What's Not To Miss</h2><p class="spotlight-state" id="spotlightState">Loading…</p><div class="spotlight-grid" id="spotlightGrid"></div></div></section><div class="poster-lightbox" id="posterLightbox" role="dialog" aria-modal="true" aria-label="Poster, full screen"><img id="posterLightboxImg" src="" alt=""><div class="poster-lightbox-bar"><button type="button" id="posterLightboxPrint">Print 🖨</button><button type="button" class="close" id="posterLightboxClose">Close ✕</button></div></div><img id="posterPrintImg" src="" alt=""><section class="intro" id="about">
   <div class="intro-inner">
     <div class="intro-text">
@@ -716,7 +730,7 @@ img.slide-video { object-fit: contain; }
       if (muteToggle) muteToggle.style.display = cur.video ? '' : 'none';
       slides.forEach((s, i) => {
         if (!s.video) return;
-        if (i === current) { s.el.muted = isMuted; s.el.currentTime = 0; s.el.play().catch(() => {}); }
+        if (i === current) { s.el.muted = isMuted; s.el.currentTime = 0; if (!document.body.classList.contains('wwa-open')) s.el.play().catch(() => {}); }
         else { s.el.pause(); }
       });
       if (timer) clearTimeout(timer);
@@ -747,12 +761,32 @@ img.slide-video { object-fit: contain; }
     .then(items => start(items.length ? items : DEFAULT_SLIDES))
     .catch(err => { console.error('Carousel sheet not available, using built-in list', err); start(DEFAULT_SLIDES); });
 
-  // Video button -> Activity Haven's existing "Who We Are" VideoPress video
+  // Video button -> "Who We Are" (Come Out And Play promo) plays in a pop-up, starting automatically
   const videoBtn = document.getElementById('videoBtn');
-  if (videoBtn) {
-    videoBtn.addEventListener('click', () => {
-      window.open('https://videopress.com/v/HhgNgUG5', '_blank', 'noopener');
-    });
+  const wwaModal = document.getElementById('wwaModal');
+  const wwaVideo = document.getElementById('wwaVideo');
+  const wwaClose = document.getElementById('wwaClose');
+  if (videoBtn && wwaModal && wwaVideo) {
+    const openWwa = () => {
+      document.querySelectorAll('.hero video').forEach(v => v.pause());
+      document.body.classList.add('wwa-open');
+      wwaModal.hidden = false;
+      wwaVideo.currentTime = 0;
+      wwaVideo.muted = false;
+      wwaVideo.play().catch(() => { wwaVideo.muted = true; wwaVideo.play().catch(() => {}); });
+      wwaClose.focus();
+    };
+    const closeWwa = () => {
+      wwaVideo.pause();
+      wwaModal.hidden = true;
+      document.body.classList.remove('wwa-open');
+      videoBtn.focus();
+    };
+    videoBtn.addEventListener('click', openWwa);
+    wwaClose.addEventListener('click', closeWwa);
+    wwaModal.addEventListener('click', e => { if (e.target === wwaModal) closeWwa(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && !wwaModal.hidden) closeWwa(); });
+    wwaVideo.addEventListener('ended', closeWwa);
   }
 })();
 </script>
