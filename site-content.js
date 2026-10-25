@@ -1,5 +1,5 @@
 /* ---------- Activity Haven: sheet-driven page content ----------
-   Used by gallery.html, membership.html and volunteer.html.
+   Used by listings.html, lunches.html, about.html, membership.html and volunteer.html.
    Reads two tabs of the Program Hub Google Sheet. Columns are found by their
    heading in row 1, so column order doesn't matter.
 

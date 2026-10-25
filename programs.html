@@ -62,6 +62,16 @@ a { color: inherit; text-decoration: none; }
   outline: none;
 }
 .search-row input:focus { border-color: var(--teal-mid); }
+.search-row { align-items: center; flex-wrap: wrap; }
+.search-row input { flex: 0 1 460px; min-width: 0; }
+.listings-btn {
+  margin-left: auto;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-body); font-weight: 700; font-size: 1rem;
+  padding: 12px 20px; border-radius: 10px;
+  background: var(--coral); color: #fff; text-decoration: none; white-space: nowrap;
+}
+.listings-btn:hover, .listings-btn:focus-visible { background: var(--coral-dark); }
 .day-filters { display: flex; gap: 10px; flex-wrap: wrap; }
 .day-btn {
   font-family: var(--font-body);
@@ -173,7 +183,9 @@ footer.site-footer a { color: var(--gold); }
 
 @media (max-width: 900px) {
   .header-inner, .page-hero, .controls, .programs-section, footer.site-footer { padding-left: 24px; padding-right: 24px; }
-  .search-row { flex-direction: column; }
+  .search-row { flex-direction: column; align-items: stretch; }
+  .search-row input { flex: none; width: 100%; }
+  .listings-btn { margin-left: 0; justify-content: center; }
 }
 </style>
 <link rel="manifest" href="/manifest.webmanifest">
@@ -194,7 +206,7 @@ footer.site-footer a { color: var(--gold); }
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="programs.html" class="is-current">Activities</a>
-        <a href="gallery.html">Gallery</a>
+        <a href="lunches.html">Lunches</a>
         <a href="newsletter.html">Newsletter</a>
         <a href="membership.html">Membership</a>
         <a href="volunteer.html">Volunteer</a>
@@ -214,7 +226,8 @@ footer.site-footer a { color: var(--gold); }
 <div class="controls">
   <div class="controls-card">
     <div class="search-row">
-      <input type="text" id="searchInput" placeholder="Search programs — try &quot;cards&quot;, &quot;music&quot;, or &quot;walking&quot;&hellip;">
+      <input type="text" id="searchInput" placeholder="Search — try &quot;cards&quot; or &quot;music&quot;&hellip;" aria-label="Search programs">
+      <a class="listings-btn" href="listings.html"><span aria-hidden="true">&#128424;</span> See listings to print/download</a>
     </div>
     <div class="day-filters" id="dayFilters">
       <button class="day-btn is-active" data-day="All">All Days</button>

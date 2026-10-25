@@ -234,7 +234,17 @@ a { color: inherit; text-decoration: none; }
   box-shadow: 0 10px 20px rgba(214,96,74,0.35);
 }
 
+.banner-signpost {
+  flex-shrink: 0;
+  height: 150px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 8px 18px rgba(30,26,20,0.18));
+}
+.banner-sticker[hidden], .banner-signpost[hidden] { display: none; }
+
 @media (max-width: 800px) {
+  .banner-signpost { height: 120px; }
   .banner-inner { flex-wrap: wrap; justify-content: center; text-align: center; }
   .banner-title { margin-right: 0; align-items: center; }
   .banner-figure { height: 120px; }
@@ -505,7 +515,11 @@ body.wwa-open { overflow: hidden; }
         <span class="banner-title-main">Activity Haven</span>
         <span class="banner-title-sub">Recreation Centre <em>for Adults 50+</em></span>
       </h2>
-      <div class="banner-sticker">Join Us,<br>Come Out &amp; Play!</div>
+      <!-- Signpost picture. Upload it to the site as come-out-and-play.png;
+           until it's there, the old coral "Come Out & Play!" sticker shows instead. -->
+      <img class="banner-signpost" src="come-out-and-play.png" alt="Colourful signpost pointing to games, friends, entertainment, fun and food — Come out and play!"
+           onerror="this.hidden=true; this.nextElementSibling.hidden=false;">
+      <div class="banner-sticker" hidden>Join Us,<br>Come Out &amp; Play!</div>
     </div>
   </section>
 
@@ -515,7 +529,7 @@ body.wwa-open { overflow: hidden; }
         <a href="#home">Home</a>
         <a href="about.html">About</a>
         <a href="programs.html">Activities</a>
-        <a href="gallery.html">Gallery</a>
+        <a href="lunches.html">Lunches</a>
         <a href="newsletter.html">Newsletter</a>
         <a href="membership.html">Membership</a>
         <a href="volunteer.html">Volunteer</a>

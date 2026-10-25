@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lunches | Activity Haven Recreation Centre</title>
+<meta name="description" content="Printable posters for drop-in and instructional programs, the monthly lunch menu, this week's activities, and photos from around the centre.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal-deep: #1E5F5B;
+  --teal-mid: #2F8C82;
+  --teal-pale: #E4EFEC;
+  --cream: #FAF3E4;
+  --paper: #FFFDF8;
+  --coral: #D6604A;
+  --coral-dark: #B84D39;
+  --gold: #E3A23B;
+  --charcoal: #2B2B26;
+  --charcoal-soft: #55524A;
+  --green-row: #DEF0E1;
+  --green-day: #8FCA9F;
+  --green-alt: #C4E8CE;
+  --font-display: "Poppins", -apple-system, sans-serif;
+  --font-body: "Poppins", -apple-system, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--font-body); color: var(--charcoal); background: var(--paper); font-size: 18px; line-height: 1.6; }
+h1, h2, h3 { font-family: var(--font-display); margin: 0; }
+a { color: inherit; text-decoration: none; }
+
+.site-header { background: var(--paper); }
+.main-nav-row { position: sticky; top: 0; z-index: 50; background: var(--paper); border-bottom: 3px solid var(--teal-deep); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 10px 96px; display: flex; align-items: center; gap: 28px; flex-wrap: wrap; row-gap: 6px; }
+.main-nav { display: flex; gap: 17px; flex-wrap: wrap; row-gap: 4px; justify-content: center; width: 100%; }
+.main-nav a { font-weight: 600; font-size: 1.2rem; color: var(--charcoal); padding: 6px 2px; border-bottom: 2px solid transparent; }
+.main-nav a:hover, .main-nav a.is-current { border-color: var(--coral); }
+
+.page-hero { background: var(--teal-deep); color: var(--teal-pale); padding: 56px 96px 44px; text-align: center; }
+.page-hero .eyebrow { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.8rem; font-weight: 700; color: var(--gold); }
+.page-hero h1 { color: white; font-size: clamp(1.9rem, 3.4vw, 2.8rem); font-weight: 600; margin: 12px 0 10px; }
+.page-hero p { max-width: 640px; margin: 0 auto; opacity: 0.92; }
+
+.content-wrap { max-width: 1100px; margin: 0 auto; padding: 56px 96px 30px; }
+.content-card {
+  background: var(--paper);
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(30,26,20,0.12);
+  padding: 40px 44px;
+  border-top: 6px solid var(--teal-mid);
+  margin-bottom: 40px;
+}
+.content-card h2 { font-size: 1.5rem; color: var(--teal-deep); font-weight: 600; margin: 0 0 8px; }
+.content-card > p.lead { color: var(--charcoal-soft); margin: 0 0 26px; }
+.eyebrow { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.8rem; font-weight: 700; color: var(--coral); display: block; margin-bottom: 8px; }
+
+.card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+.card-head h2 { margin-bottom: 0; }
+.card-head .btn-print { flex-shrink: 0; margin-top: 4px; }
+
+.scroll-box { max-height: 640px; overflow-y: auto; border: 2px solid var(--teal-pale); border-radius: 12px; padding: 6px 14px; }
+
+.poster-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+.poster-card { background: var(--cream); border-radius: 14px; overflow: hidden; box-shadow: 0 2px 10px rgba(43,43,38,0.08); display: flex; flex-direction: column; }
+.poster-card img { width: 100%; display: block; }
+.poster-card-foot { padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.poster-card-foot span { font-weight: 600; font-size: 0.88rem; color: var(--charcoal-soft); }
+.btn-print {
+  display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border-radius: 999px;
+  font-weight: 700; font-size: 0.85rem; border: none; cursor: pointer; font-family: var(--font-body);
+  background: var(--coral); color: white;
+}
+.btn-print:hover { background: var(--coral-dark); }
+
+.photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+.photo-tile {
+  aspect-ratio: 4/3; background: linear-gradient(135deg, var(--teal-pale), var(--cream)); border-radius: 12px;
+  display: flex; align-items: center; justify-content: center; color: var(--charcoal-soft); font-size: 0.85rem;
+  text-align: center; padding: 12px; border: 2px dashed var(--teal-mid);
+}
+
+.fb-panel { background: var(--cream); border-radius: 14px; padding: 30px; text-align: center; border: 2px dashed var(--gold); }
+.fb-panel p { color: var(--charcoal-soft); max-width: 560px; margin: 8px auto 0; }
+
+.sheet-text h2 { margin-bottom: 8px; }
+.sheet-text p { color: var(--charcoal-soft); margin: 0 0 16px; }
+.sheet-text ul { color: var(--charcoal-soft); padding-left: 22px; margin: 0 0 16px; }
+.sheet-text + .poster-grid { margin-top: 10px; }
+.poster-card video { width: 100%; display: block; background: #000; }
+.video-frame { position: relative; aspect-ratio: 16/9; background: #000; }
+.video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.empty-msg { color: var(--charcoal-soft); font-style: italic; margin: 0; grid-column: 1 / -1; }
+.note { font-size: 0.85rem; color: var(--charcoal-soft); background: var(--teal-pale); border-radius: 10px; padding: 10px 16px; margin-top: 18px; }
+
+/* Live schedule content, embedded directly on the Gallery page (same styling as the
+   standalone /drop-in-poster and /instructional-poster pages, minus their print bar). */
+.poster-wrap { max-width: 900px; margin: 0 auto; }
+.state-msg { text-align: center; color: var(--charcoal-soft); padding: 30px 20px; font-size: 1.05rem; }
+.poster-block + .poster-block { margin-top: 36px; }
+.poster-frame { border: 3px double var(--teal-deep); border-radius: 14px; padding: 20px 26px 26px; }
+.poster-header { display: flex; align-items: center; gap: 16px; border-bottom: 3px solid var(--gold); padding-bottom: 10px; margin-bottom: 4px; }
+.poster-header img { height: 54px; width: auto; }
+.poster-header .org-name { font-size: 0.85rem; color: var(--charcoal-soft); font-weight: 600; }
+.poster-header h1 { font-size: 1.4rem; color: var(--teal-deep); font-weight: 700; letter-spacing: 0.01em; }
+.poster-subline { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px; font-size: 0.85rem; color: var(--coral-dark); font-weight: 700; margin: 8px 0 14px; }
+.poster-subline .updated { color: var(--charcoal-soft); font-weight: 600; white-space: nowrap; }
+
+.poster-table { width: 100%; border-collapse: collapse; }
+.poster-table thead th {
+  text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--teal-deep); font-weight: 700; padding: 4px 10px 6px; border-bottom: 2px solid var(--teal-deep);
+}
+.poster-table tbody td { padding: 5px 10px; vertical-align: baseline; white-space: nowrap; }
+.poster-table tbody td.name { white-space: normal; font-weight: 700; color: var(--charcoal); }
+.poster-table tbody tr.alt td { background: var(--green-row); }
+.poster-table td.day { font-weight: 700; color: var(--teal-deep); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.poster-table td.time { color: var(--charcoal-soft); font-size: 0.88rem; }
+.poster-table td.room { color: var(--teal-deep); font-weight: 600; font-size: 0.85rem; }
+
+.day-heading {
+  background: var(--green-day); color: var(--teal-deep); font-weight: 700; font-size: 1.05rem;
+  padding: 5px 14px; border-radius: 6px; margin: 14px 0 4px; text-transform: uppercase; letter-spacing: 0.03em;
+}
+.day-heading:first-of-type { margin-top: 0; }
+.prog-list { display: grid; }
+.prog-row {
+  display: grid; grid-template-columns: 145px 1fr auto auto; gap: 12px; align-items: baseline;
+  padding: 4px 10px;
+}
+.prog-row.alt { background: var(--green-alt); }
+.prog-row .time { color: var(--charcoal-soft); font-size: 0.86rem; white-space: nowrap; }
+.prog-row .desc { color: var(--charcoal); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.prog-row .room { color: var(--teal-deep); font-weight: 600; font-size: 0.85rem; white-space: nowrap; }
+.prog-row .fee { color: var(--coral-dark); font-weight: 700; font-size: 0.9rem; text-align: right; white-space: nowrap; }
+
+footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 96px; text-align: center; font-size: 0.9rem; }
+footer.site-footer a { color: var(--gold); }
+
+@media print {
+  .site-header, footer.site-footer, .btn-print, .page-hero { display: none !important; }
+  .content-card { box-shadow: none; border: none; }
+  .scroll-box { max-height: none !important; overflow: visible !important; border: none; padding: 0; }
+}
+
+@media (max-width: 900px) {
+  .header-inner, .page-hero, .content-wrap, footer.site-footer { padding-left: 24px; padding-right: 24px; }
+  .content-card { padding: 28px 26px; }
+  .prog-row { grid-template-columns: 76px 1fr auto auto; font-size: 0.9rem; }
+}
+</style>
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#1E5F5B">
+<link rel="icon" type="image/png" href="/assets/app/favicon-48.png">
+<link rel="apple-touch-icon" href="/assets/app/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Activity Haven">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="main-nav-row">
+    <div class="header-inner">
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="programs.html">Activities</a>
+        <a href="lunches.html" class="is-current">Lunches</a>
+        <a href="newsletter.html">Newsletter</a>
+        <a href="membership.html">Membership</a>
+        <a href="volunteer.html">Volunteer</a>
+        <a href="donate.html">Donate</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <p class="eyebrow">Haven Bistro</p>
+  <h1>Lunches</h1>
+  <p>This month's lunch menu. Click "Print" under the menu to print just that page.</p>
+</section>
+
+<div class="content-wrap">
+
+  <!-- MONTHLY MENU — text: "Page Text" tab, Page = Menu; posters: "Gallery" tab, Section = Menu -->
+  <div class="content-card" id="menu">
+    <span class="eyebrow">Monthly Menu</span>
+    <div class="sheet-text" id="menuText">
+      <h2>Lunch at Activity Haven — Wednesdays &amp; Fridays, $12</h2>
+      <p>Everyone's welcome, members or not. Ask for your meal "to go" if you're on the run.</p>
+    </div>
+    <div class="poster-grid" id="menuGrid">
+      <div class="poster-card">
+        <img src="https://activityhaven.org/wp-content/uploads/2026/07/July-Newsletter-2026-pg-8.jpg" alt="July lunch menu">
+        <div class="poster-card-foot">
+          <span>July</span>
+          <button class="btn-print" data-print="https://activityhaven.org/wp-content/uploads/2026/07/July-Newsletter-2026-pg-8.jpg">Print</button>
+        </div>
+      </div>
+      <div class="poster-card">
+        <img src="https://activityhaven.org/wp-content/uploads/2026/07/July-Newsletter-2026-pg-9.jpg" alt="August lunch menu">
+        <div class="poster-card-foot">
+          <span>August</span>
+          <button class="btn-print" data-print="https://activityhaven.org/wp-content/uploads/2026/07/July-Newsletter-2026-pg-9.jpg">Print</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  Activity Haven Recreation Centre — 180 Barnardo Ave, Peterborough, ON &nbsp;|&nbsp; 705-876-1670
+</footer>
+
+<script src="site-content.js"></script>
+<script>
+  AHContent.fillText('Menu', document.getElementById('menuText'));
+  AHContent.fillPosters('Menu', document.getElementById('menuGrid'));
+</script>
+
+<!-- Hidden staff shortcut: type "hub" (desktop) or triple-tap a section
+     (phone/tablet) to open the Sheet tab and row that feeds that section.
+     Nothing is shown on the page; editing is still controlled by the
+     Sheet's own sharing settings. -->
+<script>
+(function () {
+  const SHEET_ID = '1tvGtCqroniAThEteWph0f4Bg1f_aiV0JqQU3M4ZTcOk';
+  const GID = { hub: '717293429', gallery: '1026948264', pageText: '94642468' };
+  const gviz = (extra) => `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json${extra}`;
+
+  // Which part of the Sheet feeds each part of the page.
+  // Inner areas are listed first so they win over the card around them.
+  const AREAS = [
+    { sel: '#menuText',     tab: 'pageText', match: 'menu' },
+    { sel: '#menuGrid',     tab: 'gallery',  match: 'menu' }
+  ];
+  const ALL_SEL = AREAS.map(a => a.sel).join(',');
+  const rowFor = {};   // e.g. rowFor['gallery|menu'] = 3
+
+  function parse(text) {
+    return JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1)).table;
+  }
+  function val(row, i) {
+    const c = row.c && row.c[i];
+    return c && c.v != null ? String(c.v).trim().toLowerCase() : '';
+  }
+  // Remember the first Sheet row for each section; if a section has no rows
+  // yet, point at the first empty row so a new one can be added there.
+  function index(tabKey, rows, colIdx, firstDataRow, typeDefault) {
+    let firstBlank = null;
+    rows.forEach((r, i) => {
+      let key = val(r, colIdx);
+      const blankRow = !(r.c || []).some(c => c && c.v != null && String(c.v).trim() !== '');
+      if (blankRow) { if (firstBlank === null) firstBlank = i + firstDataRow; return; }
+      if (!key && typeDefault) key = typeDefault;
+      const k = tabKey + '|' + key;
+      if (!(k in rowFor)) rowFor[k] = i + firstDataRow;
+    });
+    rowFor[tabKey + '|_blank'] = firstBlank !== null ? firstBlank : rows.length + firstDataRow;
+  }
+
+  fetch(gviz('')).then(r => r.text()).then(t => {
+    const tbl = parse(t);
+    index('hub', tbl.rows, 4, 1 + (tbl.parsedNumHeaders || 0), 'drop-in');   // column E = Type
+  }).catch(() => {});
+  fetch(gviz('&headers=1&sheet=Gallery')).then(r => r.text()).then(t => {
+    index('gallery', parse(t).rows, 0, 2);                                 // column A = Section
+  }).catch(() => {});
+  fetch(gviz('&headers=1&sheet=' + encodeURIComponent('Page Text'))).then(r => r.text()).then(t => {
+    index('pageText', parse(t).rows, 0, 2);                                // column A = Page
+  }).catch(() => {});
+
+  function urlFor(area) {
+    let row = 1;
+    if (area) {
+      row = rowFor[area.tab + '|' + area.match] || rowFor[area.tab + '|_blank'] || 1;
+    }
+    const gid = area ? GID[area.tab] : GID.hub;
+    return `https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit#gid=${gid}&range=A${row}`;
+  }
+  function areaFromElement(el) {
+    const box = el && el.closest ? el.closest(ALL_SEL) : null;
+    return box ? AREAS.find(a => box.matches(a.sel)) : null;
+  }
+  // Fallback when the pointer isn't over a section: whichever section is
+  // in the middle of the screen.
+  function areaInView() {
+    const el = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2);
+    return areaFromElement(el);
+  }
+  function openHub(area) { window.open(urlFor(area || areaInView()), '_blank', 'noopener'); }
+
+  // Desktop: type "hub" while the mouse is over (or you last clicked in) a section.
+  let lastEl = null;
+  document.addEventListener('mousemove', e => { lastEl = e.target; }, { passive: true });
+  document.addEventListener('mousedown', e => { lastEl = e.target; });
+  let typed = '';
+  document.addEventListener('keydown', e => {
+    const t = e.target;
+    if (t && (t.isContentEditable || /^(input|textarea|select)$/i.test(t.tagName))) return;
+    if (e.ctrlKey || e.metaKey || e.altKey || !e.key || e.key.length !== 1) return;
+    typed = (typed + e.key.toLowerCase()).slice(-3);
+    if (typed === 'hub') { typed = ''; openHub(areaFromElement(lastEl)); }
+  });
+
+  // Phone/tablet (and a mouse in Firefox): triple-tap a section's heading or
+  // any plain part of a section — not a button, link, video or picture.
+  let taps = 0, tapTimer = null, tapArea = null;
+  document.addEventListener('click', e => {
+    if (e.target.closest('button, a, video, iframe, img, input, select, textarea')) return;
+    const area = areaFromElement(e.target);
+    if (!area) { taps = 0; return; }
+    if (area !== tapArea) { taps = 0; tapArea = area; }
+    taps++;
+    clearTimeout(tapTimer);
+    tapTimer = setTimeout(() => { taps = 0; }, 600);
+    if (taps >= 3) { taps = 0; openHub(area); }
+  });
+})();
+</script>
+
+<script src="mobile-nav.js" defer></script>
+</body>
+</html>

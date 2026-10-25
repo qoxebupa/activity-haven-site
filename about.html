@@ -99,6 +99,15 @@ footer.site-footer a { color: var(--gold); }
   .content-card { padding: 28px 26px; }
   .info-grid { grid-template-columns: 1fr; }
 }
+.eyebrow { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.8rem; font-weight: 700; color: var(--coral); display: block; margin-bottom: 8px; }
+.content-card + .content-card { margin-top: 32px; }
+.poster-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-top: 20px; }
+.poster-card { background: var(--cream); border-radius: 14px; overflow: hidden; box-shadow: 0 2px 10px rgba(43,43,38,0.08); display: flex; flex-direction: column; }
+.poster-card img, .poster-card video { width: 100%; display: block; }
+.poster-card video { background: #000; }
+.poster-card-foot { padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.poster-card-foot span { font-weight: 600; font-size: 0.88rem; color: var(--charcoal-soft); }
+.empty-msg { color: var(--charcoal-soft); font-style: italic; margin: 0; grid-column: 1 / -1; }
 </style>
 <link rel="manifest" href="/manifest.webmanifest">
 <meta name="theme-color" content="#1E5F5B">
@@ -118,7 +127,7 @@ footer.site-footer a { color: var(--gold); }
         <a href="index.html">Home</a>
         <a href="about.html" class="is-current">About</a>
         <a href="programs.html">Activities</a>
-        <a href="gallery.html">Gallery</a>
+        <a href="lunches.html">Lunches</a>
         <a href="newsletter.html">Newsletter</a>
         <a href="membership.html">Membership</a>
         <a href="volunteer.html">Volunteer</a>
@@ -157,11 +166,41 @@ footer.site-footer a { color: var(--gold); }
     <div class="pull-quote">"A place to belong, every single day."</div>
 
   </div>
+
+  <!-- OUR BOARD — "Gallery" tab, Section = Our Board (one row per board member:
+       Caption = name & role, Image = photo link). This whole card stays hidden
+       until the first "Our Board" row is added to the Sheet. -->
+  <div class="content-card" id="board" hidden>
+    <span class="eyebrow">Our Board</span>
+    <h2>Meet the Board of Directors</h2>
+    <div class="poster-grid" id="boardGrid"></div>
+  </div>
+
+  <!-- AROUND THE CENTRE — "Gallery" tab, Section = Around the Centre -->
+  <div class="content-card" id="around">
+    <span class="eyebrow">Around the Centre</span>
+    <h2>Staff &amp; past events</h2>
+    <div class="poster-grid" id="aroundGrid">
+      <p class="empty-msg">Photos coming soon.</p>
+    </div>
+  </div>
 </div>
 
 <footer class="site-footer">
   Activity Haven Recreation Centre — 180 Barnardo Ave, Peterborough, ON &nbsp;|&nbsp; 705-876-1670
 </footer>
+
+<script src="site-content.js"></script>
+<script>
+  AHContent.fillPosters('Around the Centre', document.getElementById('aroundGrid'), 'Photos coming soon.');
+  (function () {
+    var grid = document.getElementById('boardGrid'), card = document.getElementById('board');
+    new MutationObserver(function () {
+      card.hidden = !grid.querySelector('.poster-card');
+    }).observe(grid, { childList: true });
+    AHContent.fillPosters('Our Board', grid);
+  })();
+</script>
 
 <script src="mobile-nav.js" defer></script>
 </body>
