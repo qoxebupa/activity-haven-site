@@ -3,9 +3,9 @@
    Reads two tabs of the Program Hub Google Sheet. Columns are found by their
    heading in row 1, so column order doesn't matter.
 
-   "Gallery" tab  — one row per poster / photo / video:
+   "Menu" tab (formerly called "Gallery") — one row per poster / photo / video:
      Section | Order | Show | Caption | Image | Video
-     Section: Registration Rules, Menu, Announcements, Around the Centre, Volunteer
+     Section: Registration Rules, Menu, Around the Centre, Our Board, Volunteer
      Image:   a Google Drive link (shared "Anyone with the link") or a file name in this site
      Video:   used when Image is blank (file name in this site, or a Drive video link)
 
@@ -92,7 +92,8 @@
 
   function fillPosters(sectionName, gridEl, emptyText) {
     if (!gridEl) return;
-    loadTab('Gallery', ['section', 'caption', 'image']).then(rows => {
+    const need = ['section', 'caption', 'image'];
+    loadTab('Menu', need).catch(() => loadTab('Gallery', need)).then(rows => {
       const items = rows.filter(r => norm(r.section) === norm(sectionName) && (r.image || r.video));
       const html = items.map(posterCard).join('');
       if (html) {
@@ -104,7 +105,7 @@
         gridEl.innerHTML = '';
         gridEl.style.display = 'none';
       }
-    }).catch(err => console.warn('Gallery tab not available — keeping built-in posters.', err));
+    }).catch(err => console.warn('Menu tab not available — keeping built-in posters.', err));
   }
 
   // ---- Headings / paragraphs / bullets ----

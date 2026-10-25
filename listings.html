@@ -610,7 +610,7 @@ function printSection(id, title) {
     const tbl = parse(t);
     index('hub', tbl.rows, 4, 1 + (tbl.parsedNumHeaders || 0), 'drop-in');   // column E = Type
   }).catch(() => {});
-  fetch(gviz('&headers=1&sheet=Gallery')).then(r => r.text()).then(t => {
+  fetch(gviz('&headers=1&sheet=Menu')).then(r => r.text()).then(t => {
     index('gallery', parse(t).rows, 0, 2);                                 // column A = Section
   }).catch(() => {});
   fetch(gviz('&headers=1&sheet=' + encodeURIComponent('Page Text'))).then(r => r.text()).then(t => {

@@ -38,9 +38,9 @@ a { color: inherit; text-decoration: none; }
 .main-nav a:hover, .main-nav a.is-current { border-color: var(--coral); }
 
 /* ---- page hero ---- */
-.page-hero { background: var(--teal-deep); color: var(--teal-pale); padding: 56px 96px 44px; text-align: center; }
+.page-hero { background: var(--teal-deep); color: var(--teal-pale); padding: 20px 96px 40px; text-align: center; }
 .page-hero .eyebrow { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.8rem; font-weight: 700; color: var(--gold); }
-.page-hero h1 { color: white; font-size: clamp(1.9rem, 3.4vw, 2.8rem); font-weight: 600; margin: 12px 0 10px; }
+.page-hero h1 { color: white; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 600; margin: 4px 0 0; }
 .page-hero p { max-width: 640px; margin: 0 auto; opacity: 0.92; }
 
 /* ---- controls ---- */
@@ -63,7 +63,8 @@ a { color: inherit; text-decoration: none; }
 }
 .search-row input:focus { border-color: var(--teal-mid); }
 .search-row { align-items: center; flex-wrap: wrap; }
-.search-row input { flex: 0 1 460px; min-width: 0; }
+.search-row { flex-wrap: nowrap; }
+.search-row input { flex: 1 1 auto; max-width: 460px; min-width: 0; }
 .listings-btn {
   margin-left: auto;
   display: inline-flex; align-items: center; gap: 8px;
@@ -183,9 +184,15 @@ footer.site-footer a { color: var(--gold); }
 
 @media (max-width: 900px) {
   .header-inner, .page-hero, .controls, .programs-section, footer.site-footer { padding-left: 24px; padding-right: 24px; }
+  .listings-btn { padding: 12px 14px; font-size: 0.95rem; }
+}
+@media (max-width: 560px) {
   .search-row { flex-direction: column; align-items: stretch; }
-  .search-row input { flex: none; width: 100%; }
+  .search-row input { flex: none; width: 100%; max-width: none; }
   .listings-btn { margin-left: 0; justify-content: center; }
+  .page-hero { padding-top: 14px; padding-bottom: 36px; }
+  .page-hero .eyebrow { display: none; }
+  .controls-card { padding: 18px 18px; }
 }
 </style>
 <link rel="manifest" href="/manifest.webmanifest">
@@ -218,9 +225,8 @@ footer.site-footer a { color: var(--gold); }
 </header>
 
 <section class="page-hero">
-  <p class="eyebrow">50+ programs, five days a week</p>
+  <p class="eyebrow">100+ programs, five days a week</p>
   <h1>Find your next favourite thing</h1>
-  <p>Cards, crafts, fitness, music, and friends — search or filter by day to see what's on.</p>
 </section>
 
 <div class="controls">

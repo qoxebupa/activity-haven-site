@@ -186,7 +186,7 @@ footer.site-footer a { color: var(--gold); }
 
 <div class="content-wrap">
 
-  <!-- MONTHLY MENU — text: "Page Text" tab, Page = Menu; posters: "Gallery" tab, Section = Menu -->
+  <!-- MONTHLY MENU — text: "Page Text" tab, Page = Menu; posters: "Menu" tab, Section = Menu -->
   <div class="content-card" id="menu">
     <span class="eyebrow">Monthly Menu</span>
     <div class="sheet-text" id="menuText">
@@ -195,17 +195,10 @@ footer.site-footer a { color: var(--gold); }
     </div>
     <div class="poster-grid" id="menuGrid">
       <div class="poster-card">
-        <img src="https://activityhaven.org/wp-content/uploads/2026/07/July-Newsletter-2026-pg-8.jpg" alt="July lunch menu">
+        <img src="https://activityhaven.org/wp-content/uploads/2026/10/october-newsletter-2026-pg-9.jpg" alt="October lunch menu">
         <div class="poster-card-foot">
-          <span>July</span>
-          <button class="btn-print" data-print="https://activityhaven.org/wp-content/uploads/2026/07/July-Newsletter-2026-pg-8.jpg">Print</button>
-        </div>
-      </div>
-      <div class="poster-card">
-        <img src="https://activityhaven.org/wp-content/uploads/2026/07/July-Newsletter-2026-pg-9.jpg" alt="August lunch menu">
-        <div class="poster-card-foot">
-          <span>August</span>
-          <button class="btn-print" data-print="https://activityhaven.org/wp-content/uploads/2026/07/July-Newsletter-2026-pg-9.jpg">Print</button>
+          <span>October</span>
+          <button class="btn-print" data-print="https://activityhaven.org/wp-content/uploads/2026/10/october-newsletter-2026-pg-9.jpg">Print</button>
         </div>
       </div>
     </div>
@@ -268,7 +261,7 @@ footer.site-footer a { color: var(--gold); }
     const tbl = parse(t);
     index('hub', tbl.rows, 4, 1 + (tbl.parsedNumHeaders || 0), 'drop-in');   // column E = Type
   }).catch(() => {});
-  fetch(gviz('&headers=1&sheet=Gallery')).then(r => r.text()).then(t => {
+  fetch(gviz('&headers=1&sheet=Menu')).then(r => r.text()).then(t => {
     index('gallery', parse(t).rows, 0, 2);                                 // column A = Section
   }).catch(() => {});
   fetch(gviz('&headers=1&sheet=' + encodeURIComponent('Page Text'))).then(r => r.text()).then(t => {
