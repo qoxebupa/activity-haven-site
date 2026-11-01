@@ -74,12 +74,26 @@ a { color: inherit; text-decoration: none; }
 .detail-image-wrap {
   position: relative;
   width: 100%;
-  height: 340px;
+  min-height: 260px;
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 24px;
-  background: var(--teal-pale);
+  padding: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--teal-deep);
 }
+/* Soft blurred copy of the poster fills the space around it */
+.detail-image-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -40px;
+  background: var(--poster) center / cover no-repeat;
+  filter: blur(26px) saturate(1.15) brightness(0.8);
+  transform: scale(1.15);
+}
+.detail-image-link { position: relative; display: block; line-height: 0; cursor: zoom-in; }
 .detail-image-skeleton {
   position: absolute;
   inset: 0;
@@ -93,10 +107,13 @@ a { color: inherit; text-decoration: none; }
 }
 .detail-image {
   position: relative;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: min(75vh, 680px);
+  border-radius: 4px;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.4);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -311,11 +328,14 @@ footer.site-footer { background: var(--charcoal); color: #DCD8CC; padding: 40px 
              <iframe class="detail-video" src="${escapeHtml(resolveVideoEmbedUrl(match.video))}" allow="autoplay" allowfullscreen loading="lazy"></iframe>
            </div>`;
       } else if (match.image) {
-        mediaHtml = `<div class="detail-image-wrap">
+        const imgSrc = escapeHtml(resolveImageUrl(match.image));
+        mediaHtml = `<div class="detail-image-wrap" style="--poster:url(&quot;${imgSrc}&quot;)">
              <div class="detail-image-skeleton"></div>
-             <img class="detail-image" src="${escapeHtml(resolveImageUrl(match.image))}" alt="${escapeHtml(match.program)}"
-                  onload="this.classList.add('is-loaded'); this.previousElementSibling.style.display='none';"
-                  onerror="this.closest('.detail-image-wrap').style.display='none';">
+             <a class="detail-image-link" href="${imgSrc}" target="_blank" rel="noopener" title="Open full size">
+               <img class="detail-image" src="${imgSrc}" alt="${escapeHtml(match.program)}"
+                    onload="this.classList.add('is-loaded'); this.closest('.detail-image-wrap').querySelector('.detail-image-skeleton').style.display='none';"
+                    onerror="this.closest('.detail-image-wrap').style.display='none';">
+             </a>
            </div>`;
       }
 
