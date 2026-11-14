@@ -144,6 +144,18 @@ footer.site-footer a { color: var(--gold); }
 .btn-package:hover { filter: brightness(1.1); }
 .btn-package:disabled { opacity: 0.6; cursor: wait; }
 #printPackage { display: none; }
+.package-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 0 auto 22px; }
+.package-actions .btn-package { margin: 0; }
+.btn-package.btn-link { background: none; color: var(--teal-deep); border: 2px solid var(--teal-deep); }
+@media screen {
+  body.package-view .viewer, body.package-view .viewer-caption, body.package-view .viewer-meta, body.package-view .thumb-strip { display: none !important; }
+  body.package-view #printPackage { display: block; max-width: 900px; margin: 0 auto 40px; padding: 0 20px; }
+  body.package-view .pp-sheet { margin-bottom: 24px; }
+  body.package-view .pp-full img { width: 100%; height: auto; display: block; box-shadow: 0 4px 18px rgba(0,0,0,0.12); border-radius: 6px; }
+  body.package-view .pp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  body.package-view .pp-grid img { width: 100%; height: auto; display: block; box-shadow: 0 4px 18px rgba(0,0,0,0.12); border-radius: 6px; }
+}
+@media screen and (max-width: 600px) { body.package-view .pp-grid { grid-template-columns: 1fr; } }
 @media print {
   body.printing-package > *:not(#printPackage) { display: none !important; }
   body.printing-package #printPackage { display: block; }
@@ -226,7 +238,10 @@ footer.site-footer a { color: var(--gold); }
     <h2>This Month at Activity Haven</h2>
     <p>Read the full newsletter below — a message from our Executive Director, member spotlights, upcoming special events, tournaments, workshops, bus trips, and the monthly lunch menu. Use the arrows or thumbnails to flip through.</p>
 
-    <button class="btn-package" id="packageBtn" type="button" style="display:none">Print newsletter package 🖨</button>
+    <div class="package-actions">
+      <button class="btn-package" id="packageBtn" type="button" style="display:none">Print newsletter package 🖨</button>
+      <button class="btn-package btn-link" id="packageLinkBtn" type="button" style="display:none">Copy link to share 🔗</button>
+    </div>
     <div class="viewer">
       <button class="viewer-btn" id="prevBtn" aria-label="Previous page">&#8249;</button>
       <div class="viewer-frame">
@@ -388,13 +403,16 @@ footer.site-footer a { color: var(--gold); }
 
   function setupPackage(pages) {
     var btn = document.getElementById('packageBtn');
+    var linkBtn = document.getElementById('packageLinkBtn');
     var printable = pages.filter(function (p) { return !p.video && !/^skip/.test(p.printAs); });
     var full = printable.filter(function (p) { return !/^poster/.test(p.printAs); });
     var posters = printable.filter(function (p) { return /^poster/.test(p.printAs); });
     if (!printable.length) return;
-    btn.style.display = '';
+    var shareUrl = location.origin + location.pathname + '?package';
+    var packageView = /[?&]package\b/.test(location.search);
 
-    btn.addEventListener('click', function () {
+    // Build the package (full pages, then posters 4 to a sheet) directly in <body>
+    function build() {
       var old = document.getElementById('printPackage');
       if (old) old.remove();
       var wrap = document.createElement('div');
@@ -414,19 +432,41 @@ footer.site-footer a { color: var(--gold); }
         posters.slice(i, i + 4).forEach(function (p) { addImg(sh, p.src); });
         wrap.appendChild(sh);
       }
-      document.body.appendChild(wrap);
-
-      // wait for every image to load (or fail) before opening the print dialog
-      btn.disabled = true; btn.textContent = 'Preparing…';
-      Promise.all(imgs.map(function (im) {
+      var footer = document.querySelector('footer.site-footer');
+      document.body.insertBefore(wrap, footer);
+      return Promise.all(imgs.map(function (im) {
         return im.complete ? Promise.resolve() : new Promise(function (ok) { im.onload = im.onerror = ok; });
-      })).then(function () {
+      }));
+    }
+
+    function printPackage() {
+      btn.disabled = true; btn.textContent = 'Preparing…';
+      build().then(function () {
         btn.disabled = false; btn.textContent = 'Print newsletter package 🖨';
         document.body.classList.add('printing-package');
         window.print();
       });
-    });
+    }
+
+    btn.style.display = '';
+    btn.addEventListener('click', printPackage);
     window.addEventListener('afterprint', function () { document.body.classList.remove('printing-package'); });
+
+    if (linkBtn) {
+      linkBtn.style.display = '';
+      linkBtn.addEventListener('click', function () {
+        function done() { linkBtn.textContent = 'Link copied ✓ — paste it into your email'; setTimeout(function () { linkBtn.textContent = 'Copy link to share 🔗'; }, 4000); }
+        if (navigator.clipboard) navigator.clipboard.writeText(shareUrl).then(done, function () { prompt('Copy this link:', shareUrl); });
+        else prompt('Copy this link:', shareUrl);
+      });
+    }
+
+    // Shared link (newsletter.html?package): show the whole package as one scrolling page
+    if (packageView) {
+      document.body.classList.add('package-view');
+      if (linkBtn) linkBtn.style.display = 'none';
+      build();
+    }
   }
 
   loadFromSheet()
