@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Link tester | Activity Haven (staff)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root { --teal-deep:#1E5F5B; --teal-pale:#E4EFEC; --cream:#FAF3E4; --coral:#E07A5F; --ink:#2B2B2B; }
+* { box-sizing: border-box; }
+body { margin:0; font-family:'Poppins',sans-serif; font-size:18px; line-height:1.5; color:var(--ink); background:var(--cream); }
+main { max-width:760px; margin:0 auto; padding:28px 20px 60px; }
+h1 { color:var(--teal-deep); font-size:1.6rem; margin:0 0 6px; }
+p.lead { margin:0 0 20px; }
+label { font-weight:600; display:block; margin-bottom:6px; }
+textarea { width:100%; min-height:90px; font:inherit; font-size:16px; padding:12px; border:2px solid var(--teal-deep); border-radius:8px; }
+button { margin-top:10px; font:inherit; font-weight:600; color:#fff; background:var(--teal-deep); border:0; border-radius:8px; padding:10px 22px; cursor:pointer; }
+button.secondary { background:#fff; color:var(--teal-deep); border:2px solid var(--teal-deep); margin-left:8px; }
+#verdict { margin:22px 0 14px; padding:14px 16px; border-radius:8px; background:var(--teal-pale); display:none; }
+#verdict.bad { background:#FBE3DC; }
+#verdict strong { display:block; font-size:1.1rem; }
+#preview { background:#fff; border-radius:10px; padding:16px; display:none; }
+#preview h2 { font-size:1rem; margin:0 0 10px; color:var(--teal-deep); }
+#preview img { max-width:100%; display:block; border-radius:8px; }
+.tips { margin-top:30px; font-size:0.95rem; }
+.tips li { margin-bottom:6px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Link tester</h1>
+  <p class="lead">Paste an image or design link exactly as you would in the Hub's Image column. This page shows how the website will display it. Nothing is saved, and the Hub is not changed.</p>
+
+  <label for="link">Link</label>
+  <textarea id="link" placeholder="e.g. a Canva Smart embed link, a Google Drawing link, a Google Drive photo link"></textarea>
+  <div>
+    <button id="go" type="button">Show me</button>
+    <button id="clear" type="button" class="secondary">Clear</button>
+  </div>
+
+  <div id="verdict" role="status"></div>
+  <div id="preview"><h2>How it will look on the site</h2><div id="slot"></div></div>
+
+  <ul class="tips">
+    <li><strong>Canva:</strong> Share &rarr; More &rarr; Embed &rarr; copy the <em>Smart embed link</em>. Later edits in Canva show on the site automatically. Edit the same design; don't make a copy.</li>
+    <li><strong>Google Drawings:</strong> File &rarr; Share &rarr; Publish to web &rarr; Image &rarr; Publish, and copy that link. Tick "Automatically republish when changes are made".</li>
+    <li><strong>Google Slides:</strong> share as "Anyone with the link can view", open the slide you want, and copy the address from the browser bar.</li>
+    <li>A design shows tall (letter size) unless the link ends with <code>#landscape</code> or <code>#square</code>.</li>
+    <li>Changes can take up to about 5 minutes to appear. Reload this page to check.</li>
+  </ul>
+</main>
+
+<script src="image-links.js"></script>
+<script>
+(function () {
+  var box = document.getElementById('link');
+  var verdict = document.getElementById('verdict');
+  var preview = document.getElementById('preview');
+  var slot = document.getElementById('slot');
+
+  function driveId(u) {
+    var m = u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=|thumbnail\?id=)([\w-]+)/);
+    return m ? m[1] : null;
+  }
+  function say(title, text, bad) {
+    verdict.className = bad ? 'bad' : '';
+    verdict.innerHTML = '<strong></strong><span></span>';
+    verdict.firstChild.textContent = title;
+    verdict.lastChild.textContent = text;
+    verdict.style.display = 'block';
+  }
+
+  function show() {
+    var raw = box.value.trim();
+    slot.innerHTML = '';
+    preview.style.display = 'none';
+    if (!raw) { verdict.style.display = 'none'; return; }
+
+    if (/(photos\.app\.goo\.gl|photos\.google\.com|facebook\.com|fb\.com|fbcdn\.net)/i.test(raw)) {
+      say("This kind of link won't work", 'Google Photos and Facebook links can\'t be shown on the website. Download the picture and use a Google Drive link instead.', true);
+      return;
+    }
+
+    var src = window.ahImageLink(raw);
+    var id = driveId(src);
+    if (id) src = 'https://lh3.googleusercontent.com/d/' + id;   // same as the site's pages
+
+    if (window.ahEmbedLink(raw)) {
+      say('Live design', 'This shows as an embedded design. When it is edited in Canva or Adobe Express, the website updates by itself. Not suited to the homepage carousel.');
+    } else {
+      say('Picture', 'This shows as an ordinary picture, so it can be used anywhere on the site, including the homepage carousel.');
+    }
+
+    var img = document.createElement('img');
+    img.alt = 'Preview';
+    img.onerror = function () {
+      if (img.dataset.ahEmbed) return;
+      preview.style.display = 'none';
+      say("The website can't show this link", 'Check that it is shared as "Anyone with the link can view" (or published to the web), then try again.', true);
+    };
+    preview.style.display = 'block';
+    slot.appendChild(img);
+    img.setAttribute('src', src);    // a Canva / Adobe link is swapped for a live frame here
+  }
+
+  document.getElementById('go').addEventListener('click', show);
+  document.getElementById('clear').addEventListener('click', function () {
+    box.value = ''; show(); box.focus();
+  });
+})();
+</script>
+</body>
+</html>
